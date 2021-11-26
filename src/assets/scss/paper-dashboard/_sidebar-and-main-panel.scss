@@ -12,7 +12,7 @@
 .sidebar,
 .off-canvas-sidebar{
     position: fixed;
-    top: 0;
+    top: 4rem;
     height: 100%;
     bottom: 0;
     width: 260px;
@@ -295,6 +295,7 @@
     position: relative;
     float: right;
     width: $sidebar-width;
+    top : 4rem;
     background-color: #f4f3ef;;
 
 

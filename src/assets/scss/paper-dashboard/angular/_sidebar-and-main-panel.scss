@@ -6,3 +6,8 @@
     bottom: 22px;
   }
 }
+@media screen and (max-width : 500px) {
+  .sidebar .sidebar-wrapper{
+    top :4rem;
+  }  
+}
