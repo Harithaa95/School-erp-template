@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  selector: 'topbar-cmp',
+  templateUrl: './tobar.component.html',
+  moduleId: module.id,
 })
 
-export class AppComponent{
+export class TopBarComponent{
   constructor(private translateService:TranslateService){}
 }

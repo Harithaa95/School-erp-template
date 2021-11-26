@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 import Chart from 'chart.js';
 
 
@@ -15,6 +16,7 @@ export class DashboardComponent implements OnInit{
   public chartColor;
   public chartEmail;
   public chartHours;
+  constructor(public translateService:TranslateService) { }
 
     ngOnInit(){
       this.chartColor = "#FFFFFF";

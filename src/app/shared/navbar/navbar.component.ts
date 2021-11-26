@@ -1,4 +1,5 @@
 import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import { Router } from '@angular/router';
 import { Location} from '@angular/common';
@@ -17,12 +18,18 @@ export class NavbarComponent implements OnInit{
     private sidebarVisible: boolean;
 
     public isCollapsed = true;
+    public lang: any;
     @ViewChild("navbar-cmp", {static: false}) button;
 
-    constructor(location:Location, private renderer : Renderer2, private element : ElementRef, private router: Router) {
+    constructor(location:Location, private renderer : Renderer2, private element : ElementRef, private router: Router,public translateService:TranslateService) {
         this.location = location;
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
+
+        this.lang = this.translateService.addLangs(['en','ta'])
+        this.translateService.setDefaultLang('en')
+        const browerLang=translateService.getBrowserLang()
+        translateService.use(browerLang.match(/en|ta/)?browerLang:'en')
     }
 
     ngOnInit(){

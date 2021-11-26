@@ -10,12 +10,26 @@ import { DashboardComponent }       from '../../pages/dashboard/dashboard.compon
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {HttpClientModule, HttpClient} from '@angular/common/http';
+
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule,
+    TranslateModule.forRoot(
+      {
+        loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+        }
+    }
+    )
   ],
   declarations: [
     DashboardComponent,
@@ -23,3 +37,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 })
 
 export class AdminLayoutModule {}
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}

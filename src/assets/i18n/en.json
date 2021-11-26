@@ -1,0 +1,17 @@
+{
+    "Country": "Country",
+    "Confirmed": "Confirmed",
+    "Recovered": "Recovered",
+    "Deaths": "Deaths",
+    "USA": "USA",
+    "Brazil": "Brazil",
+    "India": "India",
+    "Russia": "Russia",
+    "South Africa": "South Africa",
+    "Peru": "Peru",
+    "Colombia": "Colombia",
+    "Mexico": "Mexico",
+    "Spain": "Spain",
+    "Chile": "Chile",
+    "Argentina": "Argentina"
+}
