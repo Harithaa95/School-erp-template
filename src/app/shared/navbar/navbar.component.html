@@ -1,54 +1,59 @@
-
 <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-  <div class="container-fluid">
-    <div class="navbar-wrapper">
-      <div class="navbar-toggle">
-        <button type="button" class="navbar-toggler" (click)="sidebarToggle()">
+    <div class="container-fluid">
+        <div class="navbar-wrapper">
+            <div class="navbar-toggle">
+                <button type="button" class="navbar-toggler" (click)="sidebarToggle()">
           <span class="navbar-toggler-bar bar1"></span>
           <span class="navbar-toggler-bar bar2"></span>
           <span class="navbar-toggler-bar bar3"></span>
         </button>
-      </div>
-      <a class="navbar-brand" href="javascript:void(0)">{{getTitle()}}</a>
-    </div>
-    <button class="navbar-toggler" type="button" (click)="collapse()"
-      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+            </div>
+            <a class="navbar-brand" href="javascript:void(0)">{{getTitle()}}</a>
+        </div>
+        <button class="navbar-toggler" type="button" (click)="collapse()" [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
       <span class="navbar-toggler-bar navbar-kebab"></span>
       <span class="navbar-toggler-bar navbar-kebab"></span>
       <span class="navbar-toggler-bar navbar-kebab"></span>
     </button>
-    <div class="collapse navbar-collapse justify-content-end" id="collapseExample" [ngbCollapse]="isCollapsed">
-      <form>
-        <div class="input-group no-border">
-          <input type="text" value="" class="form-control" placeholder="Search...">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <i class="nc-icon nc-zoom-split"></i>
-            </div>
-          </div>
+        <div class="collapse navbar-collapse justify-content-end" id="collapseExample" [ngbCollapse]="isCollapsed">
+            <form>
+                <div class="input-group no-border">
+                    <input type="text" value="" class="form-control" placeholder="Search...">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <i class="nc-icon nc-zoom-split"></i>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <ul class="navbar-nav">
+                <li>
+                    <div class="container mb-4 mt-4">
+                        <div class="row">
+                            <div class="col-9"></div>
+                            <div class="col-3">
+                                <select class="custom-select" (change)=changeLanguage($event)>
+                  <option value="en" [selected]="lang=='en'">English</option>
+                  <option value="ta" [selected]="lang=='ta'">Tamil(தமிழ்)</option>
+                </select>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item btn-rotate" ngbDropdown placement="bottom-left">
+                    <a class="nav-link" ngbDropdownToggle id="navbarDropdownMenuLink">
+                        <i class="nc-icon nc-button-power"></i>
+                        <p>
+                            <span class="d-lg-none d-md-block">Settings</span>
+                        </p>
+                    </a>
+                    <div ngbDropdownMenu aria-labelledby="navbarDropdownMenuLink" class="dropdown-menu dropdown-menu-right">
+                        <a ngbDropdownItem href="javascript:void(0)">Profile</a>
+                        <a ngbDropdownItem href="javascript:void(0)">Settings</a>
+                        <a ngbDropdownItem routerLink="login">Logout</a>
+                    </div>
+                </li>
+            </ul>
         </div>
-      </form>
-      <ul class="navbar-nav">
-        <li>
-          <select class="custom-select" #langSelect (change)=translateService.use(langSelect.value)>
-            <option value="en" [selected]="lang=='en'">English</option>
-            <option value="ta" [selected]="lang=='ta'">தமிழ்</option>
-          </select>
-        </li>
-        <li class="nav-item btn-rotate" ngbDropdown placement="bottom-left">
-          <a class="nav-link" ngbDropdownToggle id="navbarDropdownMenuLink" >
-            <i class="nc-icon nc-button-power"></i>
-            <p>
-              <span class="d-lg-none d-md-block">Settings</span>
-            </p>
-          </a>
-          <div ngbDropdownMenu aria-labelledby="navbarDropdownMenuLink" class="dropdown-menu dropdown-menu-right">
-            <a ngbDropdownItem href="javascript:void(0)">Profile</a>
-            <a ngbDropdownItem href="javascript:void(0)">Settings</a>
-            <a ngbDropdownItem routerLink="login">Logout</a>
-          </div>
-        </li>
-      </ul>
     </div>
-  </div>
 </nav>
