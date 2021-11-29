@@ -10,6 +10,7 @@ import {HttpClientModule, HttpClient} from '@angular/common/http';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { FooterModule } from './shared/footer/footer.module';
 import { NavbarModule} from './shared/navbar/navbar.module';
+import { TopBarModule } from "./shared/topbar/topbar.module";
 
 
 import { AppComponent } from './app.component';
@@ -32,6 +33,7 @@ import { AuthLayoutComponent } from "./layouts/Auth-layout/auth-layout.component
     }),
     SidebarModule,
     NavbarModule,
+    TopBarModule,
     ToastrModule.forRoot(),
     FooterModule,
     HttpClientModule,
