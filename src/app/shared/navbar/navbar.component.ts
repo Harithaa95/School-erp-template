@@ -1,8 +1,9 @@
 import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService ,TranslateModule} from '@ngx-translate/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   moduleId: module.id,
@@ -19,35 +20,55 @@ export class NavbarComponent implements OnInit {
 
   public isCollapsed = true;
   public lang: any;
+  loadArabic = false;
+  dynamicCSSUrlar: string;
+
   @ViewChild("navbar-cmp", { static: false }) button;
 
-  constructor(location: Location, private renderer: Renderer2, private element: ElementRef, private router: Router, public translateService: TranslateService) {
+  constructor(public sanitizer: DomSanitizer,location: Location, private renderer: Renderer2, private element: ElementRef, private router: Router, public translateService: TranslateService) {
     this.location = location;
     this.nativeElement = element.nativeElement;
     this.sidebarVisible = false;
 
-    this.lang = this.translateService.addLangs(['en', 'ta'])
-    this.translateService.setDefaultLang('en')
-    const browerLang = translateService.getBrowserLang()
-    translateService.use(browerLang.match(/en|ta/) ? browerLang : 'en')
-    console.log(this.lang)
+    this.lang = translateService.addLangs(['en', 'ta','ur'])
+    translateService.setDefaultLang('en')
+    const browserLang = translateService.getBrowserLang()
+    translateService.use(browserLang.match(/en|ta|ur/) ? browserLang : 'en')
+    console.log(browserLang)
+    
   }
 
   ngOnInit() {
-    this.lang = localStorage.getItem("lang") || 'en';
-    console.log(this.lang);
+    // path for style page of urdu language
+    this.dynamicCSSUrlar = '../../assets/css/style-ar.css'
     this.listTitles = ROUTES.filter(listTitle => listTitle);
     var navbar: HTMLElement = this.element.nativeElement;
     this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
     this.router.events.subscribe((event) => {
       this.sidebarClose();
     });
+    
   }
-  changeLanguage(lang: any) {
-    console.log(lang.target.value);
-    localStorage.setItem('lang', lang.target.value)
-    window.location.reload();
+
+  dynamicLoadingar(){
+    this.loadArabic = true;
   }
+
+  switchLanguage(lang:string){
+    this.translateService.use(lang)
+    document.documentElement.lang=lang
+    if (lang == 'ur')
+    {
+      console.log("inside load Arabic")
+      this.loadArabic = true;
+    }
+    else
+    {
+      this.loadArabic = false;
+
+    }
+  }
+
   getTitle() {
     var titlee = this.location.prepareExternalUrl(this.location.path());
     if (titlee.charAt(0) === '#') {

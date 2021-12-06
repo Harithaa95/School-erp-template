@@ -12,25 +12,30 @@ import { FooterModule } from './shared/footer/footer.module';
 import { NavbarModule} from './shared/navbar/navbar.module';
 import { TopBarModule } from "./shared/topbar/topbar.module";
 
-
 import { AppComponent } from './app.component';
 import { AppRoutes } from './app.routing';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from "./layouts/Auth-layout/auth-layout.component";
 
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http,'../assets/i18n/','.json');
+}
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
+    
   ],
   imports: [
     BrowserAnimationsModule,
     RouterModule.forRoot(AppRoutes,{
       useHash: true
     }),
+    
     SidebarModule,
     NavbarModule,
     TopBarModule,
@@ -45,16 +50,14 @@ import { AuthLayoutComponent } from "./layouts/Auth-layout/auth-layout.component
             deps: [HttpClient]
         }
     }
-    )
+    ),
+
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
 
-// AoT requires an exported function for factories
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http ,'../assets/i18n/','.json');
-}
 
-// ,'../assets/i18n/','.json'
+
+// ,'../assets/i18n/','.json' 
