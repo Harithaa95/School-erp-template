@@ -12,6 +12,7 @@ import { StudentModule }          from '../../pages/student/student.module';
 import { StaffDetailsModule}          from '../../pages/staff-details/staff-details.module';
 import { HealthModule }          from '../../pages/health/health.module';
 import { AssessmentModule }          from '../../pages/assessment/assessment.module';
+import { SettingStepperModule }          from '../../settings/setting-stepper/setting-stepper.module';
 
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -28,7 +29,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     StudentModule,
     StaffDetailsModule,
     HealthModule,
-    AssessmentModule
+    AssessmentModule,
+    SettingStepperModule
   ],
   declarations: [
     

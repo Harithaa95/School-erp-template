@@ -16,7 +16,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/assessment',     title: 'Assessment',         icon:'nc-paper',       class: '' },
     { path: '/dashboard',     title: 'Dashboard',         icon:'nc-button-power',       class: '' },
     { path : '/settings',     title:'Settings',           icon:'nc-settings-gear-65',   class:''},
-    
+    { path : '/settingStepper',     title:'Configuration',           icon:'nc-settings-gear-65',   class:''},
 ];
 
 @Component({

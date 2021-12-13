@@ -7,15 +7,15 @@ import { StudentComponent }          from '../../pages/student/student.component
 import { StaffDetailsComponent }          from '../../pages/staff-details/staff-details.component';
 import { AssessmentComponent }          from '../../pages/assessment/assessment.component';
 import {HealthComponent} from '../../pages/health/health.component'
+import {SettingStepperComponent} from '../../settings/setting-stepper/setting-stepper.component'
 
-
-export const AdminLayoutRoutes: Routes = [
+export const AdminLayoutRoutes: Routes = [ 
     { path: 'dashboard',      component: DashboardComponent },
     { path: 'settings',       component: SettingsComponent},
     { path: 'home',      component: HomeComponent },
     { path: 'student',       component: StudentComponent},
     { path: 'staffDetails',       component: StaffDetailsComponent},
     { path: 'assessment',       component: AssessmentComponent},
-    { path: 'health',       component: HealthComponent}
-
+    { path: 'health',       component: HealthComponent},
+    { path: 'settingStepper',       component:SettingStepperComponent }
 ]
