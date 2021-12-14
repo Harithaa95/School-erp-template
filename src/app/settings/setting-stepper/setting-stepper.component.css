@@ -1,6 +1,6 @@
 /*form styles*/
 
-#msform {
+#msform li{
     text-align: center;
     position: relative;
     margin-top: 30px;
@@ -10,11 +10,11 @@
     background: white;
     border: 0 none;
     border-radius: 0px;
-    box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+    /* box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4); */
     padding: 20px 30px;
     box-sizing: border-box;
     width: 80%;
-    margin: 0 10%;
+    margin: 0 7%;
     /*stacking fieldsets above each other*/
     position: relative;
 }
@@ -29,7 +29,7 @@
 
 /*inputs*/
 
-#msform input,
+/* #msform input,
 #msform textarea {
     padding: 15px;
     border: 1px solid #ccc;
@@ -40,7 +40,7 @@
     font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
     color: #2C3E50;
     font-size: 13px;
-}
+} */
 
 #msform input:focus,
 #msform textarea:focus {
@@ -102,6 +102,8 @@
     margin-bottom: 10px;
     letter-spacing: 2px;
     font-weight: bold;
+    text-align: center;
+    padding-bottom: 2rem;
 }
 
 .fs-subtitle {
@@ -111,7 +113,9 @@
     margin-bottom: 20px;
 }
 
-
+.action-div{
+    text-align: center;
+}
 /*progressbar*/
 
 #progressbar {
@@ -183,20 +187,20 @@
     color: #000;
 }
 
-fieldset {
-    /* for chrome and safari*/
+/* fieldset {
+    
     -webkit-animation-duration: .25ms;
     -webkit-animation-name: slidein;
-    /*for firefox*/
+    
     -moz-animation-duration: 1s;
     -moz-animation-name: slidein;
-    /* for opera*/
+   
     -o-animation-duration: 1s;
     -o-animation-name: slidein;
-    /* Standard syntax*/
+   
     animation-duration: 1s;
     animation-name: slidein;
-}
+} */
 
 @-webkit-keyframes slidein {
     from {
