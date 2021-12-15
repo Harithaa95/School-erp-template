@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import 'assets/scss/paper-dashboard/_variables.scss'
 
 @Component({
   selector: 'app-setting-stepper',
@@ -15,6 +16,10 @@ export class SettingStepperComponent implements OnInit {
   state_step = false;
   step = 1;
   showPreview = false;
+
+  primaryColor : string;
+  secondaryColor : string;
+
   constructor(private formBuilder: FormBuilder) { }
   ngOnInit() {
     this.configurationDetails = this.formBuilder.group({
@@ -45,42 +50,18 @@ export class SettingStepperComponent implements OnInit {
   get udiseInformation() { return this.UdiseDetails.controls; }
   get stateInformation() { return this.stateDetails.controls; }
   
-  // next() {
-  //   if (this.step == 1) {
-  //     this.configuration_step = true;
-  //     if (this.configurationDetails.invalid) { return }
-  //     this.step=this.step+1;
-  //     console.log(this.step)
-  //   }
-  //   else if (this.step == 2) {console.log("inside ")
-  //     this.udise_step = true;console.log("after address step enabled")
-  //     if (this.UdiseDetails.invalid) { return }
-  //     this.step++; console.log(this.step)
-  //   }
-  //   else  {console.log("inside else")
-  //     this.state_step = true;console.log("after education step enabled")
-  //     if (this.stateDetails.invalid) { return }
-  //     // this.step++; console.log(this.step)
-  //   }
-  // }
-  // previous() {
-  //   this.step--
-  //   if (this.step == 1) {
-  //     this.configuration_step = false;
-  //   }
-  //   if (this.step == 2) {
-  //     this.udise_step = false;
-  //   }
-  // }
   submit() {
-    // if (this.step == 3) {
-    //   this.education_step = true;
-    //   if (this.educationalDetails.invalid) { return }
-    // }
+   console.log("form submited")
   }
   previewHandler(){
     this.showPreview = ! this.showPreview
-    console.log(this.showPreview)
+    if(this.showPreview){
+      document.documentElement.style.setProperty('--primary','green' );
+      document.documentElement.style.setProperty('--secondary','green' );
+    }else{
+      document.documentElement.style.setProperty('--primary','#7251ce' );
+      document.documentElement.style.setProperty('--secondary','green' );
+    }
+    
   }
-  
 }
