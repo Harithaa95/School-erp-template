@@ -17,6 +17,7 @@ import { AppRoutes } from './app.routing';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from "./layouts/Auth-layout/auth-layout.component";
+import { PreviewComponent } from './pages/preview/preview.component';
 
 
 // AoT requires an exported function for factories
@@ -29,6 +30,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
+    PreviewComponent,
 
   ],
   imports: [

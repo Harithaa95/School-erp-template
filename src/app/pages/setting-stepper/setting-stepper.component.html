@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" *ngIf="!showPreview">
     <div class="col-lg-12" style="height: 100%;">
         <div class="card settings-page-card">
             <form [formGroup]="configurationDetails" id="msform">
@@ -33,7 +33,7 @@
                             <input type="text" formControlName="secondaryColor" name="secondaryColor" class="form-control"  />
                         </div>
                         <div class="col-lg-4">
-                            <input type="button" name="next" class="next action-button-previous" value="Preview" />
+                            <input type="button" name="next" class="next action-button-previous" value="Preview" (click)="previewHandler()"/>
                         </div>
                     </div>
                     <div class="row">
@@ -148,6 +148,67 @@
                     
                 </fieldset>
             </form>
+        </div>
+    </div>
+</div>
+<div class="row" style="width: 100%;" *ngIf="showPreview">
+    <div class="row" style="width: 100%;">
+        <div class="col-lg-12">
+            <button class="btn btn-primary btn-round pull-right" (click)="previewHandler()">Hide</button>
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="container card-preview">
+            <div class="row card">
+                <div class="col-lg-12 text-center">
+                    <h4>Sample Title</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 side-bar">
+                    <ul class="card">
+                        <li>Dashboard</li>
+                        <li>Dashboard</li>
+                        <li>Dashboard</li>
+                        <li>Dashboard</li>
+                        <li>Dashboard</li>
+                        <li class="active">Dashboard</li>
+                    </ul>
+                </div>
+                <div class="col-lg-9 preview-container card">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label>TextField One</label>
+                            <input class="form-control" />
+                        </div>
+                        <div class="col-lg-4">
+                            <label>TextField One</label>
+                            <input class="form-control" />
+                        </div>
+                        <div class="col-lg-4">
+                            <label>TextField One</label>
+                            <input class="form-control" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label>TextField One</label>
+                            <input class="form-control" />
+                        </div>
+                        <div class="col-lg-4">
+                            <label>TextField One</label>
+                            <input class="form-control" />
+                        </div>
+                        <div class="col-lg-4">
+                            <label>TextField One</label>
+                            <input class="form-control" />
+                        </div>
+                    </div>
+                    <div class="action-div">
+                        <button type="button" class="btn btn-primary btn-round">Submit</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

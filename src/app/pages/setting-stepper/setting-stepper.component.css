@@ -245,3 +245,26 @@
         width: 100%;
     }
 }
+::-webkit-file-upload-button {
+    background: #51CBCE;
+    color: white;
+    padding: 4px;
+    border: 0 none;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+
+  .card-preview{
+      height: max-content;
+      width: 100%;
+  }
+  .side-bar ul{
+      list-style-type: none;
+      padding: 10px;
+  }
+  .side-bar li{
+      padding:10px;
+  }
+  .active{
+      color: #51CBCE
+  }

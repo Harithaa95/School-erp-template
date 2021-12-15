@@ -32,6 +32,7 @@ export class SettingStepperComponent implements OnInit {
   udise_step = false;
   state_step = false;
   step = 1;
+  showPreview = false;
   constructor(private formBuilder: FormBuilder) { }
   ngOnInit() {
     this.configurationDetails = this.formBuilder.group({
@@ -95,4 +96,9 @@ export class SettingStepperComponent implements OnInit {
     //   if (this.educationalDetails.invalid) { return }
     // }
   }
+  previewHandler(){
+    this.showPreview = ! this.showPreview
+    console.log(this.showPreview)
+  }
+  
 }
