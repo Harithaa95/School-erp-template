@@ -36,7 +36,8 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     BrowserAnimationsModule,
     RouterModule.forRoot(AppRoutes, {
-      useHash: true
+       useHash: false,
+      anchorScrolling: 'enabled',
     }),
     NgxPaginationModule,
     SidebarModule,
