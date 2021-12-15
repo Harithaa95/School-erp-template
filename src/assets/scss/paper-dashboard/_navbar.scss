@@ -308,3 +308,7 @@
 .bg-white{
     background-color: $white-color !important;
 }
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    @include btn-styles($default-color, $default-states-color);
+    @include transition($fast-transition-time, linear);
+}
