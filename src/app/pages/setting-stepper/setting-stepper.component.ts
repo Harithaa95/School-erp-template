@@ -59,7 +59,7 @@ export class SettingStepperComponent implements OnInit {
   }
   previewHandler(){
     this.showPreview = ! this.showPreview
-    if(this.showPreview){
+    if(this.showPreview && this.global.primaryColor && this.global.secondaryColor){
       document.documentElement.style.setProperty('--primary',this.global.primaryColor );
       document.documentElement.style.setProperty('--secondary',this.global.secondaryColor );
       this.topBar.ngOnInit(this.portalName,this.showPreview);
