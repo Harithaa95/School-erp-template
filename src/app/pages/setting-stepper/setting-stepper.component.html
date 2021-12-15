@@ -1,13 +1,13 @@
-<div class="row">
+<!-- <div class="row">
     <div class="col-lg-12" style="height: 100%;">
         <div class="card settings-page-card">
             <form [formGroup]="configurationDetails" id="msform">
                 <ul id="progressbar">
-                    <li [ngClass]="step==1 ? 'active ' : 'inactive'">Configuration</li>
+                    <li [ngClass]="configurationDetails ? 'active ' : 'inactive'">Configuration</li>
                     <li [ngClass]="step==2 ? 'active' : 'inactive'">Udise Information Setup</li>
                     <li [ngClass]="step==3 ? 'active' : 'inactive'">State Information Setup</li>
                 </ul>
-                <fieldset *ngIf="step == 1">
+                <fieldset *ngIf="configurationDetails">
                     <h2 class="fs-title">Configuration</h2>
                     <div class="row">
                         <div class="col-lg-4">
@@ -26,11 +26,11 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <label>Primary Color</label>
-                            <input type="text" formControlName="primaryColor" name="primaryColor" class="form-control"  />
+                            <input type="text" formControlName="primaryColor" name="primaryColor" class="form-control" />
                         </div>
                         <div class="col-lg-4">
                             <label>Secondary Color</label>
-                            <input type="text" formControlName="secondaryColor" name="secondaryColor" class="form-control"  />
+                            <input type="text" formControlName="secondaryColor" name="secondaryColor" class="form-control" />
                         </div>
                         <div class="col-lg-4">
                             <input type="button" name="next" class="next action-button-previous" value="Preview" />
@@ -62,7 +62,7 @@
                     <div class="action-div">
                         <input (click)="next()" type="button" name="next" class="next action-button" value="Next" />
                     </div>
-                    
+
                 </fieldset>
             </form>
             <form [formGroup]="UdiseDetails" id="msform">
@@ -71,7 +71,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <label>Udise ID</label>
-                            <input type="text" formControlName="udiseId" class="form-control"  />
+                            <input type="text" formControlName="udiseId" class="form-control" />
                         </div>
                         <div class="col-lg-6">
                             <label>Password</label>
@@ -82,7 +82,7 @@
                         <input (click)="previous()" type="button" name="previous" class="previous action-button-previous" value="Previous" />
                         <input (click)="next()" type="button" name="next" class="next action-button" value="Next" />
                     </div>
-                    
+
                 </fieldset>
             </form>
             <form [formGroup]="stateDetails" id="msform">
@@ -145,9 +145,134 @@
                         <input (click)="previous()" type="button" name="previous" class="previous action-button-previous" value="Previous" />
                         <input (click)="submit()" type="submit" name="submit" class="submit action-button" value="Submit" />
                     </div>
-                    
+
                 </fieldset>
             </form>
         </div>
     </div>
-</div>
+</div> -->
+<div class="container my-5">
+    <div class="card">
+        <div class="card-body">
+
+            <nav>
+                <div class="nav nav-pills nav-justified">
+                    <a href="/settingStepper#nav-webdesign" id="webdesign" data-bs-toggle="tab" role="tab" class="nav-link">Configuration</a
+            >
+            <a
+              href="/settingStepper#nav-webdev"
+              id="webdev"
+              data-toggle="tab"
+              role="tab"
+              class="nav-link"
+              >Udise Information Setup</a
+            >
+            <a
+              href="/settingStepper#nav-mobiledev"
+              id="mobiledev"
+              data-bs-toggle="tab"
+              role="tab"
+              class="nav-link"
+              >State Information Setup</a
+            >
+          </div>
+        </nav>
+        <div class="tab-content">
+          <div class="tab-pane  " id="nav-webdesign">
+                <form [formGroup]="configurationDetails" id="msform">
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label>Logo</label>
+                                <input type="file" id="fileUpload" name="fileupload" class="file-upload form-control" placeholder="Logo" />
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Fav Icon</label>
+                                <input type="file" id="fileUpload" name="fileupload" class="file-upload form-control" placeholder="Logo" />
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Portal Name</label>
+                                <input type="text" formControlName="portalName" name="portalName" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label>Primary Color</label>
+                                <input type="text" formControlName="primaryColor" name="primaryColor" class="form-control" />
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Secondary Color</label>
+                                <input type="text" formControlName="secondaryColor" name="secondaryColor" class="form-control" />
+                            </div>
+                            <div class="col-lg-4">
+                                <input type="button" name="next" class="next action-button-previous" value="Preview" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Language</label>
+                                <div class="input-group">
+                                    <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon">
+                                      <option selected>Choose...</option>
+                                      <option value="1">English</option>
+                                      <option value="2">Tamil</option>
+                                      <option value="3">Hindi</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Storage Setup</label>
+                                <div class="input-group">
+                                    <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon">
+                                        <option selected>Choose...</option>
+                                        <option value="1">AWS</option>
+                                        <option value="2">Cloud</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="action-div">
+                            <input (click)="next()" type="button" name="next" class="next action-button" value="Submit" />
+                        </div>
+    
+                    </fieldset>
+                </form>
+           
+          </div>
+
+        
+          <div class="tab-pane " id="nav-webdev">
+            <div class="m-3">
+              <h4>Web development</h4>
+              <ul>
+                <li>PHP, PYTHON</li>
+                <li>MYSQL</li>
+              </ul>
+            </div>
+          </div>
+
+         
+          <div class="tab-pane" id="nav-mobiledev">
+            <div class="m-3">
+              <h4>Mobile development</h4>
+              <ul>
+                <li>Java</li>
+                <li>Kotlin</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- <nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link" id="nav-home-tab" data-toggle="tab" href="nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+        <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade " id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
+    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+</div> -->
