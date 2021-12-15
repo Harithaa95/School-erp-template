@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
-
+import { ColorPickerModule } from 'ngx-color-picker';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 
 import { DashboardModule }          from '../../pages/dashboard/dashboard.module';
@@ -20,7 +20,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   imports: [
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
-    FormsModule,ReactiveFormsModule,
+    FormsModule,
+    ReactiveFormsModule,
     NgbModule,
     DashboardModule,
     HomeModule,
@@ -28,12 +29,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     StaffDetailsModule,
     HealthModule,
     AssessmentModule,
-    SettingStepperModule
+    SettingStepperModule,
+    ColorPickerModule
   ],
-  declarations: [
-    
-
-  ]
+  declarations: []
 })
 
 export class AdminLayoutModule {}

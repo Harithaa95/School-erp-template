@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import 'assets/scss/paper-dashboard/_variables.scss'
+import { GlobalComponent } from 'app/shared/global/global.component';
+import { TopBarComponent } from 'app/shared/topbar/topbar.component';
 
 @Component({
   selector: 'app-setting-stepper',
@@ -16,11 +17,14 @@ export class SettingStepperComponent implements OnInit {
   state_step = false;
   step = 1;
   showPreview = false;
+  portalName :string;
+  public color2: string = '#e920e9';
 
-  primaryColor : string;
-  secondaryColor : string;
-
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private global : GlobalComponent, 
+    private topBar : TopBarComponent) 
+  { }
   ngOnInit() {
     this.configurationDetails = this.formBuilder.group({
       fileupload: [''],
@@ -56,18 +60,22 @@ export class SettingStepperComponent implements OnInit {
   previewHandler(){
     this.showPreview = ! this.showPreview
     if(this.showPreview){
-      document.documentElement.style.setProperty('--primary',this.primaryColor );
-      document.documentElement.style.setProperty('--secondary',this.secondaryColor );
+      document.documentElement.style.setProperty('--primary',this.global.primaryColor );
+      document.documentElement.style.setProperty('--secondary',this.global.secondaryColor );
+      this.topBar.ngOnInit(this.portalName,this.showPreview);
     }else{
       document.documentElement.style.setProperty('--primary','#7251ce' );
       document.documentElement.style.setProperty('--secondary','green' );
+      this.topBar.ngOnInit(this.global.portalName,this.showPreview);
     }
   }
-  onColorChange(color:string, value:string){
-    if(value === 'primary'){
-      this.primaryColor = color
-    }else if( value === 'secondary'){
-      this.secondaryColor = color;
+  onColorChange(givenValue:string, type:string){
+    if(type === 'primary'){
+      this.global.primaryColor = givenValue
+    }else if( type === 'secondary'){
+      this.global.secondaryColor = givenValue;
+    }else if(type === 'portal'){
+      this.portalName = givenValue;
     }
   }
 }

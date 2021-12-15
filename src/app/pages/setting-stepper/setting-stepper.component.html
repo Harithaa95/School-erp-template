@@ -40,17 +40,18 @@
                             </div>
                             <div class="col-lg-4">
                                 <label>Portal Name</label>
-                                <input type="text" formControlName="portalName" name="portalName" class="form-control" />
+                                <input type="text" formControlName="portalName" name="portalName" class="form-control" (input) = "onColorChange($event.target.value,'portal')"/>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
                                 <label>Primary Color</label>
-                                <input type="text" formControlName="primaryColor" ng-model = "primaryColor" name="primaryColor" class="form-control" (input) = "onColorChange($event.target.value,'primary')"/>
+                                <input type="color" formControlName="primaryColor" ng-model = "primaryColor" name="primaryColor" class="form-control color" (input) = "onColorChange($event.target.value,'primary')"/>
+
                             </div>
                             <div class="col-lg-4">
                                 <label>Secondary Color</label>
-                                <input type="text" formControlName="secondaryColor" ng-model= "secondaryColor" name="secondaryColor" class="form-control" (input) = "onColorChange($event.target.value,'secondary')"/>
+                                <input type="color" formControlName="secondaryColor" ng-model= "secondaryColor" name="secondaryColor" class="form-control color" (input) = "onColorChange($event.target.value,'secondary')"/>
                             </div>
                             <div class="col-lg-4">
                                 <button type="button" class="btn btn-secondary btn-round" (click)="previewHandler()">

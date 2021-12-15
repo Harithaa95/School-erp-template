@@ -4,3 +4,6 @@
 .settings-tab a{
     cursor: pointer;
 }
+.form-control{
+    height: 43px;
+}
