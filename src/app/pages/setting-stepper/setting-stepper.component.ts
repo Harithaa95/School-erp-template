@@ -56,12 +56,18 @@ export class SettingStepperComponent implements OnInit {
   previewHandler(){
     this.showPreview = ! this.showPreview
     if(this.showPreview){
-      document.documentElement.style.setProperty('--primary','green' );
-      document.documentElement.style.setProperty('--secondary','green' );
+      document.documentElement.style.setProperty('--primary',this.primaryColor );
+      document.documentElement.style.setProperty('--secondary',this.secondaryColor );
     }else{
       document.documentElement.style.setProperty('--primary','#7251ce' );
       document.documentElement.style.setProperty('--secondary','green' );
     }
-    
+  }
+  onColorChange(color:string, value:string){
+    if(value === 'primary'){
+      this.primaryColor = color
+    }else if( value === 'secondary'){
+      this.secondaryColor = color;
+    }
   }
 }
