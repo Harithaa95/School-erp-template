@@ -1,4 +1,4 @@
-<div class="container my-5" >
+<div class="container my-5">
     <div class="card">
         <div class="card-body">
             <nav class="settings-tab">
@@ -13,7 +13,7 @@
             </nav>
             <div class="tab-content">
                 <div class="tab-pane active" id="nav-webdesign">
-                    <form [formGroup]="configurationDetails" id="msform">
+                    <form [formGroup]="configurationDetails" id="msform" (ngSubmit)="configurationDetailsSubmit(configurationDetails)">
                         <div class="row">
                             <div class="col-lg-4">
                                 <label>Logo</label>
@@ -46,41 +46,41 @@
                             <div class="col-lg-4">
                                 <label>Secondary Color</label>
                                 <input type="color" value="#009900" formControlName="secondaryColor" ng-model= "secondaryColor" name="secondaryColor" class="form-control color" (input) = "onColorChange($event.target.value,'secondary')"/>
+                                <input type="color" value="global.primaryColor" formControlName="primaryColor" ng-model="primaryColor" name="primaryColor" class="form-control color" (input)="onColorChange($event.target.value,'primary')" />
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Secondary Color</label>
+                                <input type="color" value="global.secondaryColor" formControlName="secondaryColor" ng-model="secondaryColor" name="secondaryColor" class="form-control color" (input)="onColorChange($event.target.value,'secondary')" />
                             </div>
                             <div class="col-lg-4">
                                 <button type="button" class="btn btn-secondary btn-round" (click)="previewHandler()">
                                     {{(!showPreview) ? "Preview" : "Restore"}}
-                                </button>
+                                    </button>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <label>Language</label>
                                 <div class="input-group">
-                                    <form [formGroup]="form" class="multi-dropdown">
+                                    <div class="multi-dropdown">
                                         <ng-multiselect-dropdown formControlName="language" [placeholder]="'Languages'" [settings]="dropdownSettings" [data]="dropdownList" (onSelect)="onItemSelect($event)">
                                         </ng-multiselect-dropdown>
-                                    </form>
-                                    <!-- <div>
-                                        <ul *ngFor="let item of languageSelected">
-                                            <li>{{item.item_text}}</li>
-                                        </ul>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <label>Storage Setup</label>
                                 <div class="input-group">
-                                    <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon">
-                                        <option selected>Choose...</option>
-                                        <option value="1">AWS</option>
-                                        <option value="2">Cloud</option>
+                                    <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon" formControlName="storageSetup">
+                                        <option [ngValue]="null" disabled>Choose...</option>
+                                        <option *ngFor="let storage of storageSelectArray" [ngValue]="storage.name">{{storage.name}}</option>
                                     </select>
+
                                 </div>
                             </div>
                         </div>
                         <div class="text-center">
-                            <input (click)="next()" type="button" name="next" class="btn btn-primary btn-round" value="Submit" />
+                            <button type="submit" class="btn btn-primary btn-round">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -96,8 +96,8 @@
                                 <input type="password" formControlName="password" class="form-control" ßß/>
                             </div>
                         </div>
-                        <div class="text-center">
-                            <input (click)="next()" type="button" name="next" class="btn btn-primary btn-round" value="Submit" />
+                        <div class="text-center"><button type="submit" class="btn btn-primary btn-round">Send</button>
+
                         </div>
                     </form>
                 </div>

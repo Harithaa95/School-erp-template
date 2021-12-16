@@ -22,12 +22,15 @@ export class SettingStepperComponent implements OnInit {
   showPreview = false;
   dropdownList;
   dropdownSettings;
-  form!: FormGroup;
   languageSelected: any[]=[];
   portalName :string;
 
   /* color picker */
   public toggle: boolean = false;
+  storageSelectArray= [
+    { id: 1, name: "AWS" },
+    { id: 2, name: "Cloud" },
+  ];
 
   public rgbaText: string = 'rgba(165, 26, 214, 0.2)';
 
@@ -74,7 +77,6 @@ export class SettingStepperComponent implements OnInit {
     ) 
   { }
   ngOnInit() {
-    this.initForm();
     this.dropdownList = this.getData();
     this.dropdownSettings = {
       singleSelection: false,
@@ -88,12 +90,12 @@ export class SettingStepperComponent implements OnInit {
       portalName: new FormControl(''),
       primaryColor: new FormControl(''),
       secondaryColor: new FormControl(''),
-      language: new FormControl(''),
       emailSetup: new FormControl(''),
       storageSetup: new FormControl(''),
       secretId: new FormControl(''),
       email: new FormControl(''),
       password: new FormControl(''),
+      language : [''],
     });
     this.UdiseDetails = this.formBuilder.group({
       udiseId: [''],
@@ -113,11 +115,10 @@ export class SettingStepperComponent implements OnInit {
   
  getData() : Array<any>{
     return [
-      { item_id: 1, item_text: 'Hindi', group : 'F' },
-      { item_id: 2, item_text: 'Kannada', group : 'F' },
-      { item_id: 3, item_text: 'Tamil', group : 'V' },
-      { item_id: 4, item_text: 'Telugu', group : 'V' },
-      { item_id: 5, item_text: 'Hindi', group : 'V' }
+      { item_id: 1, item_text: 'Hindi', abbreviation : 'Ha' },
+      { item_id: 2, item_text: 'Kannada', abbreviation : 'ka' },
+      { item_id: 3, item_text: 'Tamil', abbreviation : 'ta' },
+      { item_id: 4, item_text: 'Telugu', abbreviation : 'V' }
     ];
   }
    onItemSelect($event){
@@ -125,22 +126,10 @@ export class SettingStepperComponent implements OnInit {
     //this.languageSelected=this.getObjectListFromData(this.form.value.language.map(item => item.item_id))
   }
 
-  initForm(){
-    this.form = this.formBuilder.group({
-      language : ['',[Validators.required]]
-    })
-
-  }
   getObjectListFromData(ids){
     return this.getData().filter(item => ids.includes(item.item_id))
   }
 
-  handleButtonClick(){
-    console.log('reactive form value ', this.form.value);
-     console.log('Actual data ', this.getObjectListFromData(this.form.value.language.map(item => item.item_id)));
-     
-     console.log(this.languageSelected)
-  }
   submit() {
     // if (this.step == 3) {
     //   this.education_step = true;
@@ -197,5 +186,15 @@ export class SettingStepperComponent implements OnInit {
     }
 
     return '';
+  }
+  configurationDetailsSubmit(form: FormGroup){ 
+    var languageCode;
+    console.log("test",form.value)
+    this.languageSelected=this.getObjectListFromData(this.configurationDetails.value.language.map(item => item.item_id))
+    console.log("language Selected",this.languageSelected)
+    for(var i=0;i<this.languageSelected.length;i++){
+      // this.languageSelected=i.
+      console.log(this.languageSelected[i].abbreviation)
+    }
   }
 }
