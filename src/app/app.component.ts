@@ -9,7 +9,7 @@ import {TranslateService} from '@ngx-translate/core';
 
 export class AppComponent{
   constructor(private translateService:TranslateService){
-    //   this.translateService.setDefaultLang('en')
-    // this.translateService.use(localStorage.getItem('lang')||'en')
+    document.documentElement.style.setProperty('--primary','#7251ce' );
+    document.documentElement.style.setProperty('--secondary','green' );
   }
 }

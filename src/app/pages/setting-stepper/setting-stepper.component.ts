@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { GlobalComponent } from 'app/shared/global/global.component';
+import { TopBarComponent } from 'app/shared/topbar/topbar.component';
 
 
 @Component({
@@ -21,8 +23,15 @@ export class SettingStepperComponent implements OnInit {
   form!: FormGroup;
   languageSelected: any[]=[];
 
-  constructor(private formBuilder: FormBuilder) { }
 
+  portalName :string;
+  public color2: string = '#e920e9';
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private global : GlobalComponent, 
+    private topBar : TopBarComponent) 
+  { }
   ngOnInit() {
     this.initForm();
     this.dropdownList = this.getData();
@@ -35,15 +44,15 @@ export class SettingStepperComponent implements OnInit {
     };
     this.configurationDetails = this.formBuilder.group({
       fileupload: [''],
-      portalName: [''],
-      primaryColor: [''],
-      secondaryColor: [''],
-      language: [''],
-      emailSetup: [''],
-      storageSetup: [''],
-      secretId: [''],
-      email: [''],
-      password: [''],
+      portalName: new FormControl(''),
+      primaryColor: new FormControl(''),
+      secondaryColor: new FormControl(''),
+      language: new FormControl(''),
+      emailSetup: new FormControl(''),
+      storageSetup: new FormControl(''),
+      secretId: new FormControl(''),
+      email: new FormControl(''),
+      password: new FormControl(''),
     });
     this.UdiseDetails = this.formBuilder.group({
       udiseId: [''],
@@ -98,7 +107,26 @@ export class SettingStepperComponent implements OnInit {
   }
   previewHandler(){
     this.showPreview = ! this.showPreview
-    console.log(this.showPreview)
+    if(this.showPreview && this.global.primaryColor && this.global.secondaryColor){
+      document.documentElement.style.setProperty('--primary',this.global.primaryColor );
+      document.documentElement.style.setProperty('--secondary',this.global.secondaryColor );
+      this.topBar.ngOnInit(this.portalName,this.showPreview);
+    }else{
+      document.documentElement.style.setProperty('--primary','#7251ce' );
+      document.documentElement.style.setProperty('--secondary','green' );
+      this.topBar.ngOnInit(this.global.portalName,this.showPreview);
+    }
   }
-  
+  onColorChange(givenValue:string, type:string){
+    if(type === 'primary'){
+      this.global.primaryColor = givenValue
+    }else if( type === 'secondary'){
+      this.global.secondaryColor = givenValue;
+    }else if(type === 'portal'){
+      this.portalName = givenValue;
+    }
+  }
+  handleSubmit(form: FormGroup){
+    console.log("test",form.value)
+  }
 }

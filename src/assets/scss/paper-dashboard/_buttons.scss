@@ -11,7 +11,7 @@
     padding: $padding-btn-vertical $padding-btn-horizontal;
     cursor: pointer;
 
-    @include btn-styles($default-color, $default-states-color);
+    @include btn-styles(var(--secondary), var(--secondary));
     @include transition($fast-transition-time, linear);
 
     &:hover,
@@ -96,7 +96,8 @@
 
 // Apply the mixin to the buttons
 // .btn-default { @include btn-styles($default-color, $default-states-color); }
-.btn-primary { @include btn-styles($primary-color, $primary-states-color); }
+.btn-primary { @include btn-styles(var(--primary), var(--primary)); }
+.btn-secondary { @include btn-styles(var(--secondary), var(--secondary)); }
 .btn-success { @include btn-styles($success-color, $success-states-color); }
 .btn-info    { @include btn-styles($info-color, $info-states-color); }
 .btn-warning { @include btn-styles($warning-color, $warning-states-color); }
@@ -104,7 +105,8 @@
 // .btn-neutral { @include btn-styles($white-color, $white-color); }
 
 .btn-outline-default { @include btn-outline-styles($default-color, $default-states-color); }
-.btn-outline-primary { @include btn-outline-styles($primary-color, $primary-states-color); }
+.btn-outline-primary { @include btn-outline-styles(var(--primary), $primary-states-color); }
+.btn-outline-secondary { @include btn-outline-styles(var(--secondary), $secondary-states-color); }
 .btn-outline-success { @include btn-outline-styles($success-color, $success-states-color); }
 .btn-outline-info    { @include btn-outline-styles($info-color, $info-states-color); }
 .btn-outline-warning { @include btn-outline-styles($warning-color, $warning-states-color); }

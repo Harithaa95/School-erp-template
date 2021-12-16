@@ -6,11 +6,14 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import { SidebarModule } from './sidebar/sidebar.module';
 import { FooterModule } from './shared/footer/footer.module';
 import { NavbarModule } from './shared/navbar/navbar.module';
 import { TopBarModule } from "./shared/topbar/topbar.module";
+import { GlobalModule } from "./shared/global/global.module";
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AppComponent } from './app.component';
@@ -31,8 +34,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    PreviewComponent,
-
+    PreviewComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -44,6 +46,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SidebarModule,
     NavbarModule,
     TopBarModule,
+    GlobalModule,
     ToastrModule.forRoot(),
     FooterModule,
     HttpClientModule,
@@ -58,6 +61,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ),
     NgMultiSelectDropDownModule.forRoot(),
 
+    FormsModule,
+    ReactiveFormsModule,
+    ColorPickerModule
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]

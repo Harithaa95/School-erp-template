@@ -3,14 +3,20 @@
 }
 .settings-tab a{
     cursor: pointer;
-} */input[type="checkbox"]{
+} */
+
+input[type="checkbox"] {
     color: red;
 }
 
-.drop-container{
+.drop-container {
     margin: 100px;
 }
 
-.action{
+.action {
     margin-top: 10px;
+}
+
+.form-control {
+    height: 43px;
 }

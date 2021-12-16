@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
+import { GlobalComponent } from '../global/global.component';
 
 @Component({
   selector: 'topbar-cmp',
@@ -8,6 +9,25 @@ import {TranslateService} from '@ngx-translate/core';
   styleUrls: ['./topbar.component.scss']
 })
 
+@Injectable({
+  providedIn: 'root'
+})
+
 export class TopBarComponent{
-  constructor(private translateService:TranslateService){}
+
+  siteName :string
+
+  constructor(private translateService:TranslateService, private global : GlobalComponent){ }
+
+  ngOnInit(givenValue,showPreview){
+    if(showPreview){
+      this.siteName = givenValue;
+    }else{
+      this.siteName = this.global.portalName
+    }
+    console.log(this.siteName)
+  }
+  portal(){
+    return this.siteName
+  } 
 }
