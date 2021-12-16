@@ -28,7 +28,7 @@
             </nav>
             <div class="tab-content">
                 <div class="tab-pane  active" id="nav-webdesign">
-                    <form [formGroup]="configurationDetails" id="msform">
+                    <form [formGroup]="configurationDetails" id="msform" (ngSubmit)="onSubmit(configurationDetails)">
                         <div class="row">
                             <div class="col-lg-4">
                                 <label>Logo</label>
@@ -40,7 +40,7 @@
                             </div>
                             <div class="col-lg-4">
                                 <label>Portal Name</label>
-                                <input type="text" formControlName="portalName" name="portalName" class="form-control" (input) = "onColorChange($event.target.value,'portal')"/>
+                                <input type="text" formControlName="portalName" name="portalName"  ng-model = "portalName" class="form-control" (input) = "onColorChange($event.target.value,'portal')"/>
                             </div>
                         </div>
                         <div class="row">
@@ -83,7 +83,8 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <input (click)="next()" type="button" name="next" class="btn btn-primary btn-round" value="Submit" />
+                            <!-- <input (ngSubmit)="handleSubmit()" type="button" name="submit" class="btn btn-primary btn-round" value="Submit" /> -->
+                            <button type="submit" class="btn btn-primary btn-round">Submit</button>
                         </div>
                     </form>
                 </div>

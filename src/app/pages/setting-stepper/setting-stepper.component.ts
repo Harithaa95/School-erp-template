@@ -28,15 +28,15 @@ export class SettingStepperComponent implements OnInit {
   ngOnInit() {
     this.configurationDetails = this.formBuilder.group({
       fileupload: [''],
-      portalName: [''],
-      primaryColor: [''],
-      secondaryColor: [''],
-      language: [''],
-      emailSetup: [''],
-      storageSetup: [''],
-      secretId: [''],
-      email: [''],
-      password: [''],
+      portalName: new FormControl(''),
+      primaryColor: new FormControl(''),
+      secondaryColor: new FormControl(''),
+      language: new FormControl(''),
+      emailSetup: new FormControl(''),
+      storageSetup: new FormControl(''),
+      secretId: new FormControl(''),
+      email: new FormControl(''),
+      password: new FormControl(''),
     });
     this.UdiseDetails = this.formBuilder.group({
       udiseId: [''],
@@ -54,9 +54,6 @@ export class SettingStepperComponent implements OnInit {
   get udiseInformation() { return this.UdiseDetails.controls; }
   get stateInformation() { return this.stateDetails.controls; }
   
-  submit() {
-   console.log("form submited")
-  }
   previewHandler(){
     this.showPreview = ! this.showPreview
     if(this.showPreview && this.global.primaryColor && this.global.secondaryColor){
@@ -77,5 +74,8 @@ export class SettingStepperComponent implements OnInit {
     }else if(type === 'portal'){
       this.portalName = givenValue;
     }
+  }
+  handleSubmit(form: FormGroup){
+    console.log("test",form.value)
   }
 }

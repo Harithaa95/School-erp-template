@@ -27,7 +27,7 @@ export class TopBarComponent{
     }
     console.log(this.siteName)
   }
-  ngOnChanges() {
-     console.log(this.siteName);
+  portal(){
+    return this.siteName
   } 
 }
