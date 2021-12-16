@@ -5,6 +5,7 @@ import { ToastrModule } from "ngx-toastr";
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 import { SidebarModule } from './sidebar/sidebar.module';
 import { FooterModule } from './shared/footer/footer.module';
@@ -55,6 +56,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         }
       }
     ),
+    NgMultiSelectDropDownModule.forRoot(),
 
   ],
   providers: [HttpClient],

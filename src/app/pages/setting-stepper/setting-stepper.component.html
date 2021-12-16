@@ -3,31 +3,16 @@
         <div class="card-body">
             <nav class="settings-tab">
                 <div class="nav nav-tabs nav-pills nav-justified">
-                    <a 
-                        data-target="#nav-webdesign" 
-                        id="webdesign" 
-                        data-toggle="tab" 
-                        role="tab" 
-                        class="nav-link active"> Configuration
+                    <a data-target="#nav-webdesign" id="webdesign" data-toggle="tab" role="tab" class="nav-link"> Configuration
                     </a>
-                    <a
-                        data-target="#nav-webdev"
-                        id="webdev"
-                        data-toggle="tab"
-                        role="tab"
-                        class="nav-link"> Udise Information Setup
+                    <a data-target="#nav-webdev" id="webdev" data-toggle="tab" role="tab" class="nav-link"> Udise Information Setup
                     </a>
-                    <a
-                        data-target="#nav-mobiledev"
-                        id="mobiledev"
-                        data-toggle="tab"
-                        role="tab"
-                        class="nav-link"> State Information Setup
+                    <a data-target="#nav-mobiledev" id="mobiledev" data-toggle="tab" role="tab" class="nav-link"> State Information Setup
                     </a>
                 </div>
             </nav>
             <div class="tab-content">
-                <div class="tab-pane  active" id="nav-webdesign">
+                <div class="tab-pane" id="nav-webdesign">
                     <form [formGroup]="configurationDetails" id="msform">
                         <div class="row">
                             <div class="col-lg-4">
@@ -53,19 +38,25 @@
                                 <input type="text" formControlName="secondaryColor" name="secondaryColor" class="form-control" />
                             </div>
                             <div class="col-lg-4">
-                                <input type="button" name="next" class="btn btn-secondary btn-round" value="Preview" (click)="previewHandler()"/>
+                                <input type="button" name="next" class="btn btn-secondary btn-round" value="Preview" (click)="previewHandler()" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-4">
                                 <label>Language</label>
                                 <div class="input-group">
-                                    <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon">
-                                      <option selected>Choose...</option>
-                                      <option value="1">English</option>
-                                      <option value="2">Tamil</option>
-                                      <option value="3">Hindi</option>
-                                    </select>
+                                    <form [formGroup]="form">
+                                        <ng-multiselect-dropdown formControlName="language" [placeholder]="'Languages'" [settings]="dropdownSettings" [data]="dropdownList" (onSelect)="onItemSelect($event)">
+                                        </ng-multiselect-dropdown>
+                                    </form>
+                                    <div class="action">
+                                        <button (click)="handleButtonClick()">Enter</button>
+                                    </div>
+                                    <div>
+                                        <ul *ngFor="let item of languageSelected">
+                                            <li>{{item.item_text}}</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -226,3 +217,17 @@
         </div>
     </div>
 </div>
+<!-- <div class="drop-container">
+    <form [formGroup]="form">
+        <ng-multiselect-dropdown formControlName="language" [placeholder]="'Languages'" [settings]="dropdownSettings" [data]="dropdownList" (onSelect)="onItemSelect($event)">
+        </ng-multiselect-dropdown>
+    </form>
+    <div class="action">
+        <button (click)="handleButtonClick()">Enter</button>
+    </div>
+    <div>
+        <ul *ngFor="let item of languageSelected">
+            <li>{{item.item_text}}</li>
+        </ul>
+    </div>
+</div> -->

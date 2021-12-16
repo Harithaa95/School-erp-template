@@ -1,6 +1,16 @@
-.settings-tab{
+/* .settings-tab{
     margin-bottom: 3rem;
 }
 .settings-tab a{
     cursor: pointer;
+} */input[type="checkbox"]{
+    color: red;
+}
+
+.drop-container{
+    margin: 100px;
+}
+
+.action{
+    margin-top: 10px;
 }
