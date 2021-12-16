@@ -81,6 +81,7 @@ export class SettingStepperComponent implements OnInit {
   }
    onItemSelect($event){
     console.log('$event is ', $event); 
+    //this.languageSelected=this.getObjectListFromData(this.form.value.language.map(item => item.item_id))
   }
 
   initForm(){
@@ -96,7 +97,7 @@ export class SettingStepperComponent implements OnInit {
   handleButtonClick(){
     console.log('reactive form value ', this.form.value);
      console.log('Actual data ', this.getObjectListFromData(this.form.value.language.map(item => item.item_id)));
-     this.languageSelected=this.getObjectListFromData(this.form.value.language.map(item => item.item_id))
+     
      console.log(this.languageSelected)
   }
   submit() {

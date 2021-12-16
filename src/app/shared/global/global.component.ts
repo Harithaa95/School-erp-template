@@ -11,6 +11,6 @@ import { Component, Injectable, OnInit } from '@angular/core';
 
 export class GlobalComponent {
   portalName : string = "Government of Pudhuchery"
-  primaryColor : string
-  secondaryColor : string
+  primaryColor : string = '#7251ce'
+  secondaryColor : string = 'green'
 }
