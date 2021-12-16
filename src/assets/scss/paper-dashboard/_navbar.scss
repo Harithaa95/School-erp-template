@@ -308,6 +308,9 @@
 .bg-white{
     background-color: $white-color !important;
 }
+.nav-pills{
+    cursor: pointer;
+}
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     @include btn-styles(var(--secondary), var(--secondary));
     @include transition($fast-transition-time, linear);

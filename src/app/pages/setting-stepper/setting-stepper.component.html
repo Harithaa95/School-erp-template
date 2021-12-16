@@ -31,11 +31,21 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <label>Primary Color</label>
-                                <input type="color" value="global.primaryColor" formControlName="primaryColor" ng-model = "primaryColor" name="primaryColor" class="form-control color" (input) = "onColorChange($event.target.value,'primary')"/>
+                                <!-- <input type="color" value="#009900" formControlName="primaryColor" ng-model = "primaryColor" name="primaryColor" class="form-control color" (input) = "onColorChange($event.target.value,'primary')"/> -->
+                                <input 
+                                type="text"
+                                [style.background]="color1" 
+                                colorPicker="color1" 
+                                cpPosition = 'right'
+                                colorPickerOpen = "onEventLog('colorPickerOpen', $event)" 
+                                colorPickerClose = "onEventLog('colorPickerClose', $event)" 
+                                cpInputChange = "onEventLog('cpInputChange', $event)" 
+                                cpSliderDragStart = "onEventLog('cpSliderDragStart', $event)" 
+                                cpSliderDragEnd="onEventLog('cpSliderDragEnd', $event)"/>
                             </div>
                             <div class="col-lg-4">
                                 <label>Secondary Color</label>
-                                <input type="color" value="global.secondaryColor" formControlName="secondaryColor" ng-model= "secondaryColor" name="secondaryColor" class="form-control color" (input) = "onColorChange($event.target.value,'secondary')"/>
+                                <input type="color" value="#009900" formControlName="secondaryColor" ng-model= "secondaryColor" name="secondaryColor" class="form-control color" (input) = "onColorChange($event.target.value,'secondary')"/>
                             </div>
                             <div class="col-lg-4">
                                 <button type="button" class="btn btn-secondary btn-round" (click)="previewHandler()">
