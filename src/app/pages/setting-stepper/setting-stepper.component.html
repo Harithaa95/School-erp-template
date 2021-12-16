@@ -13,7 +13,7 @@
             </nav>
             <div class="tab-content">
                 <div class="tab-pane" id="nav-webdesign">
-                    <form [formGroup]="configurationDetails" id="msform">
+                    <form [formGroup]="configurationDetails" id="msform" (ngSubmit)="configurationDetailsSubmit(configurationDetails)">
                         <div class="row">
                             <div class="col-lg-4">
                                 <label>Logo</label>
@@ -38,7 +38,7 @@
                                 <input type="text" formControlName="secondaryColor" name="secondaryColor" class="form-control" />
                             </div>
                             <div class="col-lg-4">
-                                <input type="button" name="next" class="btn btn-secondary btn-round" value="Preview" (click)="previewHandler()" />
+                                <input type="button" name="next" class="btn btn-secondary btn-round" value="Preview" />
                             </div>
                         </div>
                         <div class="row">
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <input (click)="next()" type="button" name="next" class="btn btn-primary btn-round" value="Submit" />
+                            <button type="submit" class="btn btn-primary btn-round">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -87,8 +87,8 @@
                                 <input type="password" formControlName="password" class="form-control" ßß/>
                             </div>
                         </div>
-                        <div class="text-center">
-                            <input (click)="next()" type="button" name="next" class="btn btn-primary btn-round" value="Submit" />
+                        <div class="text-center"><button type="submit" class="btn btn-primary btn-round">Send</button>
+
                         </div>
                     </form>
                 </div>

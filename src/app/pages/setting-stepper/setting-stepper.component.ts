@@ -129,4 +129,10 @@ export class SettingStepperComponent implements OnInit {
   handleSubmit(form: FormGroup){
     console.log("test",form.value)
   }
+
+
+  configurationDetailsSubmit(form: FormGroup){ 
+    console.log("test",form.value)
+    
+  }
 }
