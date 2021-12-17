@@ -34,15 +34,15 @@ export class SettingStepperComponent implements OnInit {
 
   public rgbaText: string = 'rgba(165, 26, 214, 0.2)';
 
-  public arrayColors: any = {
-    color1: '#2883e9',
-    color2: '#e920e9',
-    color3: 'rgb(255,245,0)',
-    color4: 'rgb(236,64,64)',
-    color5: 'rgba(45,208,45,1)'
-  };
+  // public arrayColors: any = {
+  //   color1: '#2883e9',
+  //   color2: '#e920e9',
+  //   color3: 'rgb(255,245,0)',
+  //   color4: 'rgb(236,64,64)',
+  //   color5: 'rgba(45,208,45,1)'
+  // };
 
-  public selectedColor: string = 'color1';
+  // public selectedColor: string = 'color1';
 
   public color1: string = '#2889e9';
   public color2: string = '#e920e9';
@@ -197,4 +197,14 @@ export class SettingStepperComponent implements OnInit {
       console.log(this.languageSelected[i].abbreviation)
     }
   }
+  title = 'colorPicker';
+  color: string = '#2889e9'
+  arrayColors: any = {
+    color1: '#2883e9',
+    color2: '#e920e9',
+    color3: 'rgb(255,245,0)',
+    color4: 'rgb(236,64,64)',
+    color5: 'rgba(45,208,45,1)'
+  };
+  selectedColor: string = 'color1';  
 }

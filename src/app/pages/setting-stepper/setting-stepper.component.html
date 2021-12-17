@@ -3,11 +3,14 @@
         <div class="card-body">
             <nav class="settings-tab">
                 <div class="nav nav-tabs nav-pills nav-justified">
-                    <a data-target="#nav-webdesign" id="webdesign" data-toggle="tab" role="tab" class="nav-link active"> Configuration
+                    <a data-target="#nav-webdesign" id="webdesign" data-toggle="tab" role="tab" class="nav-link active">
+                        Configuration
                     </a>
-                    <a data-target="#nav-webdev" id="webdev" data-toggle="tab" role="tab" class="nav-link"> Udise Information Setup
+                    <a data-target="#nav-webdev" id="webdev" data-toggle="tab" role="tab" class="nav-link"> Udise
+                        Information Setup
                     </a>
-                    <a data-target="#nav-mobiledev" id="mobiledev" data-toggle="tab" role="tab" class="nav-link"> State Information Setup
+                    <a data-target="#nav-mobiledev" id="mobiledev" data-toggle="tab" role="tab" class="nav-link"> State
+                        Information Setup
                     </a>
                 </div>
             </nav>
@@ -30,10 +33,14 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <label>Primary Color</label>
-                                <input type="color" value="#009900" formControlName="primaryColor" ng-model="primaryColor" name="primaryColor" class="form-control color" (input)="onColorChange($event.target.value,'primary')" />
+                                <!-- <label>Primary Color</label> -->
+                                <!-- <input type="color" value="#009900" formControlName="primaryColor" ng-model="primaryColor" name="primaryColor" class="form-control color" (input)="onColorChange($event.target.value,'primary')" />
                                 <input type="text" [style.background]="color1" colorPicker="color1" cpPosition='right' colorPickerOpen="onEventLog('colorPickerOpen', $event)" colorPickerClose="onEventLog('colorPickerClose', $event)" cpInputChange="onEventLog('cpInputChange', $event)"
-                                    cpSliderDragStart="onEventLog('cpSliderDragStart', $event)" cpSliderDragEnd="onEventLog('cpSliderDragEnd', $event)" />
+                                    cpSliderDragStart="onEventLog('cpSliderDragStart', $event)" cpSliderDragEnd="onEventLog('cpSliderDragEnd', $event)" /> -->
+                                <div class="form-group">
+                                    <label>Pick or enter color</label>
+                                    <input class="form-control" [(colorPicker)]="color" cpWidth='230px' cpHeight="100px" [style.background]="color" />
+                                </div>
                             </div>
                             <!-- <div class="col-lg-4">
                                 <label>Primary Color</label>
@@ -46,7 +53,7 @@
                             <div class="col-lg-4">
                                 <button type="button" class="btn btn-secondary btn-round" (click)="previewHandler()">
                                     {{(!showPreview) ? "Preview" : "Restore"}}
-                                    </button>
+                                </button>
                             </div>
                         </div>
                         <div class="row">
@@ -64,7 +71,8 @@
                                 <div class="input-group">
                                     <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon" formControlName="storageSetup">
                                         <option [ngValue]="null" disabled>Choose...</option>
-                                        <option *ngFor="let storage of storageSelectArray" [ngValue]="storage.name">{{storage.name}}</option>
+                                        <option *ngFor="let storage of storageSelectArray" [ngValue]="storage.name">
+                                            {{storage.name}}</option>
                                     </select>
 
                                 </div>
@@ -84,7 +92,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <label>Password</label>
-                                <input type="password" formControlName="password" class="form-control" ßß/>
+                                <input type="password" formControlName="password" class="form-control" ßß />
                             </div>
                         </div>
                         <div class="text-center"><button type="submit" class="btn btn-primary btn-round">Send</button>
@@ -99,10 +107,10 @@
                                 <label>State</label>
                                 <div class="input-group">
                                     <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon">
-                                    <option selected>Choose...</option>
-                                    <option value="1">State</option>
-                                    <option value="2">State</option>
-                                    <option value="3">State</option>
+                                        <option selected>Choose...</option>
+                                        <option value="1">State</option>
+                                        <option value="2">State</option>
+                                        <option value="3">State</option>
                                     </select>
                                 </div>
                             </div>
@@ -110,9 +118,9 @@
                                 <label>District/Region</label>
                                 <div class="input-group">
                                     <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon">
-                                    <option selected>Choose...</option>
-                                    <option value="1">District</option>
-                                    <option value="2">Region</option>
+                                        <option selected>Choose...</option>
+                                        <option value="1">District</option>
+                                        <option value="2">Region</option>
                                     </select>
                                 </div>
                             </div>
@@ -120,9 +128,9 @@
                                 <label>Zone</label>
                                 <div class="input-group">
                                     <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon">
-                                    <option selected>Choose...</option>
-                                    <option value="1">Zone</option>
-                                    <option value="2">Zone</option>
+                                        <option selected>Choose...</option>
+                                        <option value="1">Zone</option>
+                                        <option value="2">Zone</option>
                                     </select>
                                 </div>
                             </div>
@@ -130,9 +138,9 @@
                                 <label>Cluster</label>
                                 <div class="input-group">
                                     <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon">
-                                    <option selected>Choose...</option>
-                                    <option value="1">Cluster</option>
-                                    <option value="2">Schools</option>
+                                        <option selected>Choose...</option>
+                                        <option value="1">Cluster</option>
+                                        <option value="2">Schools</option>
                                     </select>
                                 </div>
                             </div>
@@ -140,9 +148,9 @@
                                 <label>School</label>
                                 <div class="input-group">
                                     <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon">
-                                    <option selected>Choose...</option>
-                                    <option value="1">School</option>
-                                    <option value="2">School</option>
+                                        <option selected>Choose...</option>
+                                        <option value="1">School</option>
+                                        <option value="2">School</option>
                                     </select>
                                 </div>
                             </div>
