@@ -34,16 +34,6 @@ export class SettingStepperComponent implements OnInit {
 
   public rgbaText: string = 'rgba(165, 26, 214, 0.2)';
 
-  // public arrayColors: any = {
-  //   color1: '#2883e9',
-  //   color2: '#e920e9',
-  //   color3: 'rgb(255,245,0)',
-  //   color4: 'rgb(236,64,64)',
-  //   color5: 'rgba(45,208,45,1)'
-  // };
-
-  // public selectedColor: string = 'color1';
-
   public color1: string = '#2889e9';
   public color2: string = '#e920e9';
   public color3: string = '#fff500';
@@ -88,7 +78,7 @@ export class SettingStepperComponent implements OnInit {
     this.configurationDetails = this.formBuilder.group({
       fileupload: [''],
       portalName: new FormControl(''),
-      primaryColor: new FormControl(''),
+      color: [this.colorChange],
       secondaryColor: new FormControl(''),
       emailSetup: new FormControl(''),
       storageSetup: new FormControl(''),
@@ -197,14 +187,31 @@ export class SettingStepperComponent implements OnInit {
       console.log(this.languageSelected[i].abbreviation)
     }
   }
-  title = 'colorPicker';
-  color: string = '#2889e9'
-  arrayColors: any = {
-    color1: '#2883e9',
-    color2: '#e920e9',
-    color3: 'rgb(255,245,0)',
-    color4: 'rgb(236,64,64)',
-    color5: 'rgba(45,208,45,1)'
-  };
-  selectedColor: string = 'color1';  
+  // title = 'colorPicker';
+  // color: string = ''
+  // arrayColors: any = {
+  //   color1: '#2883e9',
+  //   color2: '#e920e9',
+  //   color3: 'rgb(255,245,0)',
+  //   color4: 'rgb(236,64,64)',
+  //   color5: 'rgba(45,208,45,1)'
+  // };
+
+  // selectedColor: string = '';
+  // updatePickerColor(color){
+  //   console.log(color);this.selectedColor = color;
+  //   console.log(this.selectedColor);
+    
+  // }
+  color!: string;
+  get colorChange() {
+    let newColor:string;
+    return newColor = this.color
+  }
+
+  updatePickerPrimaryColor(color: string): void {
+    this.color = color;
+    console.log(this.color)
+    this.configurationDetails.patchValue({ color });
+  }
 }
