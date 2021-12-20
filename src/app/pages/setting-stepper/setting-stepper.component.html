@@ -33,26 +33,34 @@
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
-                                <!-- <label>Primary Color</label> -->
-                                <!-- <input type="color" value="#009900" formControlName="primaryColor" ng-model="primaryColor" name="primaryColor" class="form-control color" (input)="onColorChange($event.target.value,'primary')" />
-                                <input type="text" [style.background]="color1" colorPicker="color1" cpPosition='right' colorPickerOpen="onEventLog('colorPickerOpen', $event)" colorPickerClose="onEventLog('colorPickerClose', $event)" cpInputChange="onEventLog('cpInputChange', $event)"
-                                    cpSliderDragStart="onEventLog('cpSliderDragStart', $event)" cpSliderDragEnd="onEventLog('cpSliderDragEnd', $event)" /> -->
                                 <label>Pick a Primary Colour</label>
-                                <!-- <input class="form-control" [(colorPicker)]="color" cpWidth='230px' cpHeight="100px" [style.background]="color" (colorPickerChange)="updatePickerColor($event)" formControlName="primaryColor" [ngClass]="{selected: selectedColor === color}" /> -->
-                                <input [(colorPicker)]="color" [style.background]="color" (colorPickerChange)="updatePickerPrimaryColor($event)" type="text" class="form-control" formControlName="color" />
-
+                                <!-- [style.background]="primaryColor" -->
+                                <input 
+                                    [(colorPicker)]="primaryColor" 
+                                    cpPosition='bottom' 
+                                    (colorPickerChange)="updatePickerPrimaryColor($event)" 
+                                    type="text" 
+                                    class="form-control" 
+                                    formControlName="primaryColor"
+                                    [value] = "primaryColor" 
+                                />
                             </div>
-                            <!-- <div class="col-lg-4">
-                                <label>Primary Color</label>
-                                <input type="color" value="global.primaryColor" formControlName="primaryColor" ng-model="primaryColor" name="primaryColor" class="form-control color" (input)="onColorChange($event.target.value,'primary')" />
-                            </div> -->
                             <div class="col-lg-4">
                                 <label>Secondary Color</label>
-                                <input type="color" value="global.secondaryColor" formControlName="secondaryColor" ng-model="secondaryColor" name="secondaryColor" class="form-control color" (input)="onColorChange($event.target.value,'secondary')" />
+                                <!-- [style.background]="secondaryColor"  -->
+                                <input 
+                                    [(colorPicker)]="secondaryColor" 
+                                    cpPosition='bottom' 
+                                    (colorPickerChange)="updatePickerSecondaryColor($event)" 
+                                    type="text" 
+                                    class="form-control" 
+                                    formControlName="secondaryColor" 
+                                    [value] = "secondaryColor"
+                                />
                             </div>
                             <div class="col-lg-4">
                                 <button type="button" class="btn btn-secondary btn-round" (click)="previewHandler()">
-                                    {{(!showPreview) ? "Preview" : "Restore"}}
+                                    {{(!showPreview) ? "Preview" : "Edit"}}
                                 </button>
                             </div>
                         </div>
