@@ -60,7 +60,6 @@ export function HttpLoaderFactory(http: HttpClient) {
       }
     ),
     NgMultiSelectDropDownModule.forRoot(),
-
     FormsModule,
     ReactiveFormsModule,
     ColorPickerModule
