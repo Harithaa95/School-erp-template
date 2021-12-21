@@ -28,8 +28,11 @@ export class LoginComponent implements OnInit {
       }
     loginSubmitData(formData: any) {
         console.log(formData.value.password);
-        const encryptedPassword=CryptoJS.AES.encrypt(formData.value.password.trim()).toString();
-        console.log(encryptedPassword)
+        // const encryptedPassword=CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(formData.value.password), 'my pass phrase');
+        // const encryptedPassword=CryptoJS.AES.encrypt(formData.value.password.trim()).toString();
+        const encryptedPassword = CryptoJS.AES.encrypt(formData.value.password.trim(),"secretPassword").toString();
+
+        console.log("Encrypted password",encryptedPassword)
 
 
     }
