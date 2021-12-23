@@ -254,7 +254,7 @@
     // Active color changing
 
     &[data-active-color="primary"]{
-        @include sidebar-active-color($primary-color);
+        @include sidebar-active-color(var(--primary));
     }
     &[data-active-color="info"]{
         @include sidebar-active-color($info-color);

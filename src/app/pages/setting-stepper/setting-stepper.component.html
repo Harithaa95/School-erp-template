@@ -1,0 +1,174 @@
+<div class="container my-5">
+    <div class="card">
+        <div class="card-body">
+            <nav class="settings-tab">
+                <div class="nav nav-tabs nav-pills nav-justified">
+                    <a data-target="#nav-webdesign" id="webdesign" data-toggle="tab" role="tab" class="nav-link active">
+                        Configuration
+                    </a>
+                    <a data-target="#nav-webdev" id="webdev" data-toggle="tab" role="tab" class="nav-link"> Udise
+                        Information Setup
+                    </a>
+                    <a data-target="#nav-mobiledev" id="mobiledev" data-toggle="tab" role="tab" class="nav-link"> State
+                        Information Setup
+                    </a>
+                </div>
+            </nav>
+            <div class="tab-content">
+                <div class="tab-pane active" id="nav-webdesign">
+                    <form [formGroup]="configurationDetails" id="msform" (ngSubmit)="configurationDetailsSubmit(configurationDetails)">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label>Logo</label>
+                                <input type="file" id="fileUpload" name="fileupload" class="file-upload form-control" placeholder="Logo" />
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Fav Icon</label>
+                                <input type="file" id="fileUpload" name="fileupload" class="file-upload form-control" placeholder="Logo" />
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Portal Name</label>
+                                <input type="text" formControlName="portalName" name="portalName" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <label>Pick a Primary Colour</label>
+                                <!-- [style.background]="primaryColor" -->
+                                <input 
+                                    [(colorPicker)]="primaryColor" 
+                                    cpPosition='bottom' 
+                                    (colorPickerChange)="updatePickerPrimaryColor($event)" 
+                                    type="text" 
+                                    class="form-control" 
+                                    formControlName="primaryColor"
+                                    [value] = "primaryColor" 
+                                />
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Secondary Color</label>
+                                <!-- [style.background]="secondaryColor"  -->
+                                <input 
+                                    [(colorPicker)]="secondaryColor" 
+                                    cpPosition='bottom' 
+                                    (colorPickerChange)="updatePickerSecondaryColor($event)" 
+                                    type="text" 
+                                    class="form-control" 
+                                    formControlName="secondaryColor" 
+                                    [value] = "secondaryColor"
+                                />
+                            </div>
+                            <div class="col-lg-4">
+                                <button type="button" class="btn btn-secondary btn-round" (click)="previewHandler()">
+                                    {{(!showPreview) ? "Preview" : "Edit"}}
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Language</label>
+                                <div class="input-group">
+                                    <div class="multi-dropdown">
+                                        <ng-multiselect-dropdown formControlName="language" [placeholder]="'Languages'" [settings]="dropdownSettings" [data]="dropdownList" (onSelect)="onItemSelect($event)">
+                                        </ng-multiselect-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <label>Storage Setup</label>
+                                <div class="input-group">
+                                    <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon" formControlName="storageSetup">
+                                        <option [ngValue]="null" disabled>Choose...</option>
+                                        <option *ngFor="let storage of storageSelectArray" [ngValue]="storage.name">
+                                            {{storage.name}}</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary btn-round">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane " id="nav-webdev">
+                    <form [formGroup]="UdiseDetails" id="msform">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <label>Udise ID</label>
+                                <input type="text" formControlName="udiseId" class="form-control" />
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Password</label>
+                                <input type="password" formControlName="password" class="form-control" ßß />
+                            </div>
+                        </div>
+                        <div class="text-center"><button type="submit" class="btn btn-primary btn-round">Send</button>
+
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane" id="nav-mobiledev">
+                    <form [formGroup]="stateDetails" id="msform">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>State</label>
+                                <div class="input-group">
+                                    <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon">
+                                        <option selected>Choose...</option>
+                                        <option value="1">State</option>
+                                        <option value="2">State</option>
+                                        <option value="3">State</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>District/Region</label>
+                                <div class="input-group">
+                                    <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon">
+                                        <option selected>Choose...</option>
+                                        <option value="1">District</option>
+                                        <option value="2">Region</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Zone</label>
+                                <div class="input-group">
+                                    <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon">
+                                        <option selected>Choose...</option>
+                                        <option value="1">Zone</option>
+                                        <option value="2">Zone</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Cluster</label>
+                                <div class="input-group">
+                                    <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon">
+                                        <option selected>Choose...</option>
+                                        <option value="1">Cluster</option>
+                                        <option value="2">Schools</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>School</label>
+                                <div class="input-group">
+                                    <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon">
+                                        <option selected>Choose...</option>
+                                        <option value="1">School</option>
+                                        <option value="2">School</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <input (click)="next()" type="button" name="next" class="btn btn-primary btn-round" value="Submit" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

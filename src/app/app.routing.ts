@@ -7,14 +7,14 @@ export const AppRoutes: Routes = [
   {
     path: '',
     redirectTo: 'login',
-    pathMatch: 'full',
+    pathMatch: 'prefix',
   }, {
     path: '',
     component: AdminLayoutComponent,
     children: [
         {
       path: '',
-      loadChildren: './layouts/admin-layout/admin-layout.module#AdminLayoutModule'
+      loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
   }]},
   {
     path: '**',
@@ -26,6 +26,6 @@ export const AppRoutes: Routes = [
     children: [
         {
       path: '',
-      loadChildren: './layouts/Auth-layout/auth-layout.module#AuthLayoutModule'
+      loadChildren: () => import('./layouts/Auth-layout/auth-layout.module').then(m => m.AuthLayoutModule)
   }]}
 ]
