@@ -122,7 +122,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
       @include badge-color($default-color);
   }
   &.badge-primary{
-      @include badge-color(var(--primary));
+      @include badge-color($primary-color);
   }
   &.badge-info{
       @include badge-color($info-color);

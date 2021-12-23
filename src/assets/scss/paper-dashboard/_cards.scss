@@ -43,10 +43,10 @@
     }
 
     &[data-background-color="orange"]{
-        background-color: var(--primary);
+        background-color: $primary-color;
 
         .card-header{
-            background-color: var(--primary);
+            background-color: $primary-color;
         }
 
         .card-footer{
@@ -100,7 +100,7 @@
     label{
         font-size: $font-size-small;
         margin-bottom: 5px;
-        color: var(--primary);
+        color: $dark-gray;
     }
 
     .card-footer{

@@ -174,7 +174,7 @@
         .nav-item .nav-link:not(.btn):hover,
         .nav-item .nav-link:not(.btn):active{
             border-radius: $border-radius-small;
-            color: var(--secondary);
+            color: $default-color;
         }
     }
 
@@ -235,14 +235,14 @@
        }
 
       .nav-item .nav-link:not(.btn){
-        color: var(--secondary);
+        color: $default-color;
       }
       .nav-item.active .nav-link:not(.btn),
       .nav-item .nav-link:not(.btn):focus,
       .nav-item .nav-link:not(.btn):hover,
       .nav-item .nav-link:not(.btn):focus:hover,
       .nav-item .nav-link:not(.btn):active {
-        color: var(--secondary);
+        color: $primary-color;
       }
     }
 
@@ -286,7 +286,7 @@
 }
 
 .bg-primary{
-    background-color: var(--primary) !important;
+    background-color: $primary-color !important;
 }
 
 .bg-info{
@@ -307,11 +307,4 @@
 
 .bg-white{
     background-color: $white-color !important;
-}
-.nav-pills{
-    cursor: pointer;
-}
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    @include btn-styles(var(--secondary), var(--secondary));
-    @include transition($fast-transition-time, linear);
 }

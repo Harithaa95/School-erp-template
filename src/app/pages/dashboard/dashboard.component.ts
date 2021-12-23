@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService} from '@ngx-translate/core';
-import { AdminServiceService } from 'app/services/admin-service.service';
 import Chart from 'chart.js';
 
 
@@ -17,13 +16,9 @@ export class DashboardComponent implements OnInit{
   public chartColor;
   public chartEmail;
   public chartHours;
-  constructor(
-    public translateService:TranslateService,
-    public adminService: AdminServiceService) { }
+  constructor(public translateService:TranslateService) { }
 
     ngOnInit(){
-
-      this.extractTokenVlue();
       this.chartColor = "#FFFFFF";
 
       this.canvas = document.getElementById("chartHours");
@@ -211,15 +206,6 @@ export class DashboardComponent implements OnInit{
         hover: false,
         data: speedData,
         options: chartOptions
-      });
-    }
-
-
-    extractTokenVlue() {
-      let token = sessionStorage.getItem('token');
-      console.log(token);
-      this.adminService.extractTokenFun(token).subscribe(data => {
-        console.log(data);
       });
     }
 }
