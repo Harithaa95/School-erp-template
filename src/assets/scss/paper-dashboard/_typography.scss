@@ -10,10 +10,10 @@ h1,h2,h3,h4,h5,h6{
 }
 
 a{
-    color: var(--primary);
+    color: $primary-color;
     &:hover,
     &:focus{
-        color: var(--primary);
+        color: $primary-color;
     }
 }
 h1, .h1 {
@@ -145,11 +145,11 @@ a.text-gray:focus, a.text-gray:hover{
     }
 
     &.blockquote-primary{
-        border-color: var(--primary);
-        color: var(--primary);
+        border-color: $primary-color;
+        color: $primary-color;
 
         small{
-            color: var(--primary);
+            color: $primary-color;
         }
     }
 
