@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService} from '@ngx-translate/core';
 import { AdminServiceService } from 'app/services/admin-service.service';
+import { NavbarComponent } from 'app/shared/navbar/navbar.component';
 import Chart from 'chart.js';
+
+import { map } from 'rxjs';
+import { LoginComponent } from '../login/login.component';
 
 
 @Component({
@@ -19,11 +24,12 @@ export class DashboardComponent implements OnInit{
   public chartHours;
   constructor(
     public translateService:TranslateService,
-    public adminService: AdminServiceService) { }
+    public adminService: AdminServiceService,
+    public router: Router) { }
 
     ngOnInit(){
 
-      this.extractTokenVlue();
+      this.extractTokenValue();
       this.chartColor = "#FFFFFF";
 
       this.canvas = document.getElementById("chartHours");
@@ -215,11 +221,16 @@ export class DashboardComponent implements OnInit{
     }
 
 
-    extractTokenVlue() {
+    extractTokenValue() {
       let token = sessionStorage.getItem('token');
       console.log(token);
-      this.adminService.extractTokenFun(token).subscribe(data => {
+      this.adminService.extractTokenFun(token).subscribe((data: any) => {
         console.log(data);
+        console.log(data.responseData.userRole[0])
+        if(data.responseData.userRole[0] !== "superAdmin") {
+          sessionStorage.removeItem('token');
+          this.router.navigate(['/login']);
+        }
       });
     }
 }

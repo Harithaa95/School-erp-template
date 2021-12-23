@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
 
     loginSubmitData(formData: any) {
         const encryptedPassword = CryptoJS.AES.encrypt(formData.value.password.trim(), "4hBY1ey_9xeCHGV4RcAgfXdadf1UkwYIyV8SawceQ2W-9t4XhcMCG5pbDu8_taP-Xx-dDQa-PK54G-qL8oKpXQ").toString();
-        this.adminService.loginRequest(formData.value.userId, encryptedPassword).subscribe((data) => { 
+        this.adminService.loginRequest(formData.value.mailId, encryptedPassword).subscribe((data) => { 
             if(data.result === 'Success'){sessionStorage.setItem("token",data.responseData);
             this.router.navigateByUrl('/dashboard');
         }

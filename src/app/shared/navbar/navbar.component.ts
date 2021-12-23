@@ -4,6 +4,7 @@ import { ROUTES } from '../../sidebar/sidebar.component';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
+import { AdminServiceService } from 'app/services/admin-service.service';
 
 @Component({
   moduleId: module.id,
@@ -25,7 +26,7 @@ export class NavbarComponent implements OnInit {
 
   @ViewChild("navbar-cmp", { static: false }) button;
 
-  constructor(public sanitizer: DomSanitizer,location: Location, private renderer: Renderer2, private element: ElementRef, private router: Router, public translateService: TranslateService) {
+  constructor(public sanitizer: DomSanitizer,location: Location, private renderer: Renderer2, private element: ElementRef, private router: Router, public translateService: TranslateService, public adminService: AdminServiceService) {
     this.location = location;
     this.nativeElement = element.nativeElement;
     this.sidebarVisible = false;
@@ -126,6 +127,10 @@ export class NavbarComponent implements OnInit {
       navbar.classList.remove('bg-white');
     }
 
+  }
+
+  logout() {
+    this.adminService.logoutRequest();
   }
 
 }
