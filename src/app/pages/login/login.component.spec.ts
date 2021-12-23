@@ -8,7 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 fdescribe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-
+  let el: HTMLElement;
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LoginComponent], imports: [ReactiveFormsModule, HttpClientTestingModule, RouterTestingModule
@@ -26,5 +26,9 @@ fdescribe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+//   it('Should set submitted to true', () => {
+//     component.loginSubmitData();
+//     expect(component.loginSubmitData).toBeTruthy();
 
+//  });
 });
