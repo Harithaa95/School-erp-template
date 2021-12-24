@@ -29,11 +29,13 @@ export class AdminServiceService {
   }
 
   extractTokenFun(tokenValue: any) {
-    // console.log(tokenValue);
-    // let headers = new HttpHeaders().set('token', tokenValue);
     return this.http.post(environment.extarctTokenURL, {} ,{ headers: new HttpHeaders({
       'token': `${tokenValue}`
     }) });
+  }
+
+  stateInfoFun(): Observable<any> {
+    return this.http.get(environment.stateInfoURL);
   }
 
 }

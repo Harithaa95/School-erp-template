@@ -4,6 +4,7 @@ import { ColorPickerService, Cmyk } from 'ngx-color-picker';
 
 import { GlobalComponent } from 'app/shared/global/global.component';
 import { TopBarComponent } from 'app/shared/topbar/topbar.component';
+import { AdminServiceService } from 'app/services/admin-service.service';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class SettingStepperComponent implements OnInit {
     private global : GlobalComponent, 
     private topBar : TopBarComponent,
     private cpService: ColorPickerService,
-    public vcRef: ViewContainerRef
+    public vcRef: ViewContainerRef,
+    public adminService: AdminServiceService
     ) { }
 
   ngOnInit() {
@@ -52,8 +54,10 @@ export class SettingStepperComponent implements OnInit {
     this.configurationDetails = this.formBuilder.group({
       fileupload: [''],
       portalName: new FormControl(''),
-      primaryColor: [this.primaryColorChange],
-      secondaryColor: [this.secondaryColorChange],
+      // primaryColor: [this.primaryColorChange],
+      // secondaryColor: [this.secondaryColorChange],
+      primaryColor: new FormControl(''),
+      secondaryColor: new FormControl(''),
       emailSetup: new FormControl(''),
       storageSetup: new FormControl(''),
       secretId: new FormControl(''),
@@ -71,6 +75,18 @@ export class SettingStepperComponent implements OnInit {
       zone: [''],
       cluster: [''],
       school: [''],
+    });
+    this.adminService.stateInfoFun().subscribe((res: any) => {
+      this.primaryColor = res.responseData[0].primaryColor;
+      this.secondaryColor = res.responseData[0].secondaryColor;
+      this.configurationDetails.patchValue({
+        language: [res.responseData[0].languageSetup[0].Language],
+        portalName: res.responseData[0].portalName,
+        primaryColor: res.responseData[0].primaryColor,
+        secondaryColor: res.responseData[0].secondaryColor
+      })
+      // this.primaryColor = res.responseData[0].primaryColor;
+      // this.secondaryColor = res.responseData[0].secondaryColor
     });
   }
   get configuration() { return this.configurationDetails.controls; }
@@ -93,8 +109,8 @@ export class SettingStepperComponent implements OnInit {
   previewHandler(){
     this.showPreview = ! this.showPreview
     if(this.showPreview && this.global.primaryColor && this.global.secondaryColor){
-      document.documentElement.style.setProperty('--primary',this.global.primaryColor );
-      document.documentElement.style.setProperty('--secondary',this.global.secondaryColor );
+      document.documentElement.style.setProperty('--primary',this.primaryColor);
+      document.documentElement.style.setProperty('--secondary',this.secondaryColor);
       this.topBar.ngOnInit(this.portalName,this.showPreview);
     }else{
       document.documentElement.style.setProperty('--primary','#7251ce' );
