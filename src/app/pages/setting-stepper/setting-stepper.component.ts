@@ -176,14 +176,23 @@ export class SettingStepperComponent implements OnInit {
   }
 
   updatePickerPrimaryColor(color: string): void {
-    this.primaryColor = color;
+    console.log(color);
+    let primaryColorSpan = document.getElementById('primaryColor');
+    primaryColorSpan.style.backgroundColor = color;
     this.global.primaryColor = this.primaryColor
-    this.configurationDetails.patchValue({ color });
+    
+    this.configurationDetails.patchValue({ 
+      primaryColor: color 
+    });
   }
   
   updatePickerSecondaryColor(color: string): void {
-    this.secondaryColor = color;
+    console.log(color);
+    let secondaryColorSpan = document.getElementById('secondaryColor');
+    secondaryColorSpan.style.backgroundColor = color;
     this.global.secondaryColor = this.secondaryColor;
-    this.configurationDetails.patchValue({ color });
+    this.configurationDetails.patchValue({ 
+      secondaryColor: color 
+    });
   }
 }
