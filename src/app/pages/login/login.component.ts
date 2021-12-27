@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
                 } else {
                     this.loading = false;
                     this.adminService.stateInfoFun().subscribe((res: any) => {
-                        console.log(res);
+                        // console.log(res);
                     });
                     this.router.navigateByUrl('/dashboard');
                 }

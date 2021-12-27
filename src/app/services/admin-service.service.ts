@@ -34,8 +34,16 @@ export class AdminServiceService {
     }) });
   }
 
-  stateInfoFun(): Observable<any> {
+  stateInfoFun(){
     return this.http.get(environment.stateInfoURL);
+  }
+
+  stateUpdateInfoFun(formData: any, id: any) {
+    console.log(formData, id);
+    return this.http.put(environment.stateUpdateInfoURL, {
+      "stateID": id,
+      "updateData" : { formData }
+    })
   }
 
 }

@@ -35,7 +35,7 @@ export class NavbarComponent implements OnInit {
     translateService.setDefaultLang('en')
     const browserLang = translateService.getBrowserLang()
     translateService.use(browserLang.match(/en|ta|ur/) ? browserLang : 'en')
-    console.log(browserLang)
+    // console.log(browserLang)
     
   }
 

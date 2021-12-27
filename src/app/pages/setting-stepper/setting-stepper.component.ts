@@ -5,6 +5,7 @@ import { ColorPickerService, Cmyk } from 'ngx-color-picker';
 import { GlobalComponent } from 'app/shared/global/global.component';
 import { TopBarComponent } from 'app/shared/topbar/topbar.component';
 import { AdminServiceService } from 'app/services/admin-service.service';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class SettingStepperComponent implements OnInit {
   UdiseDetails!: FormGroup;
   stateDetails!: FormGroup;
   showPreview = false;
+  ShowFilter = false;
   dropdownList;
   dropdownSettings;
   languageSelected: any[]=[];
@@ -28,6 +30,7 @@ export class SettingStepperComponent implements OnInit {
   /* color picker */
   primaryColor!: string;
   secondaryColor!: string;
+  stateID: any;
   public rgbaText: string = 'rgba(165, 26, 214, 0.2)';
   public cmykValue: string = '';
   public cmykColor: Cmyk = new Cmyk(0, 0, 0, 0);
@@ -46,8 +49,8 @@ export class SettingStepperComponent implements OnInit {
     this.dropdownList = this.getData();
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
+      idField: 'itemId',
+      textField: 'Language',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',allowSearchFilter: true
     };
@@ -63,7 +66,7 @@ export class SettingStepperComponent implements OnInit {
       secretId: new FormControl(''),
       email: new FormControl(''),
       password: new FormControl(''),
-      language : [''],
+      language : new FormControl(['']),
     });
     this.UdiseDetails = this.formBuilder.group({
       udiseId: [''],
@@ -76,34 +79,43 @@ export class SettingStepperComponent implements OnInit {
       cluster: [''],
       school: [''],
     });
+
     this.adminService.stateInfoFun().subscribe((res: any) => {
+      this.stateID = res.responseData[0].stateId;
       this.primaryColor = res.responseData[0].primaryColor;
       this.secondaryColor = res.responseData[0].secondaryColor;
       this.configurationDetails.patchValue({
-        language: [res.responseData[0].languageSetup[0].Language],
+        language: [res.responseData[0].languageSetup[0]],
         portalName: res.responseData[0].portalName,
         primaryColor: res.responseData[0].primaryColor,
         secondaryColor: res.responseData[0].secondaryColor
       })
-      // this.primaryColor = res.responseData[0].primaryColor;
-      // this.secondaryColor = res.responseData[0].secondaryColor
+      let primaryColorSpan = document.getElementById('primaryColor');
+      primaryColorSpan.style.backgroundColor = this.primaryColor;
+      let secondaryColorSpan = document.getElementById('secondaryColor');
+      secondaryColorSpan.style.backgroundColor = this.secondaryColor;
+      
     });
+    
+    
   }
+  
   get configuration() { return this.configurationDetails.controls; }
   get udiseInformation() { return this.UdiseDetails.controls; }
   get stateInformation() { return this.stateDetails.controls; }
   
  getData() : Array<any>{
     return [
-      { item_id: 1, item_text: 'Hindi', abbreviation : 'Ha' },
-      { item_id: 2, item_text: 'Kannada', abbreviation : 'ka' },
-      { item_id: 3, item_text: 'Tamil', abbreviation : 'ta' },
-      { item_id: 4, item_text: 'Telugu', abbreviation : 'V' }
+      { abb : 'en', itemId: 1, Language: 'English' },
+      { abb : 'ka', itemId: 2, Language: 'Kannada' },
+      { abb : 'ta', itemId: 3, Language: 'Tamil' },
+      { abb : 'V', itemId: 4, Language: 'Telugu' },
+      { abb : 'Ha', itemId: 5, Language: 'Hindi' }
     ];
   }
 
   getObjectListFromData(ids){
-    return this.getData().filter(item => ids.includes(item.item_id))
+    return this.getData().filter(item => ids.includes(item.itemId))
   }
 
   previewHandler(){
@@ -147,7 +159,10 @@ export class SettingStepperComponent implements OnInit {
 
   configurationDetailsSubmit(form: FormGroup){ 
     var languageCode;
-    this.languageSelected=this.getObjectListFromData(this.configurationDetails.value.language.map(item => item.item_id))
+    // this.adminService.stateUpdateInfoFun(this.configurationDetails.value, this.stateID);
+    this.languageSelected = this.getObjectListFromData(this.configurationDetails.value.language.map(item => item.itemId))
+    console.log(this.languageSelected);
+    console.log(this.configurationDetails.value);
   }
   
   get primaryColorChange() {

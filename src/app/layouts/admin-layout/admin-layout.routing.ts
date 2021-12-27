@@ -7,13 +7,14 @@ import { StaffDetailsComponent } from '../../pages/staff-details/staff-details.c
 import { AssessmentComponent } from '../../pages/assessment/assessment.component';
 import { HealthComponent }     from  '../../pages/health/health.component'
 import { SettingStepperComponent } from '../../pages/setting-stepper/setting-stepper.component'
+import { AuthGuardService } from 'app/authGuard/auth-guard.service';
 
 export const AdminLayoutRoutes: Routes = [ 
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'home',      component: HomeComponent },
-    { path: 'student',   component: StudentComponent },
-    { path: 'staffDetails', component: StaffDetailsComponent },
-    { path: 'assessment',   component: AssessmentComponent },
-    { path: 'health',       component: HealthComponent },
-    { path: 'settingStepper', component:SettingStepperComponent }
+    { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuardService] },
+    { path: 'home',      component: HomeComponent, canActivate: [AuthGuardService] },
+    { path: 'student',   component: StudentComponent, canActivate: [AuthGuardService] },
+    { path: 'staffDetails', component: StaffDetailsComponent, canActivate: [AuthGuardService] },
+    { path: 'assessment',   component: AssessmentComponent, canActivate: [AuthGuardService] },
+    { path: 'health',       component: HealthComponent, canActivate: [AuthGuardService] },
+    { path: 'settingStepper', component:SettingStepperComponent, canActivate: [AuthGuardService] }
 ]
