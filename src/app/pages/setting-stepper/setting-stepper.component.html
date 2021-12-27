@@ -20,7 +20,9 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <label>Logo</label>
-                                <input type="file" id="fileUpload" name="fileupload" class="file-upload form-control" placeholder="Logo" />
+                                <input type="file" class="file-upload form-control" placeholder="Logo" (change)="onLogoFileChange($event)" />
+                                <input type="hidden" name="fileHidden" formControlName="logo" />
+                                <p *ngIf="file" class="pl-4 align-middle mb-0">{{file.name}}</p>
                             </div>
                             <div class="col-lg-4">
                                 <label>Fav Icon</label>
@@ -29,34 +31,21 @@
                             <div class="col-lg-4">
                                 <label>Portal Name</label>
                                 <input type="text" formControlName="portalName" name="portalName" class="form-control" />
+                                <span class="text-danger " *ngIf="(configurationFormControl.portalName.touched ||isconfigurationDetailsSubmitted) && configurationFormControl.portalName.errors?.required ">
+                                    Portal Name is required
+                                </span>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-4">
                                 <label>Pick a Primary Colour</label>
                                 <!-- [style.background]="primaryColor" -->
-                                <input 
-                                    [(colorPicker)]="primaryColor" 
-                                    cpPosition='bottom' 
-                                    (colorPickerChange)="updatePickerPrimaryColor($event)" 
-                                    type="text" 
-                                    class="form-control" 
-                                    formControlName="primaryColor"
-                                    [value] = "primaryColor" 
-                                />
+                                <input [(colorPicker)]="primaryColor" cpPosition='bottom' (colorPickerChange)="updatePickerPrimaryColor($event)" type="text" class="form-control" formControlName="primaryColor" [value]="primaryColor" />
                             </div>
                             <div class="col-lg-4">
                                 <label>Secondary Color</label>
                                 <!-- [style.background]="secondaryColor"  -->
-                                <input 
-                                    [(colorPicker)]="secondaryColor" 
-                                    cpPosition='bottom' 
-                                    (colorPickerChange)="updatePickerSecondaryColor($event)" 
-                                    type="text" 
-                                    class="form-control" 
-                                    formControlName="secondaryColor" 
-                                    [value] = "secondaryColor"
-                                />
+                                <input [(colorPicker)]="secondaryColor" cpPosition='bottom' (colorPickerChange)="updatePickerSecondaryColor($event)" type="text" class="form-control" formControlName="secondaryColor" [value]="secondaryColor" />
                             </div>
                             <div class="col-lg-4">
                                 <button type="button" class="btn btn-secondary btn-round" (click)="previewHandler()">
@@ -82,8 +71,10 @@
                                         <option *ngFor="let storage of storageSelectArray" [ngValue]="storage.name">
                                             {{storage.name}}</option>
                                     </select>
-
                                 </div>
+                                <span class="text-danger " *ngIf="isconfigurationDetailsSubmitted && configurationFormControl.storageSetup.errors?.required ">
+                                    Please select a storage setup
+                                </span>
                             </div>
                         </div>
                         <div class="text-center">
@@ -92,15 +83,21 @@
                     </form>
                 </div>
                 <div class="tab-pane " id="nav-webdev">
-                    <form [formGroup]="UdiseDetails" id="msform">
+                    <form [formGroup]="udiseDetails" id="msform" (ngSubmit)="udiseDetailsSubmit(udiseDetails)">
                         <div class="row">
                             <div class="col-lg-6">
                                 <label>Udise ID</label>
                                 <input type="text" formControlName="udiseId" class="form-control" />
+                                <span class="text-danger " *ngIf="(udiseInformationFormControl.udiseId.touched ||isUdiseDetailsSubmitted) && udiseInformationFormControl.udiseId.errors?.required ">
+                                    Udise Id is required
+                                </span>
                             </div>
                             <div class="col-lg-6">
                                 <label>Password</label>
                                 <input type="password" formControlName="password" class="form-control" ßß />
+                                <span class="text-danger " *ngIf="(udiseInformationFormControl.password.touched ||isUdiseDetailsSubmitted) && udiseInformationFormControl.password.errors?.required ">
+                                    Password is required
+                                </span>
                             </div>
                         </div>
                         <div class="text-center"><button type="submit" class="btn btn-primary btn-round">Send</button>

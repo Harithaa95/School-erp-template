@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule, ReactiveFormsModule, FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as CryptoJS from 'crypto-js';
+import { CustomValidatorService } from '../validators/custom-validator.service';
+
 @Component({
     selector: 'login-cmp',
     moduleId: module.id,
@@ -9,31 +11,39 @@ import * as CryptoJS from 'crypto-js';
 })
 
 export class LoginComponent implements OnInit {
-    LoginDetails!: FormGroup;
-    message="komathi123";
+
+    loginDetails!: FormGroup;
+    submitted = false;
+
     constructor(
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,private customValidatorService:CustomValidatorService
     ) { }
 
     ngOnInit() {
-        this.LoginDetails = this.formBuilder.group({
-            userName: new FormControl(''),
-            mailId: new FormControl(''),
-            password: new FormControl(''),
+        // this.loginDetails = this.formBuilder.group({
+        //     email:['',[Validators.required, Validators.email]],
+        //     password: ['',Validators.compose([Validators.required, this.customValidatorService.patternValidator()])],
+        // });
+        this.loginDetails = this.formBuilder.group({
+            email:['',Validators.required],
+            password: ['',Validators.required],
         });
     }
 
-    get formControl() {
-        return this.LoginDetails.controls;
+    get loginDetailsformControl() {
+        return this.loginDetails.controls;
       }
+
     loginSubmitData(formData: any) {
-        console.log(formData.value.password);
-        // const encryptedPassword=CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(formData.value.password), 'my pass phrase');
-        // const encryptedPassword=CryptoJS.AES.encrypt(formData.value.password.trim()).toString();
-        const encryptedPassword = CryptoJS.AES.encrypt(formData.value.password.trim(),"secretPassword").toString();
-
-        console.log("Encrypted password",encryptedPassword)
-
+        this.submitted = true;
+        console.log(this.loginDetails.valid)
+        if (this.loginDetails.valid) {
+            console.table(this.loginDetails.value);
+            console.log(formData.value.password);
+            const encryptedPassword = CryptoJS.AES.encrypt(formData.value.password.trim(),"secretPassword").toString();
+            console.log("Encrypted password",encryptedPassword)
+    
+        }
 
     }
 }
