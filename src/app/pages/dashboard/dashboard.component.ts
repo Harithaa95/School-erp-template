@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { TranslateService} from '@ngx-translate/core';
+import { AdminServiceService } from 'app/services/admin-service.service';
+import { NavbarComponent } from 'app/shared/navbar/navbar.component';
 import Chart from 'chart.js';
+
+import { map } from 'rxjs';
+import { LoginComponent } from '../login/login.component';
 
 
 @Component({
@@ -16,9 +22,13 @@ export class DashboardComponent implements OnInit{
   public chartColor;
   public chartEmail;
   public chartHours;
-  constructor(public translateService:TranslateService) { }
+  constructor(
+    public translateService:TranslateService,
+    public adminService: AdminServiceService,
+    public router: Router) { }
 
     ngOnInit(){
+
       this.chartColor = "#FFFFFF";
 
       this.canvas = document.getElementById("chartHours");

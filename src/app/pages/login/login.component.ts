@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import * as CryptoJS from 'crypto-js';
 import { CustomValidatorService } from '../validators/custom-validator.service';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import * as CryptoJS from 'crypto-js';
+import { Router } from '@angular/router';
+import { AdminServiceService } from '../../services/admin-service.service';
+import { environment } from 'environments/environment';
+
 
 @Component({
     selector: 'login-cmp',
@@ -11,12 +17,11 @@ import { CustomValidatorService } from '../validators/custom-validator.service';
 })
 
 export class LoginComponent implements OnInit {
-
     loginDetails!: FormGroup;
     submitted = false;
 
     constructor(
-        private formBuilder: FormBuilder,private customValidatorService:CustomValidatorService
+        private formBuilder: FormBuilder,private customValidatorService:CustomValidatorService,private adminService: AdminServiceService, public router: Router
     ) { }
 
     ngOnInit() {
@@ -42,8 +47,23 @@ export class LoginComponent implements OnInit {
             console.log(formData.value.password);
             const encryptedPassword = CryptoJS.AES.encrypt(formData.value.password.trim(),"secretPassword").toString();
             console.log("Encrypted password",encryptedPassword)
+           this.adminService.loginRequest(formData.value.email, encryptedPassword).subscribe((data) => { 
+            if(data.result === 'Success'){sessionStorage.setItem("token",data.responseData);
+            this.adminService.extractTokenFun(data.responseData).subscribe((data: any) => {
+                if(data.responseData.userRole[0] !== "superAdmin") {
+                    this.loading = false;
+                    sessionStorage.removeItem('token');
+                    this.router.navigate(['/login']);
+                } else {
+                    this.loading = false;
+                    this.adminService.stateInfoFun().subscribe((res: any) => {
+                        
+                    });
+                    this.router.navigateByUrl('/dashboard');
+                }
+            })
+        }
+        })
     
         }
-
-    }
 }

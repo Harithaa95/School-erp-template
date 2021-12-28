@@ -24,6 +24,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="password">Password</label>
+
                                     <input type="password" class="form-control" placeholder="password" formControlName="password">
                                     <span class="text-danger" *ngIf="(loginDetailsformControl.password.touched || submitted) && loginDetailsformControl.password.errors?.required">
                                         Password is required
@@ -33,12 +34,16 @@
                                         lowercase
                                         letter and 1 number
                                     </span> -->
+
+                                    <input type="password" class="form-control" placeholder="Enter the Password" formControlName="password">
+
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="update ml-auto mr-auto">
-                                <button type="submit" class="btn btn-primary btn-round">Submit</button>
+                                <button type="submit" class="btn btn-primary btn-round"><span *ngIf="!loading">Submit</span>
+                                    <i class="fa fa-spinner fa-spin" *ngIf="loading"></i></button>
                             </div>
                         </div>
                     </form>

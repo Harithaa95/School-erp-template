@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { ReactiveFormsModule} from '@angular/forms';
 import { SettingStepperComponent } from './setting-stepper.component';
+import { TranslateModule} from '@ngx-translate/core';
 
 describe('SettingStepperComponent', () => {
   let component: SettingStepperComponent;
@@ -8,7 +9,7 @@ describe('SettingStepperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SettingStepperComponent ]
+      declarations: [ SettingStepperComponent ],imports:[ReactiveFormsModule,TranslateModule]
     })
     .compileComponents();
   });
