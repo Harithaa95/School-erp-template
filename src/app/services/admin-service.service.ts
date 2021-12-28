@@ -33,8 +33,10 @@ export class AdminServiceService {
     }) });
   }
 
-  stateInfoFun(){
-    return this.http.get(environment.stateInfoURL);
+  stateInfoFun(tokenValue: any){
+    return this.http.get(environment.stateInfoURL ,{ headers: new HttpHeaders({
+      'token': `${tokenValue}`
+    }) });
   }
 
   stateUpdateInfoFun(formData: any, id: any) {
