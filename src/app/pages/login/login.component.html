@@ -24,7 +24,8 @@
                         </div>
                         <div class="row">
                             <div class="update ml-auto mr-auto">
-                                <button type="submit" class="btn btn-primary btn-round">Submit</button>
+                                <button type="submit" class="btn btn-primary btn-round"><span *ngIf="!loading">Submit</span>
+                                    <i class="fa fa-spinner fa-spin" *ngIf="loading"></i></button>
                             </div>
                         </div>
                     </form>
