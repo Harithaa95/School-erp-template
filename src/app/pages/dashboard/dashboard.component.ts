@@ -29,7 +29,6 @@ export class DashboardComponent implements OnInit{
 
     ngOnInit(){
 
-      // this.extractTokenValue();
       this.chartColor = "#FFFFFF";
 
       this.canvas = document.getElementById("chartHours");
@@ -219,18 +218,4 @@ export class DashboardComponent implements OnInit{
         options: chartOptions
       });
     }
-
-
-    // extractTokenValue() {
-    //   let token = sessionStorage.getItem('token');
-    //   // console.log(token);
-    //   this.adminService.extractTokenFun(token).subscribe((data: any) => {
-    //     console.log(data);
-    //     // console.log(data.responseData.userRole[0])
-    //     if(data.responseData.userRole[0] !== "superAdmin") {
-    //       sessionStorage.removeItem('token');
-    //       this.router.navigate(['/login']);
-    //     }
-    //   });
-    // }
 }
