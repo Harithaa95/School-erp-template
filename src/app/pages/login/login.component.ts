@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import * as CryptoJS from 'crypto-js';
+import { CustomValidatorService } from '../validators/custom-validator.service';
 import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 import * as CryptoJS from 'crypto-js';
 import { Router } from '@angular/router';
 import { AdminServiceService } from '../../services/admin-service.service';
 import { environment } from 'environments/environment';
+
 
 @Component({
     selector: 'login-cmp',
@@ -13,29 +17,37 @@ import { environment } from 'environments/environment';
 })
 
 export class LoginComponent implements OnInit {
-
-    loading: boolean = false;
-    
     loginDetails!: FormGroup;
+    submitted = false;
+
     constructor(
-        private formBuilder: FormBuilder, private adminService: AdminServiceService, public router: Router
+        private formBuilder: FormBuilder,private customValidatorService:CustomValidatorService,private adminService: AdminServiceService, public router: Router
     ) { }
 
     ngOnInit() {
+        // this.loginDetails = this.formBuilder.group({
+        //     email:['',[Validators.required, Validators.email]],
+        //     password: ['',Validators.compose([Validators.required, this.customValidatorService.patternValidator()])],
+        // });
         this.loginDetails = this.formBuilder.group({
-            mailId: new FormControl(''),
-            password: new FormControl(''),
+            email:['',Validators.required],
+            password: ['',Validators.required],
         });
     }
 
-    get formControl() {
+    get loginDetailsformControl() {
         return this.loginDetails.controls;
-    }
+      }
 
     loginSubmitData(formData: any) {
-        this.loading = true;
-        const encryptedPassword = CryptoJS.AES.encrypt(formData.value.password.trim(), "4hBY1ey_9xeCHGV4RcAgfXdadf1UkwYIyV8SawceQ2W-9t4XhcMCG5pbDu8_taP-Xx-dDQa-PK54G-qL8oKpXQ").toString();
-        this.adminService.loginRequest(formData.value.mailId, encryptedPassword).subscribe((data) => { 
+        this.submitted = true;
+        console.log(this.loginDetails.valid)
+        if (this.loginDetails.valid) {
+            console.table(this.loginDetails.value);
+            console.log(formData.value.password);
+            const encryptedPassword = CryptoJS.AES.encrypt(formData.value.password.trim(),"secretPassword").toString();
+            console.log("Encrypted password",encryptedPassword)
+           this.adminService.loginRequest(formData.value.email, encryptedPassword).subscribe((data) => { 
             if(data.result === 'Success'){sessionStorage.setItem("token",data.responseData);
             this.adminService.extractTokenFun(data.responseData).subscribe((data: any) => {
                 if(data.responseData.userRole[0] !== "superAdmin") {
@@ -52,5 +64,6 @@ export class LoginComponent implements OnInit {
             })
         }
         })
-    }
+    
+        }
 }

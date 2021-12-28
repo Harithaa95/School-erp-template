@@ -1,7 +1,7 @@
 import { Component, OnInit,ViewContainerRef } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ColorPickerService, Cmyk } from 'ngx-color-picker';
-
+import { ToastrService } from 'ngx-toastr';
 import { GlobalComponent } from 'app/shared/global/global.component';
 import { TopBarComponent } from 'app/shared/topbar/topbar.component';
 import { AdminServiceService } from 'app/services/admin-service.service';
@@ -15,18 +15,29 @@ import { map } from 'rxjs/operators';
 })
 export class SettingStepperComponent implements OnInit {
   configurationDetails!: FormGroup;
-  UdiseDetails!: FormGroup;
+  udiseDetails!: FormGroup;
   stateDetails!: FormGroup;
+
+  isconfigurationDetailsSubmitted=false;
+  isUdiseDetailsSubmitted=false;
+
   showPreview = false;
+
+  logoName = '';
   ShowFilter = false;
+
   dropdownList;
   dropdownSettings;
+
   languageSelected: any[]=[];
+
   portalName :string;
+
   storageSelectArray= [
     { id: 1, name: "AWS" },
     { id: 2, name: "Cloud" },
   ];
+
   /* color picker */
   primaryColor!: string;
   secondaryColor!: string;
@@ -42,11 +53,15 @@ export class SettingStepperComponent implements OnInit {
     private topBar : TopBarComponent,
     private cpService: ColorPickerService,
     public vcRef: ViewContainerRef,
+    private toastrService:ToastrService
     public adminService: AdminServiceService
+
     ) { }
 
   ngOnInit() {
+
     this.dropdownList = this.getData();
+
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'itemId',
@@ -54,9 +69,11 @@ export class SettingStepperComponent implements OnInit {
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',allowSearchFilter: true
     };
+
     this.configurationDetails = this.formBuilder.group({
-      fileupload: [''],
-      portalName: new FormControl(''),
+     logo: [this.logoName, Validators.required],
+      favIcon:[''],
+      portalName: ['',Validators.required],
       primaryColor: new FormControl(''),
       secondaryColor: new FormControl(''),
       emailSetup: new FormControl(''),
@@ -66,10 +83,12 @@ export class SettingStepperComponent implements OnInit {
       password: new FormControl(''),
       language : new FormControl(['']),
     });
-    this.UdiseDetails = this.formBuilder.group({
-      udiseId: [''],
-      password: ['']
+
+    this.udiseDetails = this.formBuilder.group({
+      udiseId: ['',Validators.required],
+      password: ['',Validators.required]
     });
+
     this.stateDetails = this.formBuilder.group({
       state: [''],
       district: [''],
@@ -77,6 +96,10 @@ export class SettingStepperComponent implements OnInit {
       cluster: [''],
       school: [''],
     });
+  }
+  get configurationFormControl() { return this.configurationDetails.controls; }
+  get udiseInformationFormControl() { return this.udiseDetails.controls; }
+  get stateInformationFormControl() { return this.stateDetails.controls; }
 
     this.adminService.stateInfoFun().subscribe((res: any) => {
       this.stateID = res.responseData[0].stateId;
@@ -97,10 +120,6 @@ export class SettingStepperComponent implements OnInit {
     
     
   }
-  
-  get configuration() { return this.configurationDetails.controls; }
-  get udiseInformation() { return this.UdiseDetails.controls; }
-  get stateInformation() { return this.stateDetails.controls; }
   
  getData() : Array<any>{
     return [
@@ -155,12 +174,34 @@ export class SettingStepperComponent implements OnInit {
     return '';
   }
 
-  configurationDetailsSubmit(form: FormGroup){ 
+  configurationDetailsSubmit(formValue: FormGroup){ 
+    this.isconfigurationDetailsSubmitted=true;
     var languageCode;
-    // this.adminService.stateUpdateInfoFun(this.configurationDetails.value, this.stateID);
-    this.languageSelected = this.getObjectListFromData(this.configurationDetails.value.language.map(item => item.itemId))
-    console.log(this.languageSelected);
-    console.log(this.configurationDetails.value);
+    console.log(this.configurationDetails.valid)
+    if (this.configurationDetails.valid) {
+        console.log(formValue.value);
+        // this.languageSelected=this.getObjectListFromData(this.configurationDetails.value.language.map(item => item.item_id)
+        this.languageSelected = this.getObjectListFromData(this.configurationDetails.value.language.map(item => item.itemId))
+        console.log(this.languageSelected);
+        this.configurationDetails.value.language=this.languageSelected;
+        console.log(this.configurationDetails.value);
+        this.adminService.stateUpdateInfoFun(this.configurationDetails.value, this.stateID);
+    }
+  }
+
+
+  udiseDetailsSubmit(udiseFormValue:any){
+    this.isUdiseDetailsSubmitted=true
+    console.log(this.udiseDetails.valid)
+    if (this.udiseDetails.valid) {
+        console.log(udiseFormValue.value);
+        console.log(this.udiseDetails);
+        this.toastrService.success('Data Inserted Successfully!','',{
+          timeOut:2000,
+          positionClass:'toast-top-left'
+        })
+
+    }
   }
   
   get primaryColorChange() {
@@ -193,4 +234,16 @@ export class SettingStepperComponent implements OnInit {
       secondaryColor: color 
     });
   }
+
+  keyDown(event:any){
+    return false;
+  }
+
+
+  onLogoFileChange($event){
+    let file = $event.target.files[0]; // <--- File Object for future use.
+     this.configurationDetails.controls['logo'].setValue(file ? file.name : '');
+  }
+
+  
 }
