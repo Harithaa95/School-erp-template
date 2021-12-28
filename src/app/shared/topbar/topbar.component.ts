@@ -31,12 +31,6 @@ export class TopBarComponent{
         this.siteName = this.global.portalName
       }
     })
-    // if(showPreview){
-    //   this.siteName = givenValue;
-    // }else{
-      
-    // }
-    // console.log(this.siteName)
   }
   portal(){
     return this.siteName
