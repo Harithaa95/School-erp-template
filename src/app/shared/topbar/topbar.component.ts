@@ -17,6 +17,7 @@ import { GlobalComponent } from '../global/global.component';
 export class TopBarComponent{
 
   siteName :string
+  token: string = '';
 
   constructor(
     private translateService:TranslateService, 
@@ -24,7 +25,8 @@ export class TopBarComponent{
     private adminService: AdminServiceService){ }
 
   ngOnInit(givenValue,showPreview){
-    this.adminService.stateInfoFun().subscribe((res: any) => {
+    this.token = sessionStorage.getItem('token');
+    this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
       if(sessionStorage.getItem('token') !== null) {
         this.siteName = res.responseData[0].portalName;
       } else {
