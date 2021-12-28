@@ -57,8 +57,6 @@ export class SettingStepperComponent implements OnInit {
     this.configurationDetails = this.formBuilder.group({
       fileupload: [''],
       portalName: new FormControl(''),
-      // primaryColor: [this.primaryColorChange],
-      // secondaryColor: [this.secondaryColorChange],
       primaryColor: new FormControl(''),
       secondaryColor: new FormControl(''),
       emailSetup: new FormControl(''),
