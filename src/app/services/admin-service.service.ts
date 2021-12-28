@@ -16,7 +16,6 @@ export class AdminServiceService {
               public router: Router) { }
 
   loginRequest(userId: any,userPassword:any): Observable<any> {
-    // console.log(userId,userPassword);
     return this.http.post(environment.loginURL, {
       "userID": userId,
       "password": userPassword
@@ -39,7 +38,6 @@ export class AdminServiceService {
   }
 
   stateUpdateInfoFun(formData: any, id: any) {
-    console.log(formData, id);
     return this.http.put(environment.stateUpdateInfoURL, {
       "stateID": id,
       "updateData" : { formData }
