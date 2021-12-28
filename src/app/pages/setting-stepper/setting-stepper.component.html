@@ -39,28 +39,14 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <label>Pick a Primary Colour</label>
-
-                                <!-- [style.background]="primaryColor" -->
-                                <input [(colorPicker)]="primaryColor" cpPosition='bottom' (colorPickerChange)="updatePickerPrimaryColor($event)" type="text" class="form-control" formControlName="primaryColor" [value]="primaryColor" />
-                            </div>
-                            <div class="col-lg-4">
-                                <label>Secondary Color</label>
                                 <!-- [style.background]="secondaryColor"  -->
-                                <input [(colorPicker)]="secondaryColor" cpPosition='bottom' (colorPickerChange)="updatePickerSecondaryColor($event)" type="text" class="form-control" formControlName="secondaryColor" [value]="secondaryColor" />
+                                <!-- <input [(colorPicker)]="secondaryColor" cpPosition='bottom' (colorPickerChange)="updatePickerSecondaryColor($event)" type="text" class="form-control" formControlName="secondaryColor" [value]="secondaryColor" /> -->
 
                                 <div class="input-group mb-4">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-color"  style="width: 45px;" id="primaryColor"></span>
+                                        <span class="input-group-color" style="width: 45px;" id="primaryColor"></span>
                                     </div>
-                                    <input 
-                                        [(colorPicker)]="primaryColor" 
-                                        cpPosition='bottom' 
-                                        (colorPickerChange)="updatePickerPrimaryColor($event)" 
-                                        type="text" 
-                                        class="form-control" 
-                                        formControlName="primaryColor"
-                                        [value] = "primaryColor" 
-                                    />
+                                    <input [(colorPicker)]="primaryColor" cpPosition='bottom' (colorPickerChange)="updatePickerPrimaryColor($event)" type="text" class="form-control" formControlName="primaryColor" [value]="primaryColor" />
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -69,16 +55,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-color" style="width: 45px;" id="secondaryColor"></span>
                                     </div>
-                                    <input 
-                                    [(colorPicker)]="secondaryColor" 
-                                    cpPosition='bottom' 
-                                    (colorPickerChange)="updatePickerSecondaryColor($event)" 
-                                    type="text" 
-                                    class="form-control" 
-                                    formControlName="secondaryColor" 
-                                    [value] = "secondaryColor"
-                                />
-                                
+                                    <input [(colorPicker)]="secondaryColor" cpPosition='bottom' (colorPickerChange)="updatePickerSecondaryColor($event)" type="text" class="form-control" formControlName="secondaryColor" [value]="secondaryColor" />
+
                                 </div>
                             </div>
                             <div class="col-lg-4">

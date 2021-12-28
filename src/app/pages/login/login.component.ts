@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import * as CryptoJS from 'crypto-js';
 import { CustomValidatorService } from '../validators/custom-validator.service';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import * as CryptoJS from 'crypto-js';
 import { Router } from '@angular/router';
 import { AdminServiceService } from '../../services/admin-service.service';
@@ -20,15 +18,18 @@ export class LoginComponent implements OnInit {
     loginDetails!: FormGroup;
     submitted = false;
 
+    loading: boolean = false;
+
+    token: string = '';
+
     constructor(
-        private formBuilder: FormBuilder,private customValidatorService:CustomValidatorService,private adminService: AdminServiceService, public router: Router
+        private formBuilder: FormBuilder,
+        private customValidatorService:CustomValidatorService,
+        private adminService: AdminServiceService, 
+        public router: Router
     ) { }
 
     ngOnInit() {
-        // this.loginDetails = this.formBuilder.group({
-        //     email:['',[Validators.required, Validators.email]],
-        //     password: ['',Validators.compose([Validators.required, this.customValidatorService.patternValidator()])],
-        // });
         this.loginDetails = this.formBuilder.group({
             email:['',Validators.required],
             password: ['',Validators.required],
@@ -37,33 +38,32 @@ export class LoginComponent implements OnInit {
 
     get loginDetailsformControl() {
         return this.loginDetails.controls;
-      }
+    }
 
     loginSubmitData(formData: any) {
         this.submitted = true;
-        console.log(this.loginDetails.valid)
+        this.loading = true;
         if (this.loginDetails.valid) {
-            console.table(this.loginDetails.value);
-            console.log(formData.value.password);
-            const encryptedPassword = CryptoJS.AES.encrypt(formData.value.password.trim(),"secretPassword").toString();
-            console.log("Encrypted password",encryptedPassword)
-           this.adminService.loginRequest(formData.value.email, encryptedPassword).subscribe((data) => { 
-            if(data.result === 'Success'){sessionStorage.setItem("token",data.responseData);
-            this.adminService.extractTokenFun(data.responseData).subscribe((data: any) => {
-                if(data.responseData.userRole[0] !== "superAdmin") {
-                    this.loading = false;
-                    sessionStorage.removeItem('token');
-                    this.router.navigate(['/login']);
-                } else {
-                    this.loading = false;
-                    this.adminService.stateInfoFun().subscribe((res: any) => {
-                        
-                    });
-                    this.router.navigateByUrl('/dashboard');
+            const encryptedPassword = CryptoJS.AES.encrypt(formData.value.password.trim(),"4hBY1ey_9xeCHGV4RcAgfXdadf1UkwYIyV8SawceQ2W-9t4XhcMCG5pbDu8_taP-Xx-dDQa-PK54G-qL8oKpXQ").toString();
+            this.adminService.loginRequest(formData.value.email, encryptedPassword).subscribe((data) => { 
+                if(data.result === 'Success'){sessionStorage.setItem("token",data.responseData);
+                    this.adminService.extractTokenFun(data.responseData).subscribe((data: any) => {
+                        if(data.responseData.userRole[0] !== "superAdmin") {
+                            this.loading = false;
+                            sessionStorage.removeItem('token');
+                            this.router.navigate(['/login']);
+                        } else {
+                            this.token = sessionStorage.getItem('token');
+                            this.loading = false;
+                            this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
+
+                            });
+                            this.router.navigateByUrl('/dashboard');
+                        }
+                    })
                 }
             })
         }
-        })
     
-        }
+    }
 }
