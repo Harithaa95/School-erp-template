@@ -159,7 +159,6 @@ export class SettingStepperComponent implements OnInit {
       document.documentElement.style.setProperty("--secondary", "green");
       this.topBar.ngOnInit(this.global.portalName, this.showPreview);
     }
-    
   }
 
   ontitleChange(titleValue: any) {
@@ -236,7 +235,6 @@ export class SettingStepperComponent implements OnInit {
   }
 
   updatePickerPrimaryColor(color: string): void {
-    console.log(color);
     let primaryColorSpan = document.getElementById("primaryColor");
     primaryColorSpan.style.backgroundColor = color;
     this.global.primaryColor = this.primaryColor;
@@ -247,7 +245,6 @@ export class SettingStepperComponent implements OnInit {
   }
 
   updatePickerSecondaryColor(color: string): void {
-    console.log(color);
     let secondaryColorSpan = document.getElementById("secondaryColor");
     secondaryColorSpan.style.backgroundColor = color;
     this.global.secondaryColor = this.secondaryColor;
