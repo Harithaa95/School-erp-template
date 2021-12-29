@@ -34,7 +34,9 @@ export class TopBarComponent{
       }
     })
   }
-  portal(){
-    return this.siteName
+
+  portal(title?: any){
+    document.getElementById('title').innerHTML = title;
+    // return this.siteName
   } 
 }

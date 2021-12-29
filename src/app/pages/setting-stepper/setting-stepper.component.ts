@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef } from "@angular/core";
+import { Component, ElementRef, OnInit, ViewChild, ViewContainerRef } from "@angular/core";
 import { FormControl, FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { ColorPickerService, Cmyk } from "ngx-color-picker";
 import { ToastrService } from "ngx-toastr";
@@ -24,6 +24,18 @@ export class SettingStepperComponent implements OnInit {
   logoName = "";
   ShowFilter = false;
 
+  warningAlertForChooseFile: boolean = false;
+
+  fileNameForAlert: string = '';
+
+  warningAlert: boolean = false;
+
+  attachmentDetails: any[] = [];
+
+  fileUrl: any[] = [];
+
+  selectedFiles!: FileList;
+
   dropdownList;
   dropdownSettings;
 
@@ -31,7 +43,7 @@ export class SettingStepperComponent implements OnInit {
 
   languageSelected: any[] = [];
 
-  portalName: string;
+  portalName: any;
 
   storageSelectArray = [
     { id: 1, name: "AWS" },
@@ -108,6 +120,8 @@ export class SettingStepperComponent implements OnInit {
       primaryColorSpan.style.backgroundColor = this.primaryColor;
       let secondaryColorSpan = document.getElementById("secondaryColor");
       secondaryColorSpan.style.backgroundColor = this.secondaryColor;
+      document.documentElement.style.setProperty("--primary", res.responseData[0].primaryColor);
+      document.documentElement.style.setProperty("--secondary", res.responseData[0].secondaryColor);
     });
   }
   get configurationFormControl() {
@@ -136,25 +150,20 @@ export class SettingStepperComponent implements OnInit {
 
   previewHandler() {
     this.showPreview = !this.showPreview;
-    if (
-      this.showPreview &&
-      this.global.primaryColor &&
-      this.global.secondaryColor
-    ) {
-      document.documentElement.style.setProperty(
-        "--primary",
-        this.primaryColor
-      );
-      document.documentElement.style.setProperty(
-        "--secondary",
-        this.secondaryColor
-      );
+    if (this.showPreview && this.global.primaryColor && this.global.secondaryColor) {
+      document.documentElement.style.setProperty("--primary", this.primaryColor);
+      document.documentElement.style.setProperty("--secondary", this.secondaryColor);
       this.topBar.ngOnInit(this.portalName, this.showPreview);
     } else {
       document.documentElement.style.setProperty("--primary", "#7251ce");
       document.documentElement.style.setProperty("--secondary", "green");
       this.topBar.ngOnInit(this.global.portalName, this.showPreview);
     }
+    
+  }
+
+  ontitleChange(titleValue: any) {
+    this.topBar.portal(titleValue);
   }
 
   handleSubmit(form: FormGroup) {
@@ -252,7 +261,38 @@ export class SettingStepperComponent implements OnInit {
   }
 
   onLogoFileChange($event) {
+    this.attachmentDetails = [];
     let file = $event.target.files[0]; // <--- File Object for future use.
-    this.configurationDetails.controls["logo"].setValue(file ? file.name : "");
+    if(file.size > 1000 * 1024) {
+      this.warningAlert = true;
+    } else {
+      this.warningAlert = false;
+      this.adminService.uploadLogoFun(file, this.token).subscribe(
+        async (event) => {
+          let fileName= event.responseData.FileName;
+          let folderName= event.responseData.folderName;
+          let arrayObject = {
+            fileName: event.responseData.FileName,
+            folderName: event.responseData.folderName
+          }
+          this.attachmentDetails.push(arrayObject);
+          this.adminService.uploadUrl(file, event.responseData.url).subscribe((event) => {
+            this.adminService.downloadLogoFun(fileName, folderName, this.token).subscribe(data => {
+              this.fileUrl.push(data.responseData)
+              console.log(this.fileUrl);
+            })
+          }, error => {
+            console.log(error);
+          })
+        }, error => {
+          console.log(error);
+        }
+      );
+    }
+    // let token = sessionStorage.getItem('token');
+    
+    // console.log(file);
+    // this.configurationDetails.controls["logo"].setValue(file ? file.name : "");
+    // this.adminService.uploadLogoFun(file, this.token);
   }
 }

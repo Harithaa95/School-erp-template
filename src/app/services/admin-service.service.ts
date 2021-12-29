@@ -46,4 +46,29 @@ export class AdminServiceService {
     })
   }
 
+  uploadLogoFun(imageFile: any, tokenValue: any): Observable<any> {
+    return this.http.post(environment.uploadLogoURL, {
+      "folderName": `${Math.floor(Date.now() / 1000)+ "Logo"}`,
+      "fileName": imageFile.name,
+      "expireLimt": 240,
+      "extension": imageFile.type
+    }, { headers: new HttpHeaders({
+      'token': `${tokenValue}`
+    })});
+  }
+
+  uploadUrl(fileData: any, mainUrl: any): Observable<any> {
+    return this.http.put(mainUrl, fileData, { headers: { "Content-Type": "multipart/formData" } })
+  }
+
+  downloadLogoFun(fileName: any, folderName: any, tokenValue: any): Observable<any>  {
+    return this.http.post(environment.downloadLogoURL, {
+      "FileName": fileName,
+      "folderName": folderName,
+      "expireLimt": 240
+    }, { headers: new HttpHeaders({
+      'token': `${tokenValue}`
+    })});
+  }
+
 }
