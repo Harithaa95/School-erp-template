@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { Router } from '@angular/router';
 
+import { Title } from '@angular/platform-browser';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +15,8 @@ export class AdminServiceService {
   
 
   constructor(public http: HttpClient,
-              public router: Router) { }
+              public router: Router,
+              private titleService: Title) { }
 
   loginRequest(userId: any,userPassword:any): Observable<any> {
     return this.http.post(environment.loginURL, {
@@ -26,6 +29,7 @@ export class AdminServiceService {
     sessionStorage.removeItem('token');
     document.documentElement.style.setProperty("--primary", "#7251ce");
     document.documentElement.style.setProperty("--secondary", "green");
+    this.titleService.setTitle('School ERP');
     this.router.navigate(['/login']);
   }
 

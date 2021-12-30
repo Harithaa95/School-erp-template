@@ -6,6 +6,8 @@ import { GlobalComponent } from "app/shared/global/global.component";
 import { TopBarComponent } from "app/shared/topbar/topbar.component";
 import { AdminServiceService } from "app/services/admin-service.service";
 
+
+
 @Component({
   selector: "app-setting-stepper",
   templateUrl: "./setting-stepper.component.html",
@@ -38,6 +40,7 @@ export class SettingStepperComponent implements OnInit {
   faviconfileUrl: any[] = [];
 
   selectedFiles!: FileList;
+
 
   dropdownList;
   dropdownSettings;
@@ -263,7 +266,7 @@ export class SettingStepperComponent implements OnInit {
   onLogoFileChange($event) {
     this.attachmentLogoDetails = [];
     let file = $event.target.files[0]; // <--- File Object for future use.
-    if(file.size > 1000 * 1024) {
+    if(file.size > 1024 * 1000 || file.type !== "image/jpeg") {
       this.warningAlert = true;
     } else {
       this.warningAlert = false;
@@ -280,6 +283,7 @@ export class SettingStepperComponent implements OnInit {
             this.adminService.downloadFileFun(fileName, folderName, this.token).subscribe(data => {
               this.logofileUrl.push(data.responseData)
               console.log(this.logofileUrl);
+              this.topBar.logo(data.responseData);
             })
           }, error => {
             console.log(error);
@@ -294,7 +298,7 @@ export class SettingStepperComponent implements OnInit {
   onFaviconFileChange($event) {
     this.attachmentFaviconDetails = [];
     let file = $event.target.files[0]; 
-    if(file.size > 1000 * 1024) {
+    if(file.size > 1024 * 1000 || file.type !== "image/jpeg") {
       this.warningAlert = true;
     } else {
       this.warningAlert = false;
@@ -311,6 +315,7 @@ export class SettingStepperComponent implements OnInit {
             this.adminService.downloadFileFun(fileName, folderName, this.token).subscribe(data => {
               this.faviconfileUrl.push(data.responseData);
               console.log(this.faviconfileUrl);
+              this.topBar.favicon(data.responseData);
             })
           }, error => {
             console.log(error);
