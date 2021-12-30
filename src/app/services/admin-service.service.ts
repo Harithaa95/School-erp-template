@@ -24,6 +24,8 @@ export class AdminServiceService {
 
   logoutRequest() {
     sessionStorage.removeItem('token');
+    document.documentElement.style.setProperty("--primary", "#7251ce");
+    document.documentElement.style.setProperty("--secondary", "green");
     this.router.navigate(['/login']);
   }
 
@@ -46,7 +48,7 @@ export class AdminServiceService {
     })
   }
 
-  uploadLogoFun(imageFile: any, tokenValue: any): Observable<any> {
+  uploadFileFun(imageFile: any, tokenValue: any): Observable<any> {
     return this.http.post(environment.uploadLogoURL, {
       "folderName": `${Math.floor(Date.now() / 1000)+ "Logo"}`,
       "fileName": imageFile.name,
@@ -61,7 +63,7 @@ export class AdminServiceService {
     return this.http.put(mainUrl, fileData, { headers: { "Content-Type": "multipart/formData" } })
   }
 
-  downloadLogoFun(fileName: any, folderName: any, tokenValue: any): Observable<any>  {
+  downloadFileFun(fileName: any, folderName: any, tokenValue: any): Observable<any>  {
     return this.http.post(environment.downloadLogoURL, {
       "FileName": fileName,
       "folderName": folderName,

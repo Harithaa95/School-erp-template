@@ -33,7 +33,15 @@
                             
                             <div class="col-lg-4">
                                 <label>Fav Icon</label>
-                                <input type="file" id="fileUpload" name="fileupload" class="file-upload form-control" placeholder="Logo" />
+                                <input type="file" name="fileupload" class="file-upload form-control" placeholder="Logo" (change)="onFaviconFileChange($event)" />
+                                <input type="hidden" name="fileHidden" formControlName="favIcon" />
+                                <p *ngIf="file" class="pl-4 align-middle mb-0">{{file.name}}</p>
+                                <div class="alert alert-warning" role="alert" *ngIf="warningAlert">
+                                    The {{fileNameForAlert}} file size should be less than 100KB
+                                </div>
+                                <div class="alert alert-warning" role="alert" *ngIf="warningAlertForChooseFile">
+                                    Please choose the file
+                                </div>
                             </div>
                             <div class="col-lg-4">
                                 <label>Portal Name</label>

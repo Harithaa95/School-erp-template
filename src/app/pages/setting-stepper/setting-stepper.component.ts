@@ -30,9 +30,12 @@ export class SettingStepperComponent implements OnInit {
 
   warningAlert: boolean = false;
 
-  attachmentDetails: any[] = [];
+  attachmentLogoDetails: any[] = [];
 
-  fileUrl: any[] = [];
+  attachmentFaviconDetails: any[] = [];
+
+  logofileUrl: any[] = [];
+  faviconfileUrl: any[] = [];
 
   selectedFiles!: FileList;
 
@@ -258,13 +261,13 @@ export class SettingStepperComponent implements OnInit {
   }
 
   onLogoFileChange($event) {
-    this.attachmentDetails = [];
+    this.attachmentLogoDetails = [];
     let file = $event.target.files[0]; // <--- File Object for future use.
     if(file.size > 1000 * 1024) {
       this.warningAlert = true;
     } else {
       this.warningAlert = false;
-      this.adminService.uploadLogoFun(file, this.token).subscribe(
+      this.adminService.uploadFileFun(file, this.token).subscribe(
         async (event) => {
           let fileName= event.responseData.FileName;
           let folderName= event.responseData.folderName;
@@ -272,11 +275,11 @@ export class SettingStepperComponent implements OnInit {
             fileName: event.responseData.FileName,
             folderName: event.responseData.folderName
           }
-          this.attachmentDetails.push(arrayObject);
+          this.attachmentLogoDetails.push(arrayObject);
           this.adminService.uploadUrl(file, event.responseData.url).subscribe((event) => {
-            this.adminService.downloadLogoFun(fileName, folderName, this.token).subscribe(data => {
-              this.fileUrl.push(data.responseData)
-              console.log(this.fileUrl);
+            this.adminService.downloadFileFun(fileName, folderName, this.token).subscribe(data => {
+              this.logofileUrl.push(data.responseData)
+              console.log(this.logofileUrl);
             })
           }, error => {
             console.log(error);
@@ -286,10 +289,36 @@ export class SettingStepperComponent implements OnInit {
         }
       );
     }
-    // let token = sessionStorage.getItem('token');
-    
-    // console.log(file);
-    // this.configurationDetails.controls["logo"].setValue(file ? file.name : "");
-    // this.adminService.uploadLogoFun(file, this.token);
+  }
+
+  onFaviconFileChange($event) {
+    this.attachmentFaviconDetails = [];
+    let file = $event.target.files[0]; 
+    if(file.size > 1000 * 1024) {
+      this.warningAlert = true;
+    } else {
+      this.warningAlert = false;
+      this.adminService.uploadFileFun(file, this.token).subscribe(
+        async (event) => {
+          let fileName = event.responseData.FileName;
+          let folderName = event.responseData.folderName;
+          let arrayObject = {
+            fileName: event.responseData.FileName,
+            folderName: event.responseData.folderName
+          }
+          this.attachmentFaviconDetails.push(arrayObject);
+          this.adminService.uploadUrl(file, event.responseData.url).subscribe((event) => {
+            this.adminService.downloadFileFun(fileName, folderName, this.token).subscribe(data => {
+              this.faviconfileUrl.push(data.responseData);
+              console.log(this.faviconfileUrl);
+            })
+          }, error => {
+            console.log(error);
+          })
+        }, error => {
+          console.log(error);
+        }
+      );
+    }
   }
 }
