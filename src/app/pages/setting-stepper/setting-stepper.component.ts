@@ -32,6 +32,14 @@ export class SettingStepperComponent implements OnInit {
 
   warningAlert: boolean = false;
 
+  favIconwarningAlert: boolean = false;
+
+  imageError: string;
+
+  isImageSaved: boolean;
+
+  cardImageBase64: string;
+
   attachmentLogoDetails: any[] = [];
 
   attachmentFaviconDetails: any[] = [];
@@ -266,7 +274,7 @@ export class SettingStepperComponent implements OnInit {
   onLogoFileChange($event) {
     this.attachmentLogoDetails = [];
     let file = $event.target.files[0]; // <--- File Object for future use.
-    if(file.size > 1024 * 1000 || file.type !== "image/jpeg") {
+    if(file.size > 1024 * 1000 || file.type !== "image/jpeg" || file.type !== 'image/png' || file.type !== "image/jpg") {
       this.warningAlert = true;
     } else {
       this.warningAlert = false;
@@ -298,8 +306,8 @@ export class SettingStepperComponent implements OnInit {
   onFaviconFileChange($event) {
     this.attachmentFaviconDetails = [];
     let file = $event.target.files[0]; 
-    if(file.size > 1024 * 1000 || file.type !== "image/jpeg") {
-      this.warningAlert = true;
+    if(file.size > 1024 * 1000 || file.type !== "image/jpeg" || file.type !== 'image/png' || file.type !== "image/jpg") {
+      this.favIconwarningAlert = true;
     } else {
       this.warningAlert = false;
       this.adminService.uploadFileFun(file, this.token).subscribe(
@@ -326,4 +334,76 @@ export class SettingStepperComponent implements OnInit {
       );
     }
   }
+
+  // onLogoFileChange(fileInput: any) {
+  //   let file = fileInput.target.files[0]; 
+  //   this.imageError = null;
+  //       if (file) {
+  //           // Size Filter Bytes
+  //           const max_size = 20971520;
+  //           const allowed_types = ['image/png', 'image/jpeg'];
+  //           const max_height = 15200;
+  //           const max_width = 25600;
+
+  //           if (file.size > max_size) {
+  //               this.imageError =
+  //                   'Maximum size allowed is ' + max_size / 1000 + 'Mb';
+
+  //               return false;
+  //           }
+
+  //           if (file.type !== "image/jpeg" || file.type !== 'image/png' || file.type !== "image/jpg") {
+  //               this.imageError = 'Only Images are allowed ( JPG | PNG )';
+  //               return false;
+  //           }
+  //           const reader = new FileReader();
+  //           reader.onload = (e: any) => {
+  //               const image = new Image();
+  //               image.src = e.target.result;
+  //               image.onload = rs => {
+  //                   const img_height = rs.currentTarget['height'];
+  //                   const img_width = rs.currentTarget['width'];
+
+  //                   console.log(img_height, img_width);
+
+
+  //                   if (img_height > max_height && img_width > max_width) {
+  //                       this.imageError =
+  //                           'Maximum dimentions allowed ' +
+  //                           max_height +
+  //                           '*' +
+  //                           max_width +
+  //                           'px';
+  //                           console.log(this.imageError);
+  //                       return false;
+  //                   } else {
+  //                     this.adminService.uploadFileFun(file, this.token).subscribe(
+  //                       async (event) => {
+  //                         let fileName = event.responseData.FileName;
+  //                         let folderName = event.responseData.folderName;
+  //                         let arrayObject = {
+  //                           fileName: event.responseData.FileName,
+  //                           folderName: event.responseData.folderName
+  //                         }
+  //                         this.attachmentFaviconDetails.push(arrayObject);
+  //                         this.adminService.uploadUrl(file, event.responseData.url).subscribe((event) => {
+  //                           this.adminService.downloadFileFun(fileName, folderName, this.token).subscribe(data => {
+  //                             this.faviconfileUrl.push(data.responseData);
+  //                             console.log(this.faviconfileUrl);
+  //                             this.topBar.favicon(data.responseData);
+  //                           })
+  //                         }, error => {
+  //                           console.log(error);
+  //                         })
+  //                       }, error => {
+  //                         console.log(error);
+  //                       }
+  //                     );
+  //                   }
+  //               };
+  //           };
+
+  //           reader.readAsDataURL(fileInput.target.files[0]);
+  //       }
+  // }
 }

@@ -20,6 +20,7 @@
                         <div class="row">
                             <div class="col-lg-4">
                                 <label>Logo</label>
+                                {{imageError}}
                                 <input type="file" class="file-upload form-control" placeholder="Logo" (change)="onLogoFileChange($event)" />
                                 <input type="hidden" name="fileHidden" formControlName="logo" />
                                 <p *ngIf="file" class="pl-4 align-middle mb-0">{{file.name}}</p>
@@ -36,7 +37,7 @@
                                 <input type="file" name="fileupload" class="file-upload form-control" placeholder="Logo" (change)="onFaviconFileChange($event)" />
                                 <input type="hidden" name="fileHidden" formControlName="favIcon" />
                                 <p *ngIf="file" class="pl-4 align-middle mb-0">{{file.name}}</p>
-                                <div class="alert alert-warning" role="alert" *ngIf="warningAlert">
+                                <div class="alert alert-warning" role="alert" *ngIf="favIconwarningAlert">
                                     The {{fileNameForAlert}} file size should be less than 100KB and in jpeg/jpg format
                                 </div>
                                 <div class="alert alert-warning" role="alert" *ngIf="warningAlertForChooseFile">
