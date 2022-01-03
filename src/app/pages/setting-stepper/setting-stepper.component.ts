@@ -15,6 +15,10 @@ import { rendererTypeName } from "@angular/compiler";
   styleUrls: ["./setting-stepper.component.css"],
 })
 export class SettingStepperComponent implements OnInit {
+
+  @ViewChild("imageSize") input: any;
+  @ViewChild("imagefavIcon") inputImg: any;
+
   configurationDetails!: FormGroup;
   udiseDetails!: FormGroup;
   stateDetails!: FormGroup;
@@ -286,10 +290,10 @@ export class SettingStepperComponent implements OnInit {
     this.loadingLogo = true;
     this.attachmentLogoDetails = [];
     let file = $event.target.files[0]; // <--- File Object for future use.
-    if(file.size > 1024 * 1000 || file.type !== "image/jpeg") {
+    if(file.size > 1024 * 1000 || (file.type !== "image/jpeg" && file.type !== "image/png")) {
       this.loadingLogo = false;
       this.warningAlert = true;
-      this.configurationDetails.value.logo = null;
+      this.input.nativeElement.value = null;
     } else {
       this.warningAlert = false;
       this.adminService.uploadFileFun(file, this.token).subscribe(
@@ -320,10 +324,10 @@ export class SettingStepperComponent implements OnInit {
     this.loadingFavIcon = true;
     this.attachmentFaviconDetails = [];
     let file = $event.target.files[0]; 
-    if(file.size > 1024 * 1000) {
+    if(file.size > 1024 * 1000 || (file.type !== "image/jpeg" && file.type !== "image/png")) {
       this.loadingFavIcon = false;
       this.favIconwarningAlert = true;
-      this.configurationDetails.value.favIcon = null;
+      this.inputImg.nativeElement.value = null;
     } else {
       this.warningAlert = false;
       this.adminService.uploadFileFun(file, this.token).subscribe(
