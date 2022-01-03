@@ -21,7 +21,7 @@
                             <div class="col-lg-4">
                                 <label>Logo</label>
                                 {{imageError}}
-                                <input type="file" #imageLogo class="file-upload form-control" placeholder="Logo" (change)="onLogoFileChange($event)" />
+                                <input type="file" #imageSize class="file-upload form-control" placeholder="Logo" (change)="onLogoFileChange($event)" />
                                 <input type="hidden" *ngIf="!loadingLogo" name="fileHidden" formControlName="logo" />
                                 <i class="fa fa-spinner fa-spin" *ngIf="loadingLogo"></i> 
                                 <p *ngIf="file" class="pl-4 align-middle mb-0">{{file.name}}</p>
@@ -31,13 +31,14 @@
                                 <div class="alert alert-warning" role="alert" *ngIf="warningAlertForChooseFile">
                                     Please choose the file
                                 </div>
-                                <div class="alert alert-warning" role="alert" *ngIf="warningAlertForSize">
+                                <div class="alert alert-warning" role="alert" *ngIf="warningAlertForLogoSize">
                                     Height and Width must not exceed 100px.
                                 </div>
                             </div>
                             
                             <div class="col-lg-4">
                                 <label>Fav Icon</label>
+                                {{imageError}}
                                 <input type="file" #imagefavIcon class="file-upload form-control" placeholder="Logo" (change)="onFaviconFileChange($event)" />
                                 <input type="hidden" *ngIf="!loadingFavIcon" name="fileHidden" formControlName="favIcon" />
                                 <i class="fa fa-spinner fa-spin" *ngIf="loadingFavIcon"></i>
@@ -47,6 +48,9 @@
                                 </div>
                                 <div class="alert alert-warning" role="alert" *ngIf="warningAlertForChooseFile">
                                     Please choose the file
+                                </div>
+                                <div class="alert alert-warning" role="alert" *ngIf="warningAlertForFavIconSize">
+                                    Height and Width must not exceed 100px.
                                 </div>
                             </div>
                             <div class="col-lg-4">

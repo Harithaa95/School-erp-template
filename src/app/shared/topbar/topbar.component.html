@@ -6,7 +6,7 @@
 
 <div class="navbar navbar-dark bg-white navbar-expand-lg navbar-absolute fixed-top ">
     <div class="col align-items-start">
-        <img id="logoImage" src="assets/img/pudhuchery_gov.png" alt="Government of Pudhuchery" class="topbar_image">
+        <img id="logoImage" [src]="logoImage || 'assets/img/pudhuchery_gov.png'" alt="Government of Pudhuchery" class="topbar_image">
         <span id= 'stateName' style="font-size: 22px;"> {{ stateName }}</span>
     </div>
     <div class="collapse navbar-collapse justify-content-start">

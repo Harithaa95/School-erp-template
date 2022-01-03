@@ -22,6 +22,8 @@ export class TopBarComponent{
   token: string = '';
   stateName: string;
 
+  logoImage: any;
+
   favIcon: HTMLLinkElement = document.querySelector('#appIcon');
 
   constructor(
@@ -49,6 +51,7 @@ export class TopBarComponent{
   } 
 
   logo(imageUrl?: any) {
+    this.logoImage = imageUrl;
     let img = document.getElementById('logoImage');
     if (img instanceof HTMLImageElement) img.src = imageUrl;
   }

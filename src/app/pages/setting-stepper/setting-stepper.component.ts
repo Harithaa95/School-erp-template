@@ -1,22 +1,10 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-  ViewContainerRef,
-} from "@angular/core";
-import {
-  FormControl,
-  FormGroup,
-  Validators,
-  FormBuilder,
-} from "@angular/forms";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { FormControl, FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { ColorPickerService, Cmyk } from "ngx-color-picker";
 import { ToastrService } from "ngx-toastr";
 import { GlobalComponent } from "app/shared/global/global.component";
 import { TopBarComponent } from "app/shared/topbar/topbar.component";
 import { AdminServiceService } from "app/services/admin-service.service";
-import { rendererTypeName } from "@angular/compiler";
 
 @Component({
   selector: "app-setting-stepper",
@@ -24,7 +12,8 @@ import { rendererTypeName } from "@angular/compiler";
   styleUrls: ["./setting-stepper.component.css"],
 })
 export class SettingStepperComponent implements OnInit {
-  @ViewChild("imageSize") input: any;
+
+  @ViewChild("imageSize") inputLogo: any;
   @ViewChild("imagefavIcon") inputImg: any;
 
   configurationDetails!: FormGroup;
@@ -34,9 +23,6 @@ export class SettingStepperComponent implements OnInit {
   loadingLogo: boolean = false;
   loadingFavIcon: boolean = false;
 
-  height: number = 0;
-  width: number = 0;
-
   isconfigurationDetailsSubmitted = false;
   isUdiseDetailsSubmitted = false;
   warningAlertForLogoSize = false;
@@ -44,7 +30,6 @@ export class SettingStepperComponent implements OnInit {
 
   showPreview = false;
 
-  logoName = "";
   ShowFilter = false;
 
   warningAlertForChooseFile: boolean = false;
@@ -98,7 +83,6 @@ export class SettingStepperComponent implements OnInit {
     private global: GlobalComponent,
     private topBar: TopBarComponent,
     private cpService: ColorPickerService,
-    public vcRef: ViewContainerRef,
     private toastrService: ToastrService,
     public adminService: AdminServiceService
   ) {}
@@ -116,7 +100,7 @@ export class SettingStepperComponent implements OnInit {
     };
 
     this.configurationDetails = this.formBuilder.group({
-      logo: [this.logoName, Validators.required],
+      logo: [""],
       favIcon: [""],
       portalName: ["", Validators.required],
       primaryColor: new FormControl(""),
@@ -145,6 +129,7 @@ export class SettingStepperComponent implements OnInit {
       this.stateID = res.responseData[0].stateId;
       this.primaryColor = res.responseData[0].primaryColor;
       this.secondaryColor = res.responseData[0].secondaryColor;
+      this.titleName = res.responseData[0].portalName;
       this.configurationDetails.patchValue({
         language: [res.responseData[0].languageSetup[0]],
         portalName: res.responseData[0].portalName,
@@ -155,16 +140,11 @@ export class SettingStepperComponent implements OnInit {
       primaryColorSpan.style.backgroundColor = this.primaryColor;
       let secondaryColorSpan = document.getElementById("secondaryColor");
       secondaryColorSpan.style.backgroundColor = this.secondaryColor;
-      document.documentElement.style.setProperty(
-        "--primary",
-        res.responseData[0].primaryColor
-      );
-      document.documentElement.style.setProperty(
-        "--secondary",
-        res.responseData[0].secondaryColor
-      );
+      document.documentElement.style.setProperty("--primary", res.responseData[0].primaryColor);
+      document.documentElement.style.setProperty("--secondary",res.responseData[0].secondaryColor);
     });
   }
+
   get configurationFormControl() { return this.configurationDetails.controls; }
   get udiseInformationFormControl() { return this.udiseDetails.controls; }
   get stateInformationFormControl() { return this.stateDetails.controls; }
@@ -197,13 +177,29 @@ export class SettingStepperComponent implements OnInit {
       if(this.titleName !== null) {
         this.topBar.portal(this.titleName);
       }
-      this.topBar.ngOnInit(this.portalName, this.showPreview);
+    } else {
+      this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
+        this.primaryColor = res.responseData[0].primaryColor;
+        this.secondaryColor = res.responseData[0].secondaryColor;
+        let primaryColorSpan = document.getElementById("primaryColor");
+        primaryColorSpan.style.backgroundColor = this.primaryColor;
+        let secondaryColorSpan = document.getElementById("secondaryColor");
+        secondaryColorSpan.style.backgroundColor = this.secondaryColor;
+        document.documentElement.style.setProperty("--primary", this.primaryColor);
+        document.documentElement.style.setProperty("--secondary", this.secondaryColor);
+        this.inputImg.nativeElement.value = null;
+        this.inputLogo.nativeElement.value = null;
+        this.topBar.portal(res.responseData[0].portalName);
+        this.configurationDetails.patchValue({
+          language: [res.responseData[0].languageSetup[0]],
+          portalName: res.responseData[0].portalName,
+          primaryColor: res.responseData[0].primaryColor,
+          secondaryColor: res.responseData[0].secondaryColor,
+        });
+        this.topBar.logo("assets/img/pudhuchery_gov.png");
+        this.topBar.favicon("./assets/img/favicon.png");
+      })
     }
-    // else {
-    //   document.documentElement.style.setProperty("--primary", "#7251ce");
-    //   document.documentElement.style.setProperty("--secondary", "green");
-    //   this.topBar.ngOnInit(this.global.portalName, this.showPreview);
-    // }
   }
 
   ontitleChange(titleValue: any) {
@@ -314,21 +310,18 @@ export class SettingStepperComponent implements OnInit {
 
       image.onload = () => {
         let height = image.naturalHeight;
-        console.log(height);
         let width = image.naturalWidth;
-        console.log(width);
 
         if (height > 100 || width > 100) {
           this.warningAlertForLogoSize = true;
           this.loadingLogo = false;
+          this.inputLogo.nativeElement.value = null;
         } else {
-          if (
-            file.size > 1024 * 1000 ||
-            (file.type !== "image/jpeg" && file.type !== "image/png")
-          ) {
+          this.warningAlertForLogoSize = false;
+          if (file.size > 1024 * 1000 || (file.type !== "image/jpeg" && file.type !== "image/png")) {
             this.loadingLogo = false;
             this.warningAlert = true;
-            this.input.nativeElement.value = null;
+            this.inputLogo.nativeElement.value = null;
           } else {
             this.warningAlert = false;
             this.adminService.uploadFileFun(file, this.token).subscribe(
@@ -340,16 +333,11 @@ export class SettingStepperComponent implements OnInit {
                   folderName: event.responseData.folderName,
                 };
                 this.attachmentLogoDetails.push(arrayObject);
-                this.adminService
-                  .uploadUrl(file, event.responseData.url)
-                  .subscribe(
-                    (event) => {
-                      this.adminService
-                        .downloadFileFun(fileName, folderName, this.token)
-                        .subscribe((data) => {
+                this.adminService.uploadUrl(file, event.responseData.url).subscribe((event) => {
+                      this.adminService.downloadFileFun(fileName, folderName, this.token).subscribe((data) => {
                           this.loadingLogo = false;
                           this.logofileUrl.push(data.responseData);
-                        });
+                      });
                     },
                     (error) => {
                       console.log(error);
@@ -381,12 +369,11 @@ export class SettingStepperComponent implements OnInit {
 
         if (height > 100 || width > 100) {
           this.warningAlertForFavIconSize = true;
+          this.loadingFavIcon = false;
           this.inputImg.nativeElement.value = null;
         } else {
-          if (
-            file.size > 1024 * 1000 ||
-            (file.type !== "image/jpeg" && file.type !== "image/png")
-          ) {
+          this.warningAlertForFavIconSize = false;
+          if (file.size > 1024 * 1000 || (file.type !== "image/jpeg" && file.type !== "image/png")) {
             this.loadingFavIcon = false;
             this.favIconwarningAlert = true;
             this.inputImg.nativeElement.value = null;
@@ -401,21 +388,16 @@ export class SettingStepperComponent implements OnInit {
                   folderName: event.responseData.folderName,
                 };
                 this.attachmentFaviconDetails.push(arrayObject);
-                this.adminService
-                  .uploadUrl(file, event.responseData.url)
-                  .subscribe(
-                    (event) => {
-                      this.adminService
-                        .downloadFileFun(fileName, folderName, this.token)
-                        .subscribe((data) => {
-                          this.loadingFavIcon = false;
-                          this.faviconfileUrl.push(data.responseData);
-                        });
-                    },
-                    (error) => {
-                      console.log(error);
-                    }
-                  );
+                this.adminService.uploadUrl(file, event.responseData.url).subscribe((event) => {
+                  this.adminService.downloadFileFun(fileName, folderName, this.token).subscribe((data) => {
+                    this.loadingFavIcon = false;
+                    this.faviconfileUrl.push(data.responseData);
+                  });
+                },
+                  (error) => {
+                    console.log(error);
+                  }
+                );
               },
               (error) => {
                 console.log(error);
