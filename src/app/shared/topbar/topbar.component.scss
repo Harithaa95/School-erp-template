@@ -1,4 +1,4 @@
-.topbar{
+.topbar {
     height: 4rem;
     width: 100%;
     background: white;
@@ -12,7 +12,16 @@
     display: flex;
     justify-content: center;
 }
-.topbar_image{
+
+.topbar_image {
     width: 56px;
-    height: 51px;
+    height: 49px;
+}
+
+.container {
+    height: 4rem;
+    width: 100%;
+    background: white;
+    top: 0rem;
+    z-index: 999999;
 }

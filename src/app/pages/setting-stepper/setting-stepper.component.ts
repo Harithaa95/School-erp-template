@@ -15,9 +15,11 @@ export class SettingStepperComponent implements OnInit {
   configurationDetails!: FormGroup;
   udiseDetails!: FormGroup;
   stateDetails!: FormGroup;
+  storageSetupDetails!: FormGroup;
 
   isconfigurationDetailsSubmitted = false;
   isUdiseDetailsSubmitted = false;
+  isStorageDetailsSubmitted=false;
 
   showPreview = false;
 
@@ -75,7 +77,6 @@ export class SettingStepperComponent implements OnInit {
       primaryColor: new FormControl(""),
       secondaryColor: new FormControl(""),
       emailSetup: new FormControl(""),
-      storageSetup: new FormControl(""),
       secretId: new FormControl(""),
       email: new FormControl(""),
       password: new FormControl(""),
@@ -93,6 +94,10 @@ export class SettingStepperComponent implements OnInit {
       zone: [""],
       cluster: [""],
       school: [""],
+    });
+
+    this.storageSetupDetails = this.formBuilder.group({
+      storageSetup: ["", Validators.required],
     });
     this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
       this.stateID = res.responseData[0].stateId;
@@ -118,6 +123,10 @@ export class SettingStepperComponent implements OnInit {
   }
   get stateInformationFormControl() {
     return this.stateDetails.controls;
+  }
+
+  get storageSetupFormControl() {
+    return this.storageSetupDetails.controls;
   }
 
   getData(): Array<any> {
@@ -211,7 +220,18 @@ export class SettingStepperComponent implements OnInit {
       console.log(this.udiseDetails);
       this.toastrService.success("Data Inserted Successfully!", "", {
         timeOut: 2000,
-        positionClass: "toast-top-left",
+      });
+    }
+  }
+
+  StorageDetailsSubmit(storageSetupValue:any){
+    this.isStorageDetailsSubmitted=true;
+    console.log(this.storageSetupDetails.valid);
+    if (this.udiseDetails.valid) {
+      console.log(storageSetupValue.value);
+      console.log(this.storageSetupDetails);
+      this.toastrService.success("Data Inserted Successfully!", "", {
+        timeOut: 2000,
       });
     }
   }
