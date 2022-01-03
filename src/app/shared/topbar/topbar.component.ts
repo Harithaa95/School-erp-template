@@ -32,23 +32,20 @@ export class TopBarComponent{
 
   ngOnInit(givenValue,showPreview){
     this.token = sessionStorage.getItem('token');
-    this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
-      // this.titleService.setTitle(res.responseData[0].portalName);
-      // this.stateName = res.responseData[0].stateName;
-      // this.siteName = res.responseData[0].portalName;
-      if(sessionStorage.getItem('token') !== null) {
+    if(this.token !== null) {
+      this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
         this.siteName = res.responseData[0].portalName;
         this.titleService.setTitle(res.responseData[0].portalName);
         this.stateName = res.responseData[0].stateName;
-      } else {
-        this.siteName = this.global.portalName
-      }
-    })
+      })
+    } else {
+      this.siteName = this.global.portalName
+    }
+    
   }
 
   portal(title?: any){
     document.getElementById('title').innerHTML = title;
-    // return this.siteName
   } 
 
   logo(imageUrl?: any) {

@@ -5,6 +5,7 @@ import { ToastrService } from "ngx-toastr";
 import { GlobalComponent } from "app/shared/global/global.component";
 import { TopBarComponent } from "app/shared/topbar/topbar.component";
 import { AdminServiceService } from "app/services/admin-service.service";
+import { rendererTypeName } from "@angular/compiler";
 
 
 
@@ -17,6 +18,9 @@ export class SettingStepperComponent implements OnInit {
   configurationDetails!: FormGroup;
   udiseDetails!: FormGroup;
   stateDetails!: FormGroup;
+
+  loadingLogo: boolean = false;
+  loadingFavIcon: boolean = false;
 
   isconfigurationDetailsSubmitted = false;
   isUdiseDetailsSubmitted = false;
@@ -167,12 +171,19 @@ export class SettingStepperComponent implements OnInit {
     if (this.showPreview && this.global.primaryColor && this.global.secondaryColor) {
       document.documentElement.style.setProperty("--primary", this.primaryColor);
       document.documentElement.style.setProperty("--secondary", this.secondaryColor);
+      if(this.logofileUrl.length !== 0) {
+        this.topBar.logo(this.logofileUrl[0]);
+      }
+      if(this.faviconfileUrl.length !== 0) {
+        this.topBar.favicon(this.faviconfileUrl[0]);
+      }
       this.topBar.ngOnInit(this.portalName, this.showPreview);
-    } else {
-      document.documentElement.style.setProperty("--primary", "#7251ce");
-      document.documentElement.style.setProperty("--secondary", "green");
-      this.topBar.ngOnInit(this.global.portalName, this.showPreview);
-    }
+    } 
+    // else {
+    //   document.documentElement.style.setProperty("--primary", "#7251ce");
+    //   document.documentElement.style.setProperty("--secondary", "green");
+    //   this.topBar.ngOnInit(this.global.portalName, this.showPreview);
+    // }
   }
 
   ontitleChange(titleValue: any) {
@@ -272,10 +283,13 @@ export class SettingStepperComponent implements OnInit {
   }
 
   onLogoFileChange($event) {
+    this.loadingLogo = true;
     this.attachmentLogoDetails = [];
     let file = $event.target.files[0]; // <--- File Object for future use.
-    if(file.size > 1024 * 1000) {
+    if(file.size > 1024 * 1000 || file.type !== "image/jpeg") {
+      this.loadingLogo = false;
       this.warningAlert = true;
+      this.configurationDetails.value.logo = null;
     } else {
       this.warningAlert = false;
       this.adminService.uploadFileFun(file, this.token).subscribe(
@@ -289,9 +303,8 @@ export class SettingStepperComponent implements OnInit {
           this.attachmentLogoDetails.push(arrayObject);
           this.adminService.uploadUrl(file, event.responseData.url).subscribe((event) => {
             this.adminService.downloadFileFun(fileName, folderName, this.token).subscribe(data => {
-              this.logofileUrl.push(data.responseData)
-              console.log(this.logofileUrl);
-              this.topBar.logo(data.responseData);
+              this.loadingLogo = false;
+              this.logofileUrl.push(data.responseData);
             })
           }, error => {
             console.log(error);
@@ -304,10 +317,13 @@ export class SettingStepperComponent implements OnInit {
   }
 
   onFaviconFileChange($event) {
+    this.loadingFavIcon = true;
     this.attachmentFaviconDetails = [];
     let file = $event.target.files[0]; 
     if(file.size > 1024 * 1000) {
+      this.loadingFavIcon = false;
       this.favIconwarningAlert = true;
+      this.configurationDetails.value.favIcon = null;
     } else {
       this.warningAlert = false;
       this.adminService.uploadFileFun(file, this.token).subscribe(
@@ -321,9 +337,8 @@ export class SettingStepperComponent implements OnInit {
           this.attachmentFaviconDetails.push(arrayObject);
           this.adminService.uploadUrl(file, event.responseData.url).subscribe((event) => {
             this.adminService.downloadFileFun(fileName, folderName, this.token).subscribe(data => {
+              this.loadingFavIcon = false;
               this.faviconfileUrl.push(data.responseData);
-              console.log(this.faviconfileUrl);
-              this.topBar.favicon(data.responseData);
             })
           }, error => {
             console.log(error);
