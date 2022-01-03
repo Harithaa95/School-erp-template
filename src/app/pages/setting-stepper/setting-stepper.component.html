@@ -26,13 +26,16 @@
                                 <i class="fa fa-spinner fa-spin" *ngIf="loadingLogo"></i> 
                                 <p *ngIf="file" class="pl-4 align-middle mb-0">{{file.name}}</p>
                                 <div class="alert alert-warning" role="alert" *ngIf="warningAlert">
-                                    The {{fileNameForAlert}} file size should be less than 1MB and in jpeg/jpg format
+                                    The {{fileNameForAlert}} file size should be less than 1MB
+                                </div>
+                                <div class="alert alert-warning" role="alert" *ngIf="warningAlertForLogoFormat">
+                                    The {{fileNameForAlert}} file format should be in jpeg/jpg or png
                                 </div>
                                 <div class="alert alert-warning" role="alert" *ngIf="warningAlertForChooseFile">
                                     Please choose the file
                                 </div>
                                 <div class="alert alert-warning" role="alert" *ngIf="warningAlertForLogoSize">
-                                    Height and Width must not exceed 100px.
+                                    Height and Width must not exceed 100*100.
                                 </div>
                             </div>
                             
@@ -44,13 +47,16 @@
                                 <i class="fa fa-spinner fa-spin" *ngIf="loadingFavIcon"></i>
                                 <p *ngIf="file" class="pl-4 align-middle mb-0">{{file.name}}</p>
                                 <div class="alert alert-warning" role="alert" *ngIf="favIconwarningAlert">
-                                    The {{fileNameForAlert}} file size should be less than 1MB and in jpeg/jpg format
+                                    The {{fileNameForAlert}} file size should be less than 1MB 
+                                </div>
+                                <div class="alert alert-warning" role="alert" *ngIf="warningAlertForFavIconFormat">
+                                    The {{fileNameForAlert}} file format should be in jpeg/jpg or png
                                 </div>
                                 <div class="alert alert-warning" role="alert" *ngIf="warningAlertForChooseFile">
                                     Please choose the file
                                 </div>
                                 <div class="alert alert-warning" role="alert" *ngIf="warningAlertForFavIconSize">
-                                    Height and Width must not exceed 100px.
+                                    Height and Width must not exceed 100*100.
                                 </div>
                             </div>
                             <div class="col-lg-4">
