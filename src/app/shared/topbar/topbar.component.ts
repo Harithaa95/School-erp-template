@@ -34,10 +34,12 @@ export class TopBarComponent{
     this.token = sessionStorage.getItem('token');
     this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
       // this.titleService.setTitle(res.responseData[0].portalName);
-      this.stateName = res.responseData[0].stateName;
+      // this.stateName = res.responseData[0].stateName;
       // this.siteName = res.responseData[0].portalName;
       if(sessionStorage.getItem('token') !== null) {
         this.siteName = res.responseData[0].portalName;
+        this.titleService.setTitle(res.responseData[0].portalName);
+        this.stateName = res.responseData[0].stateName;
       } else {
         this.siteName = this.global.portalName
       }
