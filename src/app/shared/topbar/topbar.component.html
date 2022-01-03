@@ -1,6 +1,20 @@
 
-<div class="topbar">
+<!-- <div class="topbar">
     <img src="assets/img/pudhuchery_gov.png" alt="Government of Pudhuchery" class="topbar_image">
-    <h4>{{portal()}}</h4>
+    <h4 id="title">{{ siteName }}</h4>
+</div> -->
+
+<div class="navbar navbar-dark bg-white navbar-expand-lg navbar-absolute fixed-top ">
+    <div class="col align-items-start">
+        <img id="logoImage" [src]="logoImage || 'assets/img/pudhuchery_gov.png'" alt="Government of Pudhuchery" class="topbar_image">
+        <span id= 'stateName' style="font-size: 22px;"> {{ stateName }}</span>
+    </div>
+    <div class="collapse navbar-collapse justify-content-start">
+        <h4 id="title">{{ siteName }}</h4>
+    </div>
+  <!-- <div class="collapse navbar-collapse justify-content-end">
+        <img src="https://www.py.gov.in/sites/all/themes/chh/images/logo-02.jpg" alt="Government of Pudhuchery" class="topbar_image">
+    </div> -->
 </div>
+
   
