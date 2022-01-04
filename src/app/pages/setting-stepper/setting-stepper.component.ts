@@ -135,7 +135,7 @@ export class SettingStepperComponent implements OnInit {
       this.primaryColor = res.responseData[0].primaryColor;
       this.secondaryColor = res.responseData[0].secondaryColor;
       this.titleName = res.responseData[0].portalName;
-      this.inputLogo.nativeElement.src = res.responseData[0].logo;
+      // this.topBar.logo(res.responseData[0].logo);
       this.configurationDetails.patchValue({
         languageSetup: res.responseData[0].languageSetup,
         portalName: res.responseData[0].portalName,
