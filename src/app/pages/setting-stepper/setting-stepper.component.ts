@@ -114,7 +114,7 @@ export class SettingStepperComponent implements OnInit {
       secretId: new FormControl(""),
       email: new FormControl(""),
       password: new FormControl(""),
-      language: new FormControl([""]),
+      languageSetup: new FormControl([""]),
     });
 
     this.udiseDetails = this.formBuilder.group({
@@ -131,14 +131,13 @@ export class SettingStepperComponent implements OnInit {
     });
 
     this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
-      console.log(res);
       this.stateID = res.responseData[0].stateId;
       this.primaryColor = res.responseData[0].primaryColor;
       this.secondaryColor = res.responseData[0].secondaryColor;
       this.titleName = res.responseData[0].portalName;
       this.inputLogo.nativeElement.src = res.responseData[0].logo;
       this.configurationDetails.patchValue({
-        language: [res.responseData[0].languageSetup[0]],
+        languageSetup: res.responseData[0].languageSetup,
         portalName: res.responseData[0].portalName,
         primaryColor: res.responseData[0].primaryColor,
         secondaryColor: res.responseData[0].secondaryColor,
@@ -198,7 +197,7 @@ export class SettingStepperComponent implements OnInit {
         this.inputLogo.nativeElement.value = null;
         this.topBar.portal(res.responseData[0].portalName);
         this.configurationDetails.patchValue({
-          language: [res.responseData[0].languageSetup[0]],
+          languageSetup: res.responseData[0].languageSetup,
           portalName: res.responseData[0].portalName,
           primaryColor: res.responseData[0].primaryColor,
           secondaryColor: res.responseData[0].secondaryColor,
@@ -246,16 +245,14 @@ export class SettingStepperComponent implements OnInit {
       this.configurationDetails.value.logo = this.logofileUrl[0];
       this.configurationDetails.value.favIcon = this.faviconfileUrl[0];
       this.languageSelected = this.getObjectListFromData(
-        this.configurationDetails.value.language.map((item) => item.itemId)
+        this.configurationDetails.value.languageSetup.map((item) => item.itemId)
       );
-      this.configurationDetails.value.language = this.languageSelected;
-      console.log(this.configurationDetails.value);
-      console.log(this.stateID);
+      this.configurationDetails.value.languageSetup = this.languageSelected;
       this.adminService.stateUpdateInfoFun(this.configurationDetails.value,this.stateID, this.token).subscribe((res: any) => {
         this.loading = false;
-        console.log(res);
         this.toastrService.success(res.responseData);
       }), (error: any) => {
+        this.toastrService.error(error.message);
         console.log(error);
       };
     }
