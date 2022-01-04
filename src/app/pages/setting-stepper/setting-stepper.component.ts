@@ -5,12 +5,18 @@ import { ToastrService } from "ngx-toastr";
 import { GlobalComponent } from "app/shared/global/global.component";
 import { TopBarComponent } from "app/shared/topbar/topbar.component";
 import { AdminServiceService } from "app/services/admin-service.service";
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: "app-setting-stepper",
   templateUrl: "./setting-stepper.component.html",
   styleUrls: ["./setting-stepper.component.css"],
 })
+
+
+
+
 export class SettingStepperComponent implements OnInit {
   configurationDetails!: FormGroup;
   udiseDetails!: FormGroup;
@@ -19,7 +25,7 @@ export class SettingStepperComponent implements OnInit {
 
   isconfigurationDetailsSubmitted = false;
   isUdiseDetailsSubmitted = false;
-  isStorageDetailsSubmitted=false;
+  isStorageDetailsSubmitted = false;
 
   showPreview = false;
 
@@ -55,8 +61,9 @@ export class SettingStepperComponent implements OnInit {
     private cpService: ColorPickerService,
     public vcRef: ViewContainerRef,
     private toastrService: ToastrService,
-    public adminService: AdminServiceService
-  ) {}
+    public adminService: AdminServiceService,
+    public router: Router
+  ) { }
 
   ngOnInit() {
     this.dropdownList = this.getData();
@@ -224,8 +231,8 @@ export class SettingStepperComponent implements OnInit {
     }
   }
 
-  StorageDetailsSubmit(storageSetupValue:any){
-    this.isStorageDetailsSubmitted=true;
+  StorageDetailsSubmit(storageSetupValue: any) {
+    this.isStorageDetailsSubmitted = true;
     console.log(this.storageSetupDetails.valid);
     if (this.udiseDetails.valid) {
       console.log(storageSetupValue.value);
@@ -275,4 +282,7 @@ export class SettingStepperComponent implements OnInit {
     let file = $event.target.files[0]; // <--- File Object for future use.
     this.configurationDetails.controls["logo"].setValue(file ? file.name : "");
   }
+
+
 }
+

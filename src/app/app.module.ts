@@ -67,8 +67,5 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [HttpClient],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
-
-
-
-// ,'../assets/i18n/','.json' 
