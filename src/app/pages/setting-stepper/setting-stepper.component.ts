@@ -301,15 +301,18 @@ export class SettingStepperComponent implements OnInit {
   }
 
   onLogoFileChange($event) {
+    this.warningAlertForLogoFormat = false;
+    this.warningAlertForLogoSize = false;
     this.loadingLogo = true;
     this.attachmentLogoDetails = [];
     let file = $event.target.files[0]; // <--- File Object for future use.
-    if(file.type !== "image/jpeg" || file.type !== "image/png") {
+    if(file.type !== "image/jpeg" && file.type !== "image/png") {
       this.loadingLogo = false;
       this.warningAlertForLogoFormat = true;
       this.inputLogo.nativeElement.value = null;
       return;
     }
+    this.warningAlertForLogoFormat = false;
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (e: any) => {
@@ -320,20 +323,17 @@ export class SettingStepperComponent implements OnInit {
         let height = image.naturalHeight;
         let width = image.naturalWidth;
 
-        if (height > 100 || width > 100) {
-          console.log("entered");
-          this.warningAlertForLogoSize = true;
+        if (file.size > 1024 * 1000) {
           this.loadingLogo = false;
+          this.warningAlert = true;
           this.inputLogo.nativeElement.value = null;
         } else {
           this.warningAlertForLogoSize = false;
-          if (file.size > 1024 * 1000) {
-            console.log("entered");
+          if (height > 100 || width > 100) {
+            this.warningAlertForLogoSize = true;
             this.loadingLogo = false;
-            this.warningAlert = true;
             this.inputLogo.nativeElement.value = null;
           } else {
-            console.log("entered");
             this.warningAlert = false;
             this.adminService.uploadFileFun(file, this.token).subscribe(
               async (event) => {
@@ -366,6 +366,8 @@ export class SettingStepperComponent implements OnInit {
   }
 
   onFaviconFileChange($event) {
+    this.warningAlertForFavIconFormat = false;
+    this.warningAlertForFavIconSize = false;
     this.loadingFavIcon = true;
     this.attachmentFaviconDetails = [];
     let file = $event.target.files[0];
@@ -375,6 +377,7 @@ export class SettingStepperComponent implements OnInit {
       this.inputImg.nativeElement.value = null;
       return;
     }
+    this.warningAlertForFavIconFormat = false;
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = (e: any) => {
@@ -384,15 +387,15 @@ export class SettingStepperComponent implements OnInit {
         let height = image.naturalHeight;
         let width = image.naturalWidth;
 
-        if (height > 100 || width > 100) {
-          this.warningAlertForFavIconSize = true;
+        if (file.size > 1024 * 1000) {
           this.loadingFavIcon = false;
+          this.favIconwarningAlert = true;
           this.inputImg.nativeElement.value = null;
         } else {
           this.warningAlertForFavIconSize = false;
-          if (file.size > 1024 * 1000) {
+          if (height > 100 || width > 100) {
+            this.warningAlertForFavIconSize = true;
             this.loadingFavIcon = false;
-            this.favIconwarningAlert = true;
             this.inputImg.nativeElement.value = null;
           } else {
             this.warningAlert = false;
