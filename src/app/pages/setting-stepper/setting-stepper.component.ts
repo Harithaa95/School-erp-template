@@ -30,6 +30,8 @@ export class SettingStepperComponent implements OnInit {
   warningAlertForLogoFormat = false;
   warningAlertForFavIconFormat = false;
 
+  loading: boolean = false;
+
   showPreview = false;
 
   ShowFilter = false;
@@ -127,11 +129,14 @@ export class SettingStepperComponent implements OnInit {
       cluster: [""],
       school: [""],
     });
+
     this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
+      console.log(res);
       this.stateID = res.responseData[0].stateId;
       this.primaryColor = res.responseData[0].primaryColor;
       this.secondaryColor = res.responseData[0].secondaryColor;
       this.titleName = res.responseData[0].portalName;
+      this.inputLogo.nativeElement.src = res.responseData[0].logo;
       this.configurationDetails.patchValue({
         language: [res.responseData[0].languageSetup[0]],
         portalName: res.responseData[0].portalName,
@@ -235,22 +240,24 @@ export class SettingStepperComponent implements OnInit {
   }
 
   configurationDetailsSubmit(formValue: FormGroup) {
+    this.loading = true;
     this.isconfigurationDetailsSubmitted = true;
-    var languageCode;
-    console.log(this.configurationDetails.valid);
     if (this.configurationDetails.valid) {
-      console.log(formValue.value);
-      // this.languageSelected=this.getObjectListFromData(this.configurationDetails.value.language.map(item => item.item_id)
+      this.configurationDetails.value.logo = this.logofileUrl[0];
+      this.configurationDetails.value.favIcon = this.faviconfileUrl[0];
       this.languageSelected = this.getObjectListFromData(
         this.configurationDetails.value.language.map((item) => item.itemId)
       );
-      console.log(this.languageSelected);
       this.configurationDetails.value.language = this.languageSelected;
       console.log(this.configurationDetails.value);
-      this.adminService.stateUpdateInfoFun(
-        this.configurationDetails.value,
-        this.stateID
-      );
+      console.log(this.stateID);
+      this.adminService.stateUpdateInfoFun(this.configurationDetails.value,this.stateID, this.token).subscribe((res: any) => {
+        this.loading = false;
+        console.log(res);
+        this.toastrService.success(res.responseData);
+      }), (error: any) => {
+        console.log(error);
+      };
     }
   }
 
@@ -305,6 +312,7 @@ export class SettingStepperComponent implements OnInit {
     this.warningAlertForLogoSize = false;
     this.loadingLogo = true;
     this.attachmentLogoDetails = [];
+    this.logofileUrl = [];
     let file = $event.target.files[0]; // <--- File Object for future use.
     if(file.type !== "image/jpeg" && file.type !== "image/png") {
       this.loadingLogo = false;
@@ -370,6 +378,7 @@ export class SettingStepperComponent implements OnInit {
     this.warningAlertForFavIconSize = false;
     this.loadingFavIcon = true;
     this.attachmentFaviconDetails = [];
+    this.faviconfileUrl = [];
     let file = $event.target.files[0];
     if(file.type !== "image/jpeg" && file.type !== "image/png") {
       this.loadingFavIcon = false;

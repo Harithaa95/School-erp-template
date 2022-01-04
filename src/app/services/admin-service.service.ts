@@ -45,11 +45,13 @@ export class AdminServiceService {
     }) });
   }
 
-  stateUpdateInfoFun(formData: any, id: any) {
+  stateUpdateInfoFun(formData: any, id: any, tokenValue: any) {
     return this.http.put(environment.stateUpdateInfoURL, {
       "stateID": id,
-      "updateData" : { formData }
-    })
+      "updateData" : formData 
+    }, { headers: new HttpHeaders({
+      'token': `${tokenValue}`
+    }) })
   }
 
   uploadFileFun(imageFile: any, tokenValue: any): Observable<any> {

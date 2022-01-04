@@ -35,7 +35,7 @@
                                     Please choose the file
                                 </div>
                                 <div class="alert alert-warning" role="alert" *ngIf="warningAlertForLogoSize">
-                                    Height and Width must not exceed 100*100.
+                                    Height and Width must not exceed 100 x 100
                                 </div>
                             </div>
                             
@@ -56,7 +56,7 @@
                                     Please choose the file
                                 </div>
                                 <div class="alert alert-warning" role="alert" *ngIf="warningAlertForFavIconSize">
-                                    Height and Width must not exceed 100*100.
+                                    Height and Width must not exceed 100 x 100
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -137,7 +137,10 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-round">Submit</button>
+                            <button type="submit" class="btn btn-primary btn-round">
+                                <span *ngIf="!loading">Submit</span>
+                                <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                            </button>
                         </div>
                     </form>
                 </div>
