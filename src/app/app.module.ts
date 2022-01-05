@@ -24,6 +24,7 @@ import { AuthLayoutComponent } from "./layouts/Auth-layout/auth-layout.component
 import { PreviewComponent } from './pages/preview/preview.component';
 
 
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
@@ -34,7 +35,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    PreviewComponent
+    PreviewComponent,
+    
   ],
   imports: [
     BrowserAnimationsModule,
@@ -67,8 +69,5 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [HttpClient],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }
-
-
-
-// ,'../assets/i18n/','.json' 
