@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'storage-setup',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StorageSetupComponent implements OnInit {
 
-  constructor() { }
+  constructor( public router: Router) { }
 
   ngOnInit(): void {
   }
 
+  backfunc(){
+    this.router.navigate(['/settingStepper']);
+  }
 }

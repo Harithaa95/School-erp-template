@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'udise-setup',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UdiseSetupComponent implements OnInit {
 
-  constructor() { }
+  constructor( public router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  backfunc(){
+    this.router.navigate(['/settingStepper']);
   }
 
 }

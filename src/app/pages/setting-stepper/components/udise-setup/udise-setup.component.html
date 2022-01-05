@@ -1,3 +1,6 @@
+<div class="text-start"><button class="btn btn-primary btn-round" (click)="backfunc()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;&nbsp;Back</button>
+
+</div>
 <div class="card">
     <div class="card-body">
         <h6 class="card-title">{{'UDISE Information Setup'|translate}}
@@ -13,7 +16,7 @@
                 </div>
                 <div class="col-lg-6">
                     <label>{{'Password'|translate}}</label>
-                    <input type="password" formControlName="password" class="form-control" ßß />
+                    <input type="password" formControlName="password" class="form-control" />
                     <span class="text-danger " *ngIf="(udiseInformationFormControl.password.touched ||isUdiseDetailsSubmitted) && udiseInformationFormControl.password.errors?.required ">
                         Password is required
                     </span>

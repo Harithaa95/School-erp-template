@@ -5,13 +5,15 @@ import { TranslateModule} from '@ngx-translate/core';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { RouterModule } from '@angular/router';
+
 
 @NgModule({
   declarations: [ConfigurationComponent],
   imports: [
     CommonModule,FormsModule,ReactiveFormsModule,
     TranslateModule,NgMultiSelectDropDownModule.forRoot(),
-    ColorPickerModule, 
+    ColorPickerModule,RouterModule 
   ],
     exports: [ ConfigurationComponent ]
 })

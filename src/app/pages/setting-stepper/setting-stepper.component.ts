@@ -7,15 +7,18 @@ import { TopBarComponent } from "app/shared/topbar/topbar.component";
 import { AdminServiceService } from "app/services/admin-service.service";
 import { Router } from '@angular/router';
 
+export interface Breadcrumb {
+  name: string;
+  url: string;
+  queryParams?: any;
+  pauseDisplay?: boolean;
+}
 
 @Component({
   selector: "app-setting-stepper",
   templateUrl: "./setting-stepper.component.html",
   styleUrls: ["./setting-stepper.component.css"],
 })
-
-
-
 
 export class SettingStepperComponent implements OnInit {
   configurationDetails!: FormGroup;
