@@ -153,10 +153,10 @@ export class SettingStepperComponent implements OnInit {
         primaryColor: res.responseData[0].primaryColor,
         secondaryColor: res.responseData[0].secondaryColor,
       });
-      let primaryColorSpan = document.getElementById("primaryColor");
-      primaryColorSpan.style.backgroundColor = this.primaryColor;
-      let secondaryColorSpan = document.getElementById("secondaryColor");
-      secondaryColorSpan.style.backgroundColor = this.secondaryColor;
+      // let primaryColorSpan = document.getElementById("primaryColor");
+      // primaryColorSpan.style.backgroundColor = this.primaryColor;
+      // let secondaryColorSpan = document.getElementById("secondaryColor");
+      // secondaryColorSpan.style.backgroundColor = this.secondaryColor;
       document.documentElement.style.setProperty("--primary", res.responseData[0].primaryColor);
       document.documentElement.style.setProperty("--secondary",res.responseData[0].secondaryColor);
     });

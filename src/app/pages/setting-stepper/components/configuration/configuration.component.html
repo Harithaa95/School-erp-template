@@ -4,7 +4,7 @@
         <div class="card-body">
             <h6 class="card-title"> {{'Configuration'|translate}}
             </h6>
-            <form [formGroup]="configurationDetails" id="msform">
+            <form [formGroup]="configurationDetails" id="msform" (ngSubmit)="configurationDetailsSubmit(configurationDetails)">
                 <div class="row">
                     <div class="col-lg-4">
                         <label>{{'Logo'|translate}}</label>
@@ -55,14 +55,17 @@
                         <label>{{'Language'|translate}}</label>
                         <div class="input-group">
                             <div class="multi-dropdown">
-                                <ng-multiselect-dropdown formControlName="language" [placeholder]="'Languages'" [settings]="dropdownSettings" [data]="dropdownList" (onItemSelect)="onItemSelect($event)">
+                                <ng-multiselect-dropdown formControlName="languageSetup" [placeholder]="'Languages'" [settings]="dropdownSettings" [data]="dropdownList" (onItemSelect)="onItemSelect($event)">
                                 </ng-multiselect-dropdown>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-round">{{'Submit'|translate}}</button>
+                    <button type="submit" class="btn btn-primary btn-round">
+                        <span *ngIf="!loading">{{'Submit'|translate}}</span>
+                        <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                    </button>
                 </div>
             </form>
         </div>
