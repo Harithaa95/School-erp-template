@@ -217,7 +217,8 @@ export class SettingStepperComponent implements OnInit {
       console.log(this.configurationDetails.value);
       this.adminService.stateUpdateInfoFun(
         this.configurationDetails.value,
-        this.stateID
+        this.stateID,
+        this.token
       );
     }
   }
