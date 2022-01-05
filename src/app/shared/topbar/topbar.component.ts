@@ -23,6 +23,8 @@ export class TopBarComponent{
     private global : GlobalComponent,
     private adminService: AdminServiceService,
     private titleService: Title){ }
+
+    
   ngOnInit(givenValue,showPreview){
     this.token = sessionStorage.getItem('token');
     if(this.token !== null) {
