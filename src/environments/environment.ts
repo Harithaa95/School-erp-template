@@ -10,5 +10,7 @@ export const environment = {
   loginURL:backendURL+'v1/login',
   extarctTokenURL: backendURL+'v1/extractToken',
   stateInfoURL: backendURL+'v1/DES/stateInfo',
-  stateUpdateInfoURL: backendURL+'v1/DES/updateStateInfo'
+  stateUpdateInfoURL: backendURL+'v1/DES/updateStateInfo',
+  uploadLogoURL:  backendURL+'v1/uploadToAws',
+  downloadLogoURL: backendURL+'v1/downloadFromAws'
 };
