@@ -5,6 +5,7 @@ import { ToastrService } from "ngx-toastr";
 import { GlobalComponent } from "app/shared/global/global.component";
 import { TopBarComponent } from "app/shared/topbar/topbar.component";
 import { AdminServiceService } from "app/services/admin-service.service";
+import { NavbarComponent } from "app/shared/navbar/navbar.component";
 
 @Component({
   selector: "app-setting-stepper",
@@ -86,6 +87,7 @@ export class SettingStepperComponent implements OnInit {
     private formBuilder: FormBuilder,
     private global: GlobalComponent,
     private topBar: TopBarComponent,
+    private navBar: NavbarComponent,
     private cpService: ColorPickerService,
     private toastrService: ToastrService,
     public adminService: AdminServiceService
@@ -131,23 +133,25 @@ export class SettingStepperComponent implements OnInit {
     });
 
     this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
-      this.stateID = res.responseData[0].stateId;
-      this.primaryColor = res.responseData[0].primaryColor;
-      this.secondaryColor = res.responseData[0].secondaryColor;
-      this.titleName = res.responseData[0].portalName;
-      // this.topBar.logo(res.responseData[0].logo);
+      console.log(res);
+      this.navBar.selectedLanguageFun(res.responseData[0].languageSetup);
       this.configurationDetails.patchValue({
         languageSetup: res.responseData[0].languageSetup,
         portalName: res.responseData[0].portalName,
         primaryColor: res.responseData[0].primaryColor,
         secondaryColor: res.responseData[0].secondaryColor,
       });
+      this.stateID = res.responseData[0].stateId;
+      this.primaryColor = res.responseData[0].primaryColor;
+      this.secondaryColor = res.responseData[0].secondaryColor;
+      this.titleName = res.responseData[0].portalName;
       let primaryColorSpan = document.getElementById("primaryColor");
       primaryColorSpan.style.backgroundColor = this.primaryColor;
       let secondaryColorSpan = document.getElementById("secondaryColor");
       secondaryColorSpan.style.backgroundColor = this.secondaryColor;
       document.documentElement.style.setProperty("--primary", res.responseData[0].primaryColor);
-      document.documentElement.style.setProperty("--secondary",res.responseData[0].secondaryColor);
+      document.documentElement.style.setProperty("--secondary", res.responseData[0].secondaryColor);
+      this.topBar.logo(res.responseData[0].logo);
     });
   }
 
@@ -196,6 +200,7 @@ export class SettingStepperComponent implements OnInit {
         this.inputImg.nativeElement.value = null;
         this.inputLogo.nativeElement.value = null;
         this.topBar.portal(res.responseData[0].portalName);
+        this.topBar.logo(res.responseData[0].logo);
         this.configurationDetails.patchValue({
           languageSetup: res.responseData[0].languageSetup,
           portalName: res.responseData[0].portalName,
@@ -250,7 +255,30 @@ export class SettingStepperComponent implements OnInit {
       this.configurationDetails.value.languageSetup = this.languageSelected;
       this.adminService.stateUpdateInfoFun(this.configurationDetails.value,this.stateID, this.token).subscribe((res: any) => {
         this.loading = false;
-        this.toastrService.success(res.responseData);
+        if(res.result === "Success") {
+          this.toastrService.success(res.responseData);
+          this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
+            console.log(res);
+            this.navBar.selectedLanguageFun(res.responseData[0].languageSetup);
+            this.configurationDetails.patchValue({
+              languageSetup: res.responseData[0].languageSetup,
+              portalName: res.responseData[0].portalName,
+              primaryColor: res.responseData[0].primaryColor,
+              secondaryColor: res.responseData[0].secondaryColor,
+            });
+            this.stateID = res.responseData[0].stateId;
+            this.primaryColor = res.responseData[0].primaryColor;
+            this.secondaryColor = res.responseData[0].secondaryColor;
+            this.titleName = res.responseData[0].portalName;
+            let primaryColorSpan = document.getElementById("primaryColor");
+            primaryColorSpan.style.backgroundColor = this.primaryColor;
+            let secondaryColorSpan = document.getElementById("secondaryColor");
+            secondaryColorSpan.style.backgroundColor = this.secondaryColor;
+            document.documentElement.style.setProperty("--primary", res.responseData[0].primaryColor);
+            document.documentElement.style.setProperty("--secondary",res.responseData[0].secondaryColor);
+            this.topBar.logo(res.responseData[0].logo);
+          });
+        }
       }), (error: any) => {
         this.toastrService.error(error.message);
         console.log(error);
@@ -434,4 +462,5 @@ export class SettingStepperComponent implements OnInit {
       };
     };
   }
+
 }

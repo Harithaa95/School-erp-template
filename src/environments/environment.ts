@@ -3,7 +3,7 @@
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
-let backendURL = 'https://6c7e-27-7-154-31.ngrok.io/';
+let backendURL = 'https://8945-103-252-26-118.ngrok.io/';
 
 export const environment = {
   production: false,

@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import { Component, Renderer2, ViewChild, ElementRef, Injectable } from '@angular/core';
 import { TranslateService ,TranslateModule} from '@ngx-translate/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import { Router } from '@angular/router';
@@ -12,7 +12,11 @@ import { AdminServiceService } from 'app/services/admin-service.service';
   templateUrl: 'navbar.component.html'
 })
 
-export class NavbarComponent implements OnInit {
+@Injectable({
+  providedIn: 'root'
+})
+
+export class NavbarComponent {
   private listTitles: any[];
   location: Location;
   private nativeElement: Node;
@@ -23,6 +27,9 @@ export class NavbarComponent implements OnInit {
   public lang: any;
   loadArabic = false;
   dynamicCSSUrlar: string;
+
+  token: any;
+  selectedLanguage: any[] = [];
 
   @ViewChild("navbar-cmp", { static: false }) button;
 
@@ -47,8 +54,18 @@ export class NavbarComponent implements OnInit {
     this.router.events.subscribe((event) => {
       this.sidebarClose();
     });
-    
+
+    this.token = sessionStorage.getItem('token');
+
+    this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
+      console.log(res);
+      this.selectedLanguage = res.responseData[0].languageSetup;
+    });
+
+    this.selectedLanguageFun(this.selectedLanguage);
+
   }
+  
 
   dynamicLoadingar(){
     this.loadArabic = true;
@@ -126,6 +143,12 @@ export class NavbarComponent implements OnInit {
       navbar.classList.remove('bg-white');
     }
 
+  }
+
+  selectedLanguageFun(languageArray: any[]) {
+    console.log(languageArray);
+    this.selectedLanguage = languageArray;
+    return this.selectedLanguage;
   }
 
   logout() {
