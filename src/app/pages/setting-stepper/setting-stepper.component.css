@@ -38,3 +38,9 @@ input[type="checkbox"] {
 :host::ng-deep ng-multiselect-dropdown .multiselect-item-checkbox input[type=checkbox] + div:before {
     border: 2px solid var(--primary)  !important;
 }
+
+.spanBorder {
+    width: 45px;
+    border: 1px solid rgba(0,2,10,0.1);
+    border-right: none;
+}

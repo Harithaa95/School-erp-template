@@ -29,7 +29,7 @@ export class NavbarComponent {
   dynamicCSSUrlar: string;
 
   token: any;
-  selectedLanguage: any[] = [];
+  @Input() selectedLanguage: any[] = [];
 
   arrOfLanguage: any[] = [];
 
@@ -57,7 +57,7 @@ export class NavbarComponent {
     this.router.events.subscribe((event) => {
       this.sidebarClose();
     });
-    this.selectedLanguageFun(this.selectedLanguage);
+    this.selectedLanguageFun();
   }
   
 
@@ -142,14 +142,18 @@ export class NavbarComponent {
     }
   }
 
-  selectedLanguageFun(languageArray: any) {
-    this.selectedLanguage = languageArray;
+  selectedLanguageFun() {
     this.token = sessionStorage.getItem('token');
     this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
       this.selectedLanguage = res.responseData[0].languageSetup;
-      console.log(this.selectedLanguage);
     });
-    console.log(this.selectedLanguage);
+  }
+
+  reloadComponent() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 
   logout() {

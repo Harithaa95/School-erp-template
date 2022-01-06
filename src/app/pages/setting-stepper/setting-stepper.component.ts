@@ -133,7 +133,6 @@ export class SettingStepperComponent implements OnInit {
     });
 
     this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
-      this.navBar.selectedLanguageFun(res.responseData[0].languageSetup);
       this.stateID = res.responseData[0].stateId;
       this.primaryColor = res.responseData[0].primaryColor;
       this.secondaryColor = res.responseData[0].secondaryColor;
@@ -257,8 +256,8 @@ export class SettingStepperComponent implements OnInit {
         if(res.result === "Success") {
           this.toastrService.success(res.responseData);
           this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
-            console.log(res);
-            this.navBar.selectedLanguageFun(this.languageSelected);
+            // this.navBar.selectedLanguageFun(this.languageSelected);
+            this.navBar.reloadComponent();
             this.languageSelected = res.responseData[0].languageSetup;
             this.configurationDetails.patchValue({
               languageSetup: res.responseData[0].languageSetup,
