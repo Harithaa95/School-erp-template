@@ -1,4 +1,4 @@
-import { Component, Renderer2, ViewChild, ElementRef, Injectable } from '@angular/core';
+import { Component, Renderer2, ViewChild, ElementRef, Injectable, Input } from '@angular/core';
 import { TranslateService ,TranslateModule} from '@ngx-translate/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import { Router } from '@angular/router';
@@ -31,9 +31,12 @@ export class NavbarComponent {
   token: any;
   selectedLanguage: any[] = [];
 
+  arrOfLanguage: any[] = [];
+
   @ViewChild("navbar-cmp", { static: false }) button;
 
-  constructor(public sanitizer: DomSanitizer,location: Location, private renderer: Renderer2, private element: ElementRef, private router: Router, public translateService: TranslateService, public adminService: AdminServiceService) {
+  constructor(
+    public sanitizer: DomSanitizer,location: Location, private renderer: Renderer2, private element: ElementRef, private router: Router, public translateService: TranslateService, public adminService: AdminServiceService) {
     this.location = location;
     this.nativeElement = element.nativeElement;
     this.sidebarVisible = false;
@@ -54,16 +57,7 @@ export class NavbarComponent {
     this.router.events.subscribe((event) => {
       this.sidebarClose();
     });
-
-    this.token = sessionStorage.getItem('token');
-
-    this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
-      console.log(res);
-      this.selectedLanguage = res.responseData[0].languageSetup;
-    });
-
     this.selectedLanguageFun(this.selectedLanguage);
-
   }
   
 
@@ -98,6 +92,7 @@ export class NavbarComponent {
     }
     return 'Dashboard';
   }
+
   sidebarToggle() {
     if (this.sidebarVisible === false) {
       this.sidebarOpen();
@@ -105,6 +100,7 @@ export class NavbarComponent {
       this.sidebarClose();
     }
   }
+
   sidebarOpen() {
     const toggleButton = this.toggleButton;
     const html = document.getElementsByTagName('html')[0];
@@ -119,6 +115,7 @@ export class NavbarComponent {
     }
     this.sidebarVisible = true;
   };
+
   sidebarClose() {
     const html = document.getElementsByTagName('html')[0];
     const mainPanel = <HTMLElement>document.getElementsByClassName('main-panel')[0];
@@ -131,6 +128,7 @@ export class NavbarComponent {
     this.sidebarVisible = false;
     html.classList.remove('nav-open');
   };
+
   collapse() {
     this.isCollapsed = !this.isCollapsed;
     const navbar = document.getElementsByTagName('nav')[0];
@@ -142,13 +140,16 @@ export class NavbarComponent {
       navbar.classList.add('navbar-transparent');
       navbar.classList.remove('bg-white');
     }
-
   }
 
-  selectedLanguageFun(languageArray: any[]) {
-    console.log(languageArray);
+  selectedLanguageFun(languageArray: any) {
     this.selectedLanguage = languageArray;
-    return this.selectedLanguage;
+    this.token = sessionStorage.getItem('token');
+    this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
+      this.selectedLanguage = res.responseData[0].languageSetup;
+      console.log(this.selectedLanguage);
+    });
+    console.log(this.selectedLanguage);
   }
 
   logout() {

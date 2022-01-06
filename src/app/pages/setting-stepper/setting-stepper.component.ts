@@ -133,18 +133,17 @@ export class SettingStepperComponent implements OnInit {
     });
 
     this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
-      console.log(res);
       this.navBar.selectedLanguageFun(res.responseData[0].languageSetup);
+      this.stateID = res.responseData[0].stateId;
+      this.primaryColor = res.responseData[0].primaryColor;
+      this.secondaryColor = res.responseData[0].secondaryColor;
+      this.titleName = res.responseData[0].portalName;
       this.configurationDetails.patchValue({
         languageSetup: res.responseData[0].languageSetup,
         portalName: res.responseData[0].portalName,
         primaryColor: res.responseData[0].primaryColor,
         secondaryColor: res.responseData[0].secondaryColor,
       });
-      this.stateID = res.responseData[0].stateId;
-      this.primaryColor = res.responseData[0].primaryColor;
-      this.secondaryColor = res.responseData[0].secondaryColor;
-      this.titleName = res.responseData[0].portalName;
       let primaryColorSpan = document.getElementById("primaryColor");
       primaryColorSpan.style.backgroundColor = this.primaryColor;
       let secondaryColorSpan = document.getElementById("secondaryColor");
@@ -259,7 +258,8 @@ export class SettingStepperComponent implements OnInit {
           this.toastrService.success(res.responseData);
           this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
             console.log(res);
-            this.navBar.selectedLanguageFun(res.responseData[0].languageSetup);
+            this.navBar.selectedLanguageFun(this.languageSelected);
+            this.languageSelected = res.responseData[0].languageSetup;
             this.configurationDetails.patchValue({
               languageSetup: res.responseData[0].languageSetup,
               portalName: res.responseData[0].portalName,
