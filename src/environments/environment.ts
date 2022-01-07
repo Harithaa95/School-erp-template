@@ -11,6 +11,6 @@ export const environment = {
   extarctTokenURL: backendURL + 'v1/extractToken',
   stateInfoURL: backendURL + 'v1/DES/stateInfo',
   stateUpdateInfoURL: backendURL + 'v1/DES/updateStateInfo',
-  uploadLogoURL: backendURL + 'v1/uploadToAws',
-  downloadLogoURL: backendURL + 'v1/downloadFromAws'
+  uploadImageURL: backendURL + 'v1/uploadToAws',
+  downloadImageURL: backendURL + 'v1/downloadFromAws'
 };

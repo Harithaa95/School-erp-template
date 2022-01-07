@@ -84,8 +84,8 @@ export class ConfigurationComponent implements OnInit {
     this.token = sessionStorage.getItem('token');
 
     this.configurationDetails = this.formBuilder.group({
-      logo: [""],
-      favIcon: [""],
+      logo: new FormControl([""]),
+      favIcon: new FormControl([""]),
       portalName: ["", Validators.required],
       primaryColor: new FormControl(""),
       secondaryColor: new FormControl(""),
@@ -157,8 +157,8 @@ export class ConfigurationComponent implements OnInit {
         secondaryColorSpan.style.backgroundColor = this.secondaryColor;
         document.documentElement.style.setProperty("--primary", this.primaryColor);
         document.documentElement.style.setProperty("--secondary", this.secondaryColor);
-        this.inputImg.nativeElement.value = null;
         this.inputLogo.nativeElement.value = null;
+        this.inputImg.nativeElement.value = null;
         this.topBar.portal(res.responseData[0].portalName);
         this.configurationDetails.patchValue({
           languageSetup: res.responseData[0].languageSetup,
@@ -238,6 +238,7 @@ export class ConfigurationComponent implements OnInit {
         this.token
       );
       this.configurationDetails.value.languageSetup = this.languageSelected;
+      this.configurationDetails.value.favIcon = this.attachmentFaviconDetails;
       this.adminService.stateUpdateInfoFun(this.configurationDetails.value,this.stateID, this.token).subscribe((res: any) => {
         this.loading = false;
         if(res.result === "Success") {
@@ -262,7 +263,8 @@ export class ConfigurationComponent implements OnInit {
             secondaryColorSpan.style.backgroundColor = this.secondaryColor;
             document.documentElement.style.setProperty("--primary", res.responseData[0].primaryColor);
             document.documentElement.style.setProperty("--secondary",res.responseData[0].secondaryColor);
-            this.topBar.logo(res.responseData[0].logo);
+            this.topBar.logo(this.logofileUrl[0]);
+            this.topBar.favicon(this.faviconfileUrl[0]);
           });
         }
       }), (error: any) => {
@@ -273,9 +275,9 @@ export class ConfigurationComponent implements OnInit {
   }
 
   onLogoFileChange($event) {
+    this.loadingLogo = true;
     this.warningAlertForLogoFormat = false;
     this.warningAlertForLogoSize = false;
-    this.loadingLogo = true;
     this.attachmentLogoDetails = [];
     let file = $event.target.files[0]; // <--- File Object for future use.
     if(file.type !== "image/jpeg" && file.type !== "image/png") {
