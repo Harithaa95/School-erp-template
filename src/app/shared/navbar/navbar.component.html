@@ -17,14 +17,15 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="collapseExample" [ngbCollapse]="isCollapsed">
             <ul class="navbar-nav">
-                <li>
-                    <link *ngIf="loadArabic" type="text/css" rel="stylesheet" [href]='sanitizer.bypassSecurityTrustResourceUrl(dynamicCSSUrlar)'>
+                <li style="margin-top: 8px;">
+                    <link *ngIf="loadArabic"  type="text/css" rel="stylesheet" [href]='sanitizer.bypassSecurityTrustResourceUrl(dynamicCSSUrlar)'>
                     <select class="custom-select" #langSelect (change)="switchLanguage(langSelect.value)">
-                        <option value="en" [selected]="lang=='en'">English</option>
+                        <!-- <option value="en" [selected]="lang=='en'">English</option>
                         <option value="ta" [selected]="lang=='ta'">Tamil(தமிழ்)</option>
-                        <option value="ur" [selected]="lang=='ur'">Urdu(اردو)</option>
-                        <!-- <option *ngFor="let lang of translateService.getLangs()" [value]="lang">{{lang=='en'?'English':'Tamil'}}</option> -->
-                    </select>
+                        <option value="ur" [selected]="lang=='ur'">Urdu(اردو)</option> -->
+                        <!-- <option *ngFor="let lang of selectedLanguage" value="{{lang.itemId}}">{{lang.Language}}</option> -->
+                        <option *ngFor="let lang of selectedLanguage" value="{{lang.itemId}}">{{lang.Language}}</option>
+                    </select>         
                 </li>
                 <li class="nav-item btn-rotate" ngbDropdown placement="bottom-left">
                     <a class="nav-link" ngbDropdownToggle id="navbarDropdownMenuLink">

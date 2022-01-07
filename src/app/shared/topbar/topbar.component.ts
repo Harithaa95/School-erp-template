@@ -40,7 +40,8 @@ export class TopBarComponent{
   portal(title?: any){
     document.getElementById('title').innerHTML = title;
     this.titleService.setTitle(title);
-  }
+  } 
+
   logo(imageUrl?: any) {
     this.logoImage = imageUrl;
     let img = document.getElementById('logoImage');

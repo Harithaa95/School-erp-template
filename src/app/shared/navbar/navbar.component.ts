@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
+import { Component, Renderer2, ViewChild, ElementRef, Injectable, Input } from '@angular/core';
 import { TranslateService ,TranslateModule} from '@ngx-translate/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import { Router } from '@angular/router';
@@ -12,7 +12,11 @@ import { AdminServiceService } from 'app/services/admin-service.service';
   templateUrl: 'navbar.component.html'
 })
 
-export class NavbarComponent implements OnInit {
+@Injectable({
+  providedIn: 'root'
+})
+
+export class NavbarComponent {
   private listTitles: any[];
   location: Location;
   private nativeElement: Node;
@@ -24,9 +28,15 @@ export class NavbarComponent implements OnInit {
   loadArabic = false;
   dynamicCSSUrlar: string;
 
+  token: any;
+  @Input() selectedLanguage: any[] = [];
+
+  arrOfLanguage: any[] = [];
+
   @ViewChild("navbar-cmp", { static: false }) button;
 
-  constructor(public sanitizer: DomSanitizer,location: Location, private renderer: Renderer2, private element: ElementRef, private router: Router, public translateService: TranslateService, public adminService: AdminServiceService) {
+  constructor(
+    public sanitizer: DomSanitizer,location: Location, private renderer: Renderer2, private element: ElementRef, private router: Router, public translateService: TranslateService, public adminService: AdminServiceService) {
     this.location = location;
     this.nativeElement = element.nativeElement;
     this.sidebarVisible = false;
@@ -47,8 +57,9 @@ export class NavbarComponent implements OnInit {
     this.router.events.subscribe((event) => {
       this.sidebarClose();
     });
-    
+    this.selectedLanguageFun();
   }
+  
 
   dynamicLoadingar(){
     this.loadArabic = true;
@@ -81,6 +92,7 @@ export class NavbarComponent implements OnInit {
     }
      return titlee.slice(1);
   }
+
   sidebarToggle() {
     if (this.sidebarVisible === false) {
       this.sidebarOpen();
@@ -88,6 +100,7 @@ export class NavbarComponent implements OnInit {
       this.sidebarClose();
     }
   }
+
   sidebarOpen() {
     const toggleButton = this.toggleButton;
     const html = document.getElementsByTagName('html')[0];
@@ -102,6 +115,7 @@ export class NavbarComponent implements OnInit {
     }
     this.sidebarVisible = true;
   };
+
   sidebarClose() {
     const html = document.getElementsByTagName('html')[0];
     const mainPanel = <HTMLElement>document.getElementsByClassName('main-panel')[0];
@@ -114,6 +128,7 @@ export class NavbarComponent implements OnInit {
     this.sidebarVisible = false;
     html.classList.remove('nav-open');
   };
+
   collapse() {
     this.isCollapsed = !this.isCollapsed;
     const navbar = document.getElementsByTagName('nav')[0];
@@ -125,7 +140,20 @@ export class NavbarComponent implements OnInit {
       navbar.classList.add('navbar-transparent');
       navbar.classList.remove('bg-white');
     }
+  }
 
+  selectedLanguageFun() {
+    this.token = sessionStorage.getItem('token');
+    this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
+      this.selectedLanguage = res.responseData[0].languageSetup;
+    });
+  }
+
+  reloadComponent() {
+    let currentUrl = this.router.url;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 
   logout() {
