@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SettingStepperComponent } from './setting-stepper.component';
+import { StorageSetupComponent } from './storage-setup.component';
 import { TranslateModule} from '@ngx-translate/core';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
-  declarations: [SettingStepperComponent],
+  declarations: [StorageSetupComponent],
   imports: [
     CommonModule,FormsModule,ReactiveFormsModule,
     TranslateModule,NgMultiSelectDropDownModule.forRoot(),
     ColorPickerModule, RouterModule
   ],
-    exports: [ SettingStepperComponent ]
+    exports: [ StorageSetupComponent ]
 })
-export class SettingStepperModule  { }
+export class StorageSetupModule  { }

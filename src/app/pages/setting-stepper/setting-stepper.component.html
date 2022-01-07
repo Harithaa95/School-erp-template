@@ -58,20 +58,33 @@
                                 <div class="alert alert-warning" role="alert" *ngIf="warningAlertForFavIconSize">
                                     Height and Width must not exceed 100 x 100
                                 </div>
-                            </div>
-                            <div class="col-lg-4">
-                                <label>Portal Name</label>
-                                <input type="text" formControlName="portalName" (change)="ontitleChange($event.target.value)" name="portalName" class="form-control" />
-                                <span class="text-danger " *ngIf="(configurationFormControl.portalName.touched ||isconfigurationDetailsSubmitted) && configurationFormControl.portalName.errors?.required ">
-                                    Portal Name is required
-                                </span>
+<div class="row">
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card shadow card-stats">
+            <a routerLink="/storageSetup" class="custom-card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-5 col-md-4 ">
+                            <div class="icon-big text-center icon-warning">
+                                <i class="fa fa-database text-warning "></i>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-4">
-                                <label>Pick a Primary Colour</label>
-                                <!-- [style.background]="secondaryColor"  -->
-                                <!-- <input [(colorPicker)]="secondaryColor" cpPosition='bottom' (colorPickerChange)="updatePickerSecondaryColor($event)" type="text" class="form-control" formControlName="secondaryColor" [value]="secondaryColor" /> -->
+                        <div class="col-7 col-md-8 ">
+                            <div class="numbers ">
+                                <p class="card-category ">{{'Storage Setup'|translate}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card shadow card-stats">
+            <a routerLink="/configuration" class="custom-card">
+                <div class="card-body">
+                    <div class="row ">
 
                                 <div class="input-group mb-4">
                                     <div class="input-group-prepend">
@@ -143,91 +156,40 @@
                             </button>
                         </div>
                     </form>
-                </div>
-                <div class="tab-pane " id="nav-webdev">
-                    <form [formGroup]="udiseDetails" (ngSubmit)="udiseDetailsSubmit(udiseDetails)">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <label>Udise ID</label>
-                                <input type="text" formControlName="udiseId" class="form-control" />
-                                <span class="text-danger " *ngIf="(udiseInformationFormControl.udiseId.touched ||isUdiseDetailsSubmitted) && udiseInformationFormControl.udiseId.errors?.required ">
-                                    Udise Id is required
-                                </span>
-                            </div>
-                            <div class="col-lg-6">
-                                <label>Password</label>
-                                <input type="password" formControlName="password" class="form-control" ßß />
-                                <span class="text-danger " *ngIf="(udiseInformationFormControl.password.touched ||isUdiseDetailsSubmitted) && udiseInformationFormControl.password.errors?.required ">
-                                    Password is required
-                                </span>
+                        <div class="col-5 col-md-4 ">
+                            <div class="icon-big text-center icon-warning ">
+                                <i class="fa fa-cog text-success"></i>
                             </div>
                         </div>
-                        <div class="text-center"><button type="submit" class="btn btn-primary btn-round">Send</button>
+                        <div class="col-7 col-md-8 ">
+                            <div class="numbers ">
+                                <p class="card-category ">{{'Configuration'|translate}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
 
+    <div class="col-lg-3 col-md-6 col-sm-6">
+        <div class="card shadow card-stats">
+            <a routerLink="/udiseSetup" class="custom-card">
+                <div class="card-body">
+                    <div class="row ">
+                        <div class="col-2 col-md-1">
+                            <div class="icon-big text-center icon-warning ">
+                                <i class="fa fa-cogs text-danger "></i>
+                            </div>
                         </div>
-                    </form>
+                        <div class="col-10 col-md-10">
+                            <div class="numbers ">
+                                <p class="card-category ">{{'UDISE Setup'|translate}}</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="tab-pane" id="nav-mobiledev">
-                    <form [formGroup]="stateDetails">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>State</label>
-                                <div class="input-group">
-                                    <select class="form-control form-select settings-text-field" aria-label="Example select with button addon">
-                                        <option selected>Choose...</option>
-                                        <option value="1">State</option>
-                                        <option value="2">State</option>
-                                        <option value="3">State</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label>District/Region</label>
-                                <div class="input-group">
-                                    <select class="form-control form-select settings-text-field" aria-label="Example select with button addon">
-                                        <option selected>Choose...</option>
-                                        <option value="1">District</option>
-                                        <option value="2">Region</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label>Zone</label>
-                                <div class="input-group">
-                                    <select class="form-control form-select settings-text-field" aria-label="Example select with button addon">
-                                        <option selected>Choose...</option>
-                                        <option value="1">Zone</option>
-                                        <option value="2">Zone</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label>Cluster</label>
-                                <div class="input-group">
-                                    <select class="form-control form-select settings-text-field" aria-label="Example select with button addon">
-                                        <option selected>Choose...</option>
-                                        <option value="1">Cluster</option>
-                                        <option value="2">Schools</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <label>School</label>
-                                <div class="input-group">
-                                    <select class="form-control form-select settings-text-field" aria-label="Example select with button addon">
-                                        <option selected>Choose...</option>
-                                        <option value="1">School</option>
-                                        <option value="2">School</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <input (click)="next()" type="button" name="next" class="btn btn-primary btn-round" value="Submit" />
-                        </div>
-                    </form>
-                </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>

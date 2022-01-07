@@ -1,0 +1,23 @@
+<div class="text-start"><button class="btn btn-primary btn-round" (click)="backfunc()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;&nbsp;Back</button>
+
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h6 class="card-title">{{'Storage Setup'|translate}}
+            </h6>
+            <form [formGroup]="storageSetupDetails" id="msform" (ngSubmit)="StorageDetailsSubmit(storageSetup)">
+                <label>{{'Storage Setup'|translate}}</label>
+                <div class="input-group">
+                    <select class="form-control form-select settings-text-field" id="inputGroupSelect04" aria-label="Example select with button addon" formControlName="storageSetup">
+                                <option [ngValue]="null" disabled>Choose...</option>
+                                <option *ngFor="let storage of storageSelectArray" [ngValue]="storage.name">
+                                    {{storage.name}}</option>
+                            </select>
+                </div>
+                <span class="text-danger " *ngIf="isStorageDetailsSubmitted && storageSetupFormControl.storageSetup.errors?.required ">
+                            Please select a storage setup
+                        </span>
+                <div class="text-center"><button type="submit" class="btn btn-primary btn-round">{{'Submit'|translate}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
