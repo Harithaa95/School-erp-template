@@ -7,28 +7,28 @@
                     <h5 class="card-title text-center">Login</h5>
                 </div>
                 <div class="card-body">
-                    <form [formGroup]="loginDetails" id="msform" (ngSubmit)="loginSubmitData(loginDetails)">
+                    <form [formGroup]="loginDetails" id="msform" (ngSubmit)="loginSubmitData()">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="email">Email address</label>
-                                    <input type="text" class="form-control" placeholder="Email" formControlName="email">
-                                    <span class="text-danger" *ngIf="(loginDetailsformControl.email.touched ||submitted) && loginDetailsformControl.email.errors?.required">
+                                    <input type="text" class="form-control" placeholder="Email" id="email" formControlName="email">
+                                    <span id="error" class=" text-danger " *ngIf="(loginDetailsformControl.email.touched ||submitted) && loginDetailsformControl.email.errors?.required ">
                                         Email Id is required
                                     </span>
-                                    <!-- <span class="text-danger" *ngIf="loginDetailsformControl.email.touched && loginDetailsformControl.email.errors?.email">
+                                    <!-- <span class="text-danger " *ngIf="loginDetailsformControl.email.touched && loginDetailsformControl.email.errors?.email ">
                                 Enter a valid email address
                             </span> -->
                                 </div>
                             </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="password">Password</label>
-                                    <input type="password" class="form-control" placeholder="Password" formControlName="password">
-                                    <span class="form-control-feedback" *ngIf="(loginDetailsformControl.password.touched || submitted) && loginDetailsformControl.password.errors?.required">
+                            <div class="col-md-12 ">
+                                <div class="form-group ">
+                                    <label for="password ">Password</label>
+                                    <input type="password " class="form-control " id="password " placeholder="Password " formControlName="password">
+                                    <span class="form-control-feedback " *ngIf="(loginDetailsformControl.password.touched || submitted) && loginDetailsformControl.password.errors?.required ">
                                         Password is required
                                     </span>
-                                    <!-- <span class="text-danger" *ngIf="loginDetailsformControl.password.touched && loginDetailsformControl.password.errors?.invalidPassword">
+                                    <!-- <span class="text-danger " *ngIf="loginDetailsformControl.password.touched && loginDetailsformControl.password.errors?.invalidPassword ">
                                         Password should have minimum 8 characters, at least 1 uppercase letter, 1
                                         lowercase
                                         letter and 1 number
@@ -37,16 +37,16 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="update ml-auto mr-auto">
-                                <button type="submit" class="btn btn-primary btn-round"><span *ngIf="!loading">Submit</span>
-                                    <i class="fa fa-spinner fa-spin" *ngIf="loading"></i></button>
+                        <div class="row ">
+                            <div class="update ml-auto mr-auto ">
+                                <button type="submit " class="btn btn-primary btn-round "><span *ngIf="!loading ">Submit</span>
+                                    <i class="fa fa-spinner fa-spin " *ngIf="loading "></i></button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-3 "></div>
     </div>
 </div>

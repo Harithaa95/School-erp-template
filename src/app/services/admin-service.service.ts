@@ -10,10 +10,7 @@ import { Router } from '@angular/router';
 
 export class AdminServiceService {
 
-  
-
-  constructor(public http: HttpClient,
-              public router: Router) { }
+  constructor(public http: HttpClient,public router:Router) { }
 
   loginRequest(userId: any,userPassword:any): Observable<any> {
     return this.http.post(environment.loginURL, {

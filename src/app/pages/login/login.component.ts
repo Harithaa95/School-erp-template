@@ -4,8 +4,6 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import * as CryptoJS from 'crypto-js';
 import { Router } from '@angular/router';
 import { AdminServiceService } from '../../services/admin-service.service';
-import { environment } from 'environments/environment';
-
 
 @Component({
     selector: 'login-cmp',
@@ -40,12 +38,12 @@ export class LoginComponent implements OnInit {
         return this.loginDetails.controls;
     }
 
-    loginSubmitData(formData: any) {
+    loginSubmitData() {
         this.submitted = true;
         this.loading = true;
         if (this.loginDetails.valid) {
-            const encryptedPassword = CryptoJS.AES.encrypt(formData.value.password.trim(),"4hBY1ey_9xeCHGV4RcAgfXdadf1UkwYIyV8SawceQ2W-9t4XhcMCG5pbDu8_taP-Xx-dDQa-PK54G-qL8oKpXQ").toString();
-            this.adminService.loginRequest(formData.value.email, encryptedPassword).subscribe((data) => { 
+            const encryptedPassword = CryptoJS.AES.encrypt(this.loginDetails.value.password.trim(),"4hBY1ey_9xeCHGV4RcAgfXdadf1UkwYIyV8SawceQ2W-9t4XhcMCG5pbDu8_taP-Xx-dDQa-PK54G-qL8oKpXQ").toString();
+            this.adminService.loginRequest(this.loginDetails.value.email, encryptedPassword).subscribe((data) => { 
                 if(data.result === 'Success'){sessionStorage.setItem("token",data.responseData);
                     this.adminService.extractTokenFun(data.responseData).subscribe((data: any) => {
                         if(data.responseData.userRole[0] !== "superAdmin") {
