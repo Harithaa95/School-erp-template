@@ -140,7 +140,7 @@ export class AdminServiceService {
   uploadFileFun(imageFile: any, tokenValue: any): Observable<any> {
     return this.http
       .post(
-        environment.uploadLogoURL,
+        environment.uploadImageURL,
         {
           folderName: `${Math.floor(Date.now() / 1000) + "Logo"}`,
           fileName: imageFile.name,
@@ -169,7 +169,7 @@ export class AdminServiceService {
       );
   }
 
-  uploadUrl(fileData: any, mainUrl: any): Observable<any> {
+  uploadUrl(fileData: any,  mainUrl: any): Observable<any> {
     return this.http
       .put(mainUrl, fileData, {
         headers: { "Content-Type": "multipart/formData" },
@@ -193,7 +193,7 @@ export class AdminServiceService {
   downloadFileFun(fileName: any, folderName: any, tokenValue: any): Observable<any> {
     return this.http
       .post(
-        environment.downloadLogoURL,
+        environment.downloadImageURL,
         {
           FileName: fileName,
           folderName: folderName,

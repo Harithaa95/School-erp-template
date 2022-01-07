@@ -8,13 +8,35 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <label>{{'Logo'|translate}}</label>
-                        <input type="file" class="file-upload form-control" placeholder="Logo" (change)="onLogoFileChange($event)" />
-                        <input type="hidden" name="fileHidden" formControlName="logo" />
+                        <input type="file" #imageSize class="file-upload form-control" placeholder="Logo" (change)="onLogoFileChange($event)" />
+                        <input type="hidden" *ngIf="!loadingLogo" name="fileHidden" formControlName="logo" />
+                        <i class="fa fa-spinner fa-spin" *ngIf="loadingLogo"></i> 
                         <p *ngIf="file" class="pl-4 align-middle mb-0">{{file.name}}</p>
+                        <div class="alert alert-warning" role="alert" *ngIf="warningAlert">
+                            The {{fileNameForAlert}} file size should be less than 1MB and in jpeg/jpg format
+                        </div>
+                        <div class="alert alert-warning" role="alert" *ngIf="warningAlertForChooseFile">
+                            Please choose the file
+                        </div>
+                        <div class="alert alert-warning" role="alert" *ngIf="warningAlertForLogoSize">
+                            Height and Width must not exceed 100px.
+                        </div>
                     </div>
                     <div class="col-lg-4">
                         <label>{{'Fav Icon'|translate}}</label>
-                        <input type="file" id="fileUpload" name="fileupload" class="file-upload form-control" placeholder="Logo" />
+                        <input type="file" #imagefavIcon class="file-upload form-control" placeholder="Logo" (change)="onFaviconFileChange($event)" />
+                                <input type="hidden" *ngIf="!loadingFavIcon" name="fileHidden" formControlName="favIcon" />
+                                <i class="fa fa-spinner fa-spin" *ngIf="loadingFavIcon"></i>
+                                <p *ngIf="file" class="pl-4 align-middle mb-0">{{file.name}}</p>
+                                <div class="alert alert-warning" role="alert" *ngIf="favIconwarningAlert">
+                                    The {{fileNameForAlert}} file size should be less than 1MB and in jpeg/jpg format
+                                </div>
+                                <div class="alert alert-warning" role="alert" *ngIf="warningAlertForChooseFile">
+                                    Please choose the file
+                                </div>
+                                <div class="alert alert-warning" role="alert" *ngIf="warningAlertForFavIconSize">
+                                    Height and Width must not exceed 100px.
+                                </div>
                     </div>
                     <div class="col-lg-4">
                         <label>{{'Portal Name'|translate}}</label>
