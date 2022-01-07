@@ -54,7 +54,8 @@ export class LoginComponent implements OnInit {
                             this.token = sessionStorage.getItem('token');
                             this.loading = false;
                             this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
-
+                                document.documentElement.style.setProperty("--primary", res.responseData[0].primaryColor);
+                                document.documentElement.style.setProperty("--secondary", res.responseData[0].secondaryColor);
                             });
                             this.router.navigateByUrl('/dashboard');
                         }

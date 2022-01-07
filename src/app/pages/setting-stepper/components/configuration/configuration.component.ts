@@ -1,39 +1,46 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { FormControl, FormGroup, Validators, FormBuilder } from "@angular/forms";
-import { ColorPickerService, Cmyk } from "ngx-color-picker";
-import { ToastrService } from "ngx-toastr";
-import { GlobalComponent } from "app/shared/global/global.component";
-import { TopBarComponent } from "app/shared/topbar/topbar.component";
-import { AdminServiceService } from "app/services/admin-service.service";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AdminServiceService } from 'app/services/admin-service.service';
+import { GlobalComponent } from 'app/shared/global/global.component';
+import { TopBarComponent } from 'app/shared/topbar/topbar.component';
 
-export interface Breadcrumb {
-  name: string;
-  url: string;
-  queryParams?: any;
-  pauseDisplay?: boolean;
-}
+import { ColorPickerService, Cmyk } from "ngx-color-picker";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
-  selector: "app-setting-stepper",
-  templateUrl: "./setting-stepper.component.html",
-  styleUrls: ["./setting-stepper.component.css"],
+  selector: 'configuration',
+  templateUrl: './configuration.component.html',
+  styleUrls: ['./configuration.component.css']
 })
-
-export class SettingStepperComponent implements OnInit {
+export class ConfigurationComponent implements OnInit {
 
   @ViewChild("imageSize") inputLogo: any;
   @ViewChild("imagefavIcon") inputImg: any;
 
-  configurationDetails!: FormGroup;
-  udiseDetails!: FormGroup;
-  stateDetails!: FormGroup;
-  storageSetupDetails!: FormGroup;
+  configurationDetails: FormGroup;
+
+  isconfigurationDetailsSubmitted: boolean = false;
+
+  token: any;
+  stateID: any;
+  primaryColor: any;
+  secondaryColor: any;
+  titleName: any;
+
+  languageSelected: any[] = [];
+
+  showPreview = false;
+
+  loading = false;
+
+  warningAlert: boolean = false;
+
+  favIconwarningAlert: boolean = false;
 
   loadingLogo: boolean = false;
   loadingFavIcon: boolean = false;
 
-  isconfigurationDetailsSubmitted = false;
   isUdiseDetailsSubmitted = false;
   isStorageDetailsSubmitted = false;
   warningAlertForLogoSize = false;
@@ -41,67 +48,26 @@ export class SettingStepperComponent implements OnInit {
   warningAlertForLogoFormat = false;
   warningAlertForFavIconFormat = false;
 
-  showPreview = false;
-
-  ShowFilter = false;
-
-  warningAlertForChooseFile: boolean = false;
-
-  fileNameForAlert: string = "";
-
-  warningAlert: boolean = false;
-
-  favIconwarningAlert: boolean = false;
-
-  imageError: string;
-
-  isImageSaved: boolean;
-
-  cardImageBase64: string;
-
-  attachmentLogoDetails: any[] = [];
-
-  attachmentFaviconDetails: any[] = [];
-
   logofileUrl: any[] = [];
   faviconfileUrl: any[] = [];
 
-  selectedFiles!: FileList;
+  attachmentLogoDetails: any[] = [];
+  attachmentFaviconDetails: any[] = [];
 
   dropdownList;
   dropdownSettings;
 
-  token: string = "";
-  titleName: string = "";
-
-  languageSelected: any[] = [];
-
-  portalName: any;
-
-  storageSelectArray = [
-    { id: 1, name: "AWS" },
-    { id: 2, name: "Cloud" },
-  ];
-
-  /* color picker */
-  primaryColor!: string;
-  secondaryColor!: string;
-  stateID: any;
-  public rgbaText: string = "rgba(165, 26, 214, 0.2)";
-  public cmykValue: string = "";
-  public cmykColor: Cmyk = new Cmyk(0, 0, 0, 0);
-
-  constructor(
-    private formBuilder: FormBuilder,
+  constructor( 
+    public router: Router,
     private global: GlobalComponent,
     private topBar: TopBarComponent,
+    public adminService: AdminServiceService,
     private cpService: ColorPickerService,
     private toastrService: ToastrService,
-    public adminService: AdminServiceService,
-    public router: Router
-  ) { }
+    private formBuilder: FormBuilder) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+
     this.dropdownList = this.getData();
     this.token = sessionStorage.getItem("token");
     this.dropdownSettings = {
@@ -113,6 +79,8 @@ export class SettingStepperComponent implements OnInit {
       allowSearchFilter: true,
     };
 
+    this.token = sessionStorage.getItem('token');
+
     this.configurationDetails = this.formBuilder.group({
       logo: [""],
       favIcon: [""],
@@ -123,52 +91,31 @@ export class SettingStepperComponent implements OnInit {
       secretId: new FormControl(""),
       email: new FormControl(""),
       password: new FormControl(""),
-      language: new FormControl([""]),
+      languageSetup: new FormControl([""]),
     });
 
-    this.udiseDetails = this.formBuilder.group({
-      udiseId: ["", Validators.required],
-      password: ["", Validators.required],
-    });
-
-    this.stateDetails = this.formBuilder.group({
-      state: [""],
-      district: [""],
-      zone: [""],
-      cluster: [""],
-      school: [""],
-    });
-
-    this.storageSetupDetails = this.formBuilder.group({
-      storageSetup: ["", Validators.required],
-    });
     this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
+      console.log(res);
       this.stateID = res.responseData[0].stateId;
       this.primaryColor = res.responseData[0].primaryColor;
       this.secondaryColor = res.responseData[0].secondaryColor;
       this.titleName = res.responseData[0].portalName;
       this.configurationDetails.patchValue({
-        language: [res.responseData[0].languageSetup[0]],
+        languageSetup: res.responseData[0].languageSetup,
         portalName: res.responseData[0].portalName,
         primaryColor: res.responseData[0].primaryColor,
         secondaryColor: res.responseData[0].secondaryColor,
       });
-      // let primaryColorSpan = document.getElementById("primaryColor");
-      // primaryColorSpan.style.backgroundColor = this.primaryColor;
-      // let secondaryColorSpan = document.getElementById("secondaryColor");
-      // secondaryColorSpan.style.backgroundColor = this.secondaryColor;
+      let primaryColorSpan = document.getElementById("primaryColor");
+      primaryColorSpan.style.backgroundColor = this.primaryColor;
+      let secondaryColorSpan = document.getElementById("secondaryColor");
+      secondaryColorSpan.style.backgroundColor = this.secondaryColor;
       document.documentElement.style.setProperty("--primary", res.responseData[0].primaryColor);
       document.documentElement.style.setProperty("--secondary",res.responseData[0].secondaryColor);
     });
   }
 
   get configurationFormControl() { return this.configurationDetails.controls; }
-  get udiseInformationFormControl() { return this.udiseDetails.controls; }
-  get stateInformationFormControl() { return this.stateDetails.controls; }
-
-  get storageSetupFormControl() {
-    return this.storageSetupDetails.controls;
-  }
 
   getData(): Array<any> {
     return [
@@ -212,7 +159,7 @@ export class SettingStepperComponent implements OnInit {
         this.inputLogo.nativeElement.value = null;
         this.topBar.portal(res.responseData[0].portalName);
         this.configurationDetails.patchValue({
-          language: [res.responseData[0].languageSetup[0]],
+          languageSetup: res.responseData[0].languageSetup,
           portalName: res.responseData[0].portalName,
           primaryColor: res.responseData[0].primaryColor,
           secondaryColor: res.responseData[0].secondaryColor,
@@ -221,19 +168,6 @@ export class SettingStepperComponent implements OnInit {
         this.topBar.favicon("./assets/img/favicon.png");
       })
     }
-  }
-
-  ontitleChange(titleValue: any) {
-    return this.titleName = titleValue;
-  }
-
-  handleSubmit(form: FormGroup) {
-    console.log("test", form.value);
-  }
-  /* Color picker */
-
-  public onEventLog(event: string, data: any): void {
-    console.log(event, data);
   }
 
   public onChangeColorCmyk(color: string): Cmyk {
@@ -251,51 +185,6 @@ export class SettingStepperComponent implements OnInit {
       return this.cpService.outputFormat(hsva, "rgba", null);
     }
     return "";
-  }
-
-  configurationDetailsSubmit(formValue: FormGroup) {
-    this.isconfigurationDetailsSubmitted = true;
-    var languageCode;
-    console.log(this.configurationDetails.valid);
-    if (this.configurationDetails.valid) {
-      console.log(formValue.value);
-      // this.languageSelected=this.getObjectListFromData(this.configurationDetails.value.language.map(item => item.item_id)
-      this.languageSelected = this.getObjectListFromData(
-        this.configurationDetails.value.language.map((item) => item.itemId)
-      );
-      console.log(this.languageSelected);
-      this.configurationDetails.value.language = this.languageSelected;
-      console.log(this.configurationDetails.value);
-      this.adminService.stateUpdateInfoFun(
-        this.configurationDetails.value,
-        this.stateID,
-        this.token
-      );
-    }
-  }
-
-  udiseDetailsSubmit(udiseFormValue: any) {
-    this.isUdiseDetailsSubmitted = true;
-    console.log(this.udiseDetails.valid);
-    if (this.udiseDetails.valid) {
-      console.log(udiseFormValue.value);
-      console.log(this.udiseDetails);
-      this.toastrService.success("Data Inserted Successfully!", "", {
-        timeOut: 2000,
-      });
-    }
-  }
-
-  StorageDetailsSubmit(storageSetupValue: any) {
-    this.isStorageDetailsSubmitted = true;
-    console.log(this.storageSetupDetails.valid);
-    if (this.udiseDetails.valid) {
-      console.log(storageSetupValue.value);
-      console.log(this.storageSetupDetails);
-      this.toastrService.success("Data Inserted Successfully!", "", {
-        timeOut: 2000,
-      });
-    }
   }
 
   get primaryColorChange() {
@@ -329,6 +218,48 @@ export class SettingStepperComponent implements OnInit {
 
   keyDown(event: any) {
     return false;
+  }
+
+  configurationDetailsSubmit(formValue: FormGroup) {
+    this.loading = true;
+    this.isconfigurationDetailsSubmitted = true;
+    if (this.configurationDetails.valid) {
+      this.configurationDetails.value.logo = this.logofileUrl[0];
+      this.configurationDetails.value.favIcon = this.faviconfileUrl[0];
+      this.languageSelected = this.getObjectListFromData(
+        this.configurationDetails.value.languageSetup.map((item: any) => item.itemId)
+      );
+      this.configurationDetails.value.languageSetup = this.languageSelected;
+      this.adminService.stateUpdateInfoFun(this.configurationDetails.value,this.stateID, this.token).subscribe((res: any) => {
+        this.loading = false;
+        if(res.result === "Success") {
+          this.toastrService.success(res.responseData);
+          this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
+            console.log(res);
+            this.configurationDetails.patchValue({
+              languageSetup: res.responseData[0].languageSetup,
+              portalName: res.responseData[0].portalName,
+              primaryColor: res.responseData[0].primaryColor,
+              secondaryColor: res.responseData[0].secondaryColor,
+            });
+            this.stateID = res.responseData[0].stateId;
+            this.primaryColor = res.responseData[0].primaryColor;
+            this.secondaryColor = res.responseData[0].secondaryColor;
+            this.titleName = res.responseData[0].portalName;
+            let primaryColorSpan = document.getElementById("primaryColor");
+            primaryColorSpan.style.backgroundColor = this.primaryColor;
+            let secondaryColorSpan = document.getElementById("secondaryColor");
+            secondaryColorSpan.style.backgroundColor = this.secondaryColor;
+            document.documentElement.style.setProperty("--primary", res.responseData[0].primaryColor);
+            document.documentElement.style.setProperty("--secondary",res.responseData[0].secondaryColor);
+            this.topBar.logo(res.responseData[0].logo);
+          });
+        }
+      }), (error: any) => {
+        this.toastrService.error(error.message);
+        console.log(error);
+      };
+    }
   }
 
   onLogoFileChange($event) {
@@ -460,6 +391,8 @@ export class SettingStepperComponent implements OnInit {
     };
   }
 
+  backfunc(){
+    this.router.navigate(['/settingStepper']);
+  }
 
 }
-

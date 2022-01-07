@@ -1,0 +1,72 @@
+<div class="text-start"><button class="btn btn-primary btn-round" (click)="backfunc()"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;&nbsp;Back</button>
+
+    <div class="card">
+        <div class="card-body">
+            <h6 class="card-title"> {{'Configuration'|translate}}
+            </h6>
+            <form [formGroup]="configurationDetails" id="msform" (ngSubmit)="configurationDetailsSubmit(configurationDetails)">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label>{{'Logo'|translate}}</label>
+                        <input type="file" class="file-upload form-control" placeholder="Logo" (change)="onLogoFileChange($event)" />
+                        <input type="hidden" name="fileHidden" formControlName="logo" />
+                        <p *ngIf="file" class="pl-4 align-middle mb-0">{{file.name}}</p>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>{{'Fav Icon'|translate}}</label>
+                        <input type="file" id="fileUpload" name="fileupload" class="file-upload form-control" placeholder="Logo" />
+                    </div>
+                    <div class="col-lg-4">
+                        <label>{{'Portal Name'|translate}}</label>
+                        <input type="text" formControlName="portalName" name="portalName" class="form-control" />
+                        <span class="text-danger " *ngIf="(configurationFormControl.portalName.touched ||isconfigurationDetailsSubmitted) && configurationFormControl.portalName.errors?.required ">
+                        Portal Name is required
+                    </span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <label>{{'Pick a Primary Colour'|translate}}</label>
+                        <div class="input-group mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-color" style="width: 45px;" id="primaryColor"></span>
+                            </div>
+                            <input [(colorPicker)]="primaryColor" cpPosition='bottom' (colorPickerChange)="updatePickerPrimaryColor($event)" type="text" class="form-control" formControlName="primaryColor" [value]="primaryColor" />
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label>{{'Secondary Colour'|translate}}</label>
+                        <div class="input-group mb-4">
+                            <div class="input-group-prepend">
+                                <span class="input-group-color" style="width: 45px;" id="secondaryColor"></span>
+                            </div>
+                            <input [(colorPicker)]="secondaryColor" cpPosition='bottom' (colorPickerChange)="updatePickerSecondaryColor($event)" type="text" class="form-control" formControlName="secondaryColor" [value]="secondaryColor" />
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <button type="button" class="btn btn-secondary btn-round" (click)="previewHandler()">
+                        {{(!showPreview) ? "Preview" : "Edit"}}
+                    </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>{{'Language'|translate}}</label>
+                        <div class="input-group">
+                            <div class="multi-dropdown">
+                                <ng-multiselect-dropdown formControlName="languageSetup" [placeholder]="'Languages'" [settings]="dropdownSettings" [data]="dropdownList" (onItemSelect)="onItemSelect($event)">
+                                </ng-multiselect-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-round">
+                        <span *ngIf="!loading">{{'Submit'|translate}}</span>
+                        <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
