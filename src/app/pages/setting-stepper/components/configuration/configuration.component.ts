@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { AdminServiceService } from 'app/services/admin-service.service';
 import { GlobalComponent } from 'app/shared/global/global.component';
+import { NavbarComponent } from 'app/shared/navbar/navbar.component';
 import { TopBarComponent } from 'app/shared/topbar/topbar.component';
 
 import { ColorPickerService, Cmyk } from "ngx-color-picker";
@@ -61,6 +62,7 @@ export class ConfigurationComponent implements OnInit {
     public router: Router,
     private global: GlobalComponent,
     private topBar: TopBarComponent,
+    private navBar: NavbarComponent,
     public adminService: AdminServiceService,
     private cpService: ColorPickerService,
     private toastrService: ToastrService,
@@ -112,6 +114,7 @@ export class ConfigurationComponent implements OnInit {
       secondaryColorSpan.style.backgroundColor = this.secondaryColor;
       document.documentElement.style.setProperty("--primary", res.responseData[0].primaryColor);
       document.documentElement.style.setProperty("--secondary",res.responseData[0].secondaryColor);
+      this.topBar.logo(res.responseData[0].logo);
     });
   }
 
@@ -227,7 +230,14 @@ export class ConfigurationComponent implements OnInit {
       this.configurationDetails.value.logo = this.logofileUrl[0];
       this.configurationDetails.value.favIcon = this.faviconfileUrl[0];
       this.languageSelected = this.getObjectListFromData(
-        this.configurationDetails.value.languageSetup.map((item: any) => item.itemId)
+        this.configurationDetails.value.languageSetup.map((item) => item.itemId)
+      );
+      this.configurationDetails.value.language = this.languageSelected;
+      console.log(this.configurationDetails.value);
+      this.adminService.stateUpdateInfoFun(
+        this.configurationDetails.value,
+        this.stateID,
+        this.token
       );
       this.configurationDetails.value.languageSetup = this.languageSelected;
       this.adminService.stateUpdateInfoFun(this.configurationDetails.value,this.stateID, this.token).subscribe((res: any) => {
@@ -235,7 +245,9 @@ export class ConfigurationComponent implements OnInit {
         if(res.result === "Success") {
           this.toastrService.success(res.responseData);
           this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
-            console.log(res);
+            // this.navBar.selectedLanguageFun(this.languageSelected);
+            this.navBar.reloadComponent();
+            this.languageSelected = res.responseData[0].languageSetup;
             this.configurationDetails.patchValue({
               languageSetup: res.responseData[0].languageSetup,
               portalName: res.responseData[0].portalName,
