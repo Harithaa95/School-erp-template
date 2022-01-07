@@ -1,13 +1,13 @@
-.sidebar .sidebar-wrapper{
-  overflow-x: hidden;
-  height: 100vh;
-
-  .active-pro{
-    bottom: 22px;
-  }
+.sidebar .sidebar-wrapper {
+    overflow-x: hidden;
+    height: 100vh;
+    .active-pro {
+        bottom: 22px;
+    }
 }
-@media screen and (max-width : 500px) {
-  .sidebar .sidebar-wrapper{
-    top :4rem;
-  }  
+
+@media screen and (max-width: 500px) {
+    .sidebar .sidebar-wrapper {
+        top: 4rem;
+    }
 }

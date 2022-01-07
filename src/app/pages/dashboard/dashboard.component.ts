@@ -2,12 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService} from '@ngx-translate/core';
 import { AdminServiceService } from 'app/services/admin-service.service';
-import { NavbarComponent } from 'app/shared/navbar/navbar.component';
 import Chart from 'chart.js';
-
-import { map } from 'rxjs';
-import { LoginComponent } from '../login/login.component';
-
 
 @Component({
     selector: 'dashboard-cmp',
