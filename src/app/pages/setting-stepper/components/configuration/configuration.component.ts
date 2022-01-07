@@ -97,7 +97,6 @@ export class ConfigurationComponent implements OnInit {
     });
 
     this.adminService.stateInfoFun(this.token).subscribe((res: any) => {
-      console.log(res);
       this.stateID = res.responseData[0].stateId;
       this.primaryColor = res.responseData[0].primaryColor;
       this.secondaryColor = res.responseData[0].secondaryColor;
@@ -233,7 +232,6 @@ export class ConfigurationComponent implements OnInit {
         this.configurationDetails.value.languageSetup.map((item) => item.itemId)
       );
       this.configurationDetails.value.language = this.languageSelected;
-      console.log(this.configurationDetails.value);
       this.adminService.stateUpdateInfoFun(
         this.configurationDetails.value,
         this.stateID,
