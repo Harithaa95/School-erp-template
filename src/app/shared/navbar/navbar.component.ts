@@ -1,5 +1,5 @@
 import { Component, OnInit, Renderer2, ViewChild, ElementRef } from '@angular/core';
-import { TranslateService ,TranslateModule} from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { ROUTES } from '../../sidebar/sidebar.component';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -26,16 +26,16 @@ export class NavbarComponent implements OnInit {
 
   @ViewChild("navbar-cmp", { static: false }) button;
 
-  constructor(public sanitizer: DomSanitizer,location: Location, private renderer: Renderer2, private element: ElementRef, private router: Router, public translateService: TranslateService, public adminService: AdminServiceService) {
+  constructor(public sanitizer: DomSanitizer, location: Location, private renderer: Renderer2, private element: ElementRef, private router: Router, public translateService: TranslateService, public adminService: AdminServiceService) {
     this.location = location;
     this.nativeElement = element.nativeElement;
     this.sidebarVisible = false;
 
-    this.lang = translateService.addLangs(['en', 'ta','ur'])
+    this.lang = translateService.addLangs(['en', 'ta', 'ur'])
     translateService.setDefaultLang('en')
     const browserLang = translateService.getBrowserLang()
     translateService.use(browserLang.match(/en|ta|ur/) ? browserLang : 'en')
-    
+
   }
 
   ngOnInit() {
@@ -47,29 +47,28 @@ export class NavbarComponent implements OnInit {
     this.router.events.subscribe((event) => {
       this.sidebarClose();
     });
-    
+
   }
 
-  dynamicLoadingar(){
+  dynamicLoadingar() {
     this.loadArabic = true;
   }
 
-  switchLanguage(lang:string){
+  switchLanguage(lang: string) {
     this.translateService.use(lang)
-    document.documentElement.lang=lang
-    if (lang == 'ur')
-    {
+    document.documentElement.lang = lang
+    if (lang == 'ur') {
       console.log("inside load Arabic")
       this.loadArabic = true;
     }
-    else
-    {
+    else {
       this.loadArabic = false;
 
     }
   }
 
   getTitle() {
+    console.log(this.location.prepareExternalUrl(this.location.path()))
     var titlee = this.location.prepareExternalUrl(this.location.path());
     if (titlee.charAt(0) === '#') {
       titlee = titlee.slice(1);
@@ -79,7 +78,8 @@ export class NavbarComponent implements OnInit {
         return this.listTitles[item].title;
       }
     }
-     return titlee.slice(1);
+    titlee = titlee.slice(1);
+    return titlee.replace(/([A-Z])/, ' $1').trim()
   }
   sidebarToggle() {
     if (this.sidebarVisible === false) {

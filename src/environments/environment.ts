@@ -5,7 +5,7 @@
 
 
 
-let backendURL = 'https://abb7-103-252-26-159.ngrok.io/';
+let backendURL = 'http://3f9b-103-224-35-40.ngrok.io/';
 
 export const environment = {
   production: false,
