@@ -41,11 +41,11 @@ export class NavbarComponent {
     this.nativeElement = element.nativeElement;
     this.sidebarVisible = false;
 
-    this.lang = translateService.addLangs(['en', 'ta','ur'])
+    this.lang = translateService.addLangs(['en', 'ta', 'ur'])
     translateService.setDefaultLang('en')
     const browserLang = translateService.getBrowserLang()
     translateService.use(browserLang.match(/en|ta|ur/) ? browserLang : 'en')
-    
+
   }
 
   ngOnInit() {
@@ -61,26 +61,25 @@ export class NavbarComponent {
   }
   
 
-  dynamicLoadingar(){
+  dynamicLoadingar() {
     this.loadArabic = true;
   }
 
-  switchLanguage(lang:string){
+  switchLanguage(lang: string) {
     this.translateService.use(lang)
-    document.documentElement.lang=lang
-    if (lang == 'ur')
-    {
+    document.documentElement.lang = lang
+    if (lang == 'ur') {
       console.log("inside load Arabic")
       this.loadArabic = true;
     }
-    else
-    {
+    else {
       this.loadArabic = false;
 
     }
   }
 
   getTitle() {
+    console.log(this.location.prepareExternalUrl(this.location.path()))
     var titlee = this.location.prepareExternalUrl(this.location.path());
     if (titlee.charAt(0) === '#') {
       titlee = titlee.slice(1);
@@ -90,7 +89,8 @@ export class NavbarComponent {
         return this.listTitles[item].title;
       }
     }
-    return 'Dashboard';
+    titlee = titlee.slice(1);
+    return titlee.replace(/([A-Z])/, ' $1').trim()
   }
 
   sidebarToggle() {
